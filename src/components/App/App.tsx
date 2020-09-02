@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Students from '../Students/Students';
+import Users from '../Users/Users';
 import Home from '../Home/Home';
 import './App.css';
 import { UserRole } from '../../models/data-models';
@@ -33,22 +33,38 @@ const App = (): JSX.Element => {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/students">Students</Link>
+                <Link to="/users">Users</Link>
               </li>
               <li>
-                <Link to="/users">Students</Link>
+                <Link to="/tasks">Tasks</Link>
+              </li>
+              <li>
+                <Link to="/review-requests">Review Requests</Link>
+              </li>
+              <li>
+                <Link to="/reviews">Reviews</Link>
+              </li>
+              <li>
+                <Link to="/sessions">Cross-Check Sessions</Link>
               </li>
             </ul>
           </nav>
 
-          {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
           <Switch>
-            <Route path="/students">
-              <Students />
-            </Route>
             <Route path="/users">
-              <Students />
+              <Users />
+            </Route>
+            <Route path="/tasks">
+              <Users />
+            </Route>
+            <Route path="/review-requests">
+              <Users />
+            </Route>
+            <Route path="/reviews">
+              <Users />
+            </Route>
+            <Route path="/sessions">
+              <Users />
             </Route>
             <Route path="/">
               <Home />
