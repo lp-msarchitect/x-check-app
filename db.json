@@ -98,7 +98,7 @@
     {
       "reviewId": "rev-id-1",
       "state": "ONGOING",
-      "idem": "extra_p1",
+      "item": "extra_p1",
       "comment": "Check out the 'All things' page to see all things that were implemented",
       "suggestedScore": 30
     }
