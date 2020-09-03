@@ -1,14 +1,9 @@
 /// User
-enum Role {
-  author,
-  student,
-  supervisor,
-  courseManager,
-}
+export type UserRole = 'author' | 'student' | 'supervisor' | 'coursemanager';
 
 export interface User {
   githubId: string;
-  roles: Role[];
+  roles: UserRole[];
 }
 
 /// Task
