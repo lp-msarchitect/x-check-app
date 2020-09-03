@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Layout } from 'antd';
 import Users from '../Users/Users';
 import Home from '../Home/Home';
+import Tasks from '../Tasks/Tasks';
+import ReviewRequests from '../ReviewRequests/ReviewRequests';
+import Reviews from '../Reviews/Reviews';
+import Sessions from '../Sessions/Sessions';
+import Navbar from '../Navbar/Navbar';
 import './App.css';
 import { UserRole } from '../../models/data-models';
 
 const App = (): JSX.Element => {
   const [role, setRole] = useState<UserRole>('student');
+  const { Header, Content } = Layout;
 
   const handleRoleChange = (
     event: React.FormEvent<HTMLSelectElement>
@@ -24,53 +31,35 @@ const App = (): JSX.Element => {
           <option value="coursemanager">Course Manager</option>
         </select>
       </div>
-      <p>Your current role is: {role}</p>
       <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/users">Users</Link>
-              </li>
-              <li>
-                <Link to="/tasks">Tasks</Link>
-              </li>
-              <li>
-                <Link to="/review-requests">Review Requests</Link>
-              </li>
-              <li>
-                <Link to="/reviews">Reviews</Link>
-              </li>
-              <li>
-                <Link to="/sessions">Cross-Check Sessions</Link>
-              </li>
-            </ul>
-          </nav>
-
-          <Switch>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/tasks">
-              <Users />
-            </Route>
-            <Route path="/review-requests">
-              <Users />
-            </Route>
-            <Route path="/reviews">
-              <Users />
-            </Route>
-            <Route path="/sessions">
-              <Users />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </div>
+        <Layout className="layout">
+          <Header>
+            <div className="logo" />
+            <Navbar role={role} />
+          </Header>
+          <Content style={{ padding: '0 50px' }}>
+            <Switch>
+              <Route path="/users">
+                <Users />
+              </Route>
+              <Route path="/tasks">
+                <Tasks />
+              </Route>
+              <Route path="/review-requests">
+                <ReviewRequests />
+              </Route>
+              <Route path="/reviews">
+                <Reviews />
+              </Route>
+              <Route path="/sessions">
+                <Sessions />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </Content>
+        </Layout>
       </Router>
     </div>
   );
