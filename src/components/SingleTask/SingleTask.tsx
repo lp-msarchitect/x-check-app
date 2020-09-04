@@ -1,0 +1,36 @@
+import React from 'react';
+import { Task, TaskItem } from '../../models/data-models';
+import TaskItemCategoryList from '../TaskItemCategoryList/TaskItemCategoryList';
+
+interface SingleTaskProps {
+  singleTask: Task;
+}
+
+const SingleTask = ({ singleTask }: SingleTaskProps): JSX.Element => {
+  const [basic, extra, fines]: Array<TaskItem[]> = [[], [], []];
+  singleTask.items.forEach((item) => {
+    switch (item.category) {
+      case 'Basic Scope':
+        basic.push(item);
+        break;
+      case 'Extra Scope':
+        extra.push(item);
+        break;
+      case 'Fines':
+        fines.push(item);
+        break;
+      default:
+        basic.push(item);
+    }
+  });
+
+  return (
+    <>
+      <TaskItemCategoryList items={basic} />
+      <TaskItemCategoryList items={extra} />
+      <TaskItemCategoryList items={fines} />
+    </>
+  );
+};
+
+export default SingleTask;
