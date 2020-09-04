@@ -1,6 +1,7 @@
 import React from 'react';
 import { Task, TaskItem } from '../../models/data-models';
 import TaskItemCategoryList from '../TaskItemCategoryList/TaskItemCategoryList';
+import TaskActions from '../TaskActions/TaskActions';
 
 interface SingleTaskProps {
   singleTask: Task;
@@ -26,9 +27,13 @@ const SingleTask = ({ singleTask }: SingleTaskProps): JSX.Element => {
 
   return (
     <>
+      <p>
+        <strong>Author: {singleTask.author}</strong>
+      </p>
       <TaskItemCategoryList items={basic} />
       <TaskItemCategoryList items={extra} />
       <TaskItemCategoryList items={fines} />
+      <TaskActions taskState={singleTask.state} />
     </>
   );
 };
