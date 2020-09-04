@@ -1,0 +1,12 @@
+@import '~antd/dist/antd.css';
+
+#root {
+  height: 100%;
+  display: flex;
+}
+
+.app-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}

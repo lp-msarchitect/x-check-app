@@ -8,7 +8,7 @@ import ReviewRequests from '../ReviewRequests/ReviewRequests';
 import Reviews from '../Reviews/Reviews';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
-import './App.css';
+import './App.scss';
 import { UserRole } from '../../models/data-models';
 
 const App = (): JSX.Element => {
@@ -22,22 +22,22 @@ const App = (): JSX.Element => {
   };
 
   return (
-    <div>
-      <div>
-        <select value={role} onChange={handleRoleChange}>
-          <option value="author">Author</option>
-          <option value="student">Student</option>
-          <option value="supervisor">Supervisor</option>
-          <option value="coursemanager">Course Manager</option>
-        </select>
-      </div>
-      <Router>
-        <Layout className="layout">
-          <Header>
-            <div className="logo" />
-            <Navbar role={role} />
-          </Header>
-          <Content style={{ padding: '0 50px' }}>
+    <Router>
+      <Layout className="layout">
+        <Header>
+          <div className="logo" />
+          <Navbar role={role} />
+        </Header>
+        <Content style={{ padding: '50px' }}>
+          <div>
+            <select value={role} onChange={handleRoleChange}>
+              <option value="author">Author</option>
+              <option value="student">Student</option>
+              <option value="supervisor">Supervisor</option>
+              <option value="coursemanager">Course Manager</option>
+            </select>
+          </div>
+          <div className="app-content">
             <Switch>
               <Route path="/users">
                 <Users />
@@ -58,10 +58,10 @@ const App = (): JSX.Element => {
                 <Home />
               </Route>
             </Switch>
-          </Content>
-        </Layout>
-      </Router>
-    </div>
+          </div>
+        </Content>
+      </Layout>
+    </Router>
   );
 };
 
