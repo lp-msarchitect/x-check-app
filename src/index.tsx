@@ -6,6 +6,13 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 import App from './components/App/App';
 
+type composeType = typeof compose;
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: composeType;
+  }
+}
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
@@ -16,3 +23,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+/// TODO: create actions and reducers for all data types and for each single item where applicable
