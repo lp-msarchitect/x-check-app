@@ -28,7 +28,7 @@ const App = (): JSX.Element => {
           <div className="logo" />
           <Navbar role={role} />
         </Header>
-        <Content style={{ padding: '50px' }}>
+        <Content className="app-content">
           <div>
             <select value={role} onChange={handleRoleChange}>
               <option value="author">Author</option>
@@ -37,7 +37,7 @@ const App = (): JSX.Element => {
               <option value="coursemanager">Course Manager</option>
             </select>
           </div>
-          <div className="app-content">
+          <div className="router-switch-wrap">
             <Switch>
               <Route path="/users">
                 <Users />
