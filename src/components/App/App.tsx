@@ -10,6 +10,8 @@ import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
 import './App.css';
 import { UserRole } from '../../models/data-models';
+import Login from '../Login/Login';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 const App = (): JSX.Element => {
   const [role, setRole] = useState<UserRole>('student');
@@ -19,6 +21,10 @@ const App = (): JSX.Element => {
     event: React.FormEvent<HTMLSelectElement>
   ): void => {
     setRole(event.currentTarget.value as UserRole);
+  };
+
+  const isAuth = () => {
+    return JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
   };
 
   return (
@@ -39,21 +45,44 @@ const App = (): JSX.Element => {
           </Header>
           <Content style={{ padding: '0 50px' }}>
             <Switch>
-              <Route path="/users">
+              <Route path="/login">
+                <Login />
+              </Route>
+              <ProtectedRoute
+                path="/users"
+                isAuth={isAuth()}
+                redirectPath="/login"
+              >
                 <Users />
-              </Route>
-              <Route path="/tasks">
+              </ProtectedRoute>
+              <ProtectedRoute
+                path="/tasks"
+                isAuth={isAuth()}
+                redirectPath="/login"
+              >
                 <Tasks />
-              </Route>
-              <Route path="/review-requests">
+              </ProtectedRoute>
+              <ProtectedRoute
+                path="/review-requests"
+                isAuth={isAuth()}
+                redirectPath="/login"
+              >
                 <ReviewRequests />
-              </Route>
-              <Route path="/reviews">
+              </ProtectedRoute>
+              <ProtectedRoute
+                path="/reviews"
+                isAuth={isAuth()}
+                redirectPath="/login"
+              >
                 <Reviews />
-              </Route>
-              <Route path="/sessions">
+              </ProtectedRoute>
+              <ProtectedRoute
+                path="/sessions"
+                isAuth={isAuth()}
+                redirectPath="/login"
+              >
                 <Sessions />
-              </Route>
+              </ProtectedRoute>
               <Route path="/">
                 <Home />
               </Route>
