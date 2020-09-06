@@ -15,6 +15,23 @@ class DataService {
     this.baseURL = 'http://localhost:3001';
   }
 
+  async setResource<T>(url: string, resource: object): Promise<T> {
+    const res = await fetch(this.baseURL + url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(resource),
+    });
+    if (!res.ok) {
+      console.log(res);
+
+      throw new Error(`Could not fetch ${url}, status ${res.status}`);
+    }
+    const body = await res.json();
+    return body;
+  }
+
   async getResource<T>(url: string): Promise<T> {
     const res = await fetch(this.baseURL + url);
     if (!res.ok) {
@@ -33,6 +50,10 @@ class DataService {
       `/users?githubId=${githubId}`
     );
     return result[0];
+  }
+
+  async setUser(user: User): Promise<User> {
+    return this.setResource<User>(`/users`, user);
   }
 
   getAllTasks(): Promise<Task[]> {
