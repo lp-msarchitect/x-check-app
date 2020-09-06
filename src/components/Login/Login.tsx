@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Spin } from 'antd';
+import { Spin, Button } from 'antd';
+import { GithubOutlined } from '@ant-design/icons';
 
 const clientId = '140ee27ef8df8ece846a';
 const proxyUrl = 'https://x-check-app.herokuapp.com/authenticate/';
@@ -24,8 +25,9 @@ const Login = (): JSX.Element => {
             headers: { Authorization: `token ${token}` },
           })
             .then((res) => res.json())
-            .then((txt) => {
-              console.log(txt);
+            .then((userData) => {
+              localStorage.setItem('isLoggedIn', JSON.stringify(true));
+              localStorage.setItem('githubId', JSON.stringify(userData.login));
               setIsLoading(false);
             });
         });
@@ -37,11 +39,13 @@ const Login = (): JSX.Element => {
       {isLoading ? (
         <Spin />
       ) : (
-        <a
+        <Button
+          type="primary"
+          icon={<GithubOutlined />}
           href={`https://github.com/login/oauth/authorize?client_id=${clientId}`}
         >
           Login via GitHub
-        </a>
+        </Button>
       )}
     </>
   );
