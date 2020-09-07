@@ -1,17 +1,30 @@
+import { AnyAction } from 'redux';
 import * as ACTIONS from '../constants/actions';
-import { actionType } from '../models/actions';
 import DataService from '../services/data-service';
 
 const dataService = new DataService();
 
-const getTasks = (): actionType => {
-  return {
-    type: ACTIONS.GET_TASKS,
-    payload: {},
-  };
+export const getTasks = () => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .getAllTasks()
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.GET_TASKS,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
-const getUsers = () => async (dispatch, getState): Promise<void> => {
+export const getUsers = () => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
   dataService
     .getAllUsers()
     .then((body) => {
@@ -26,5 +39,3 @@ const getUsers = () => async (dispatch, getState): Promise<void> => {
       console.error(err);
     });
 };
-
-export { getTasks, getUsers };
