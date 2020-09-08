@@ -7,19 +7,11 @@ export interface User {
 }
 
 /// Task
-enum TaskState {
-  DRAFT,
-  PUBLISHED,
-  ARCHIVED,
-}
+export type TaskState = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
 
-enum TaskItemCategory {
-  'Basic Scope',
-  'Extra Scope',
-  'Fines',
-}
+type TaskItemCategory = 'Basic Scope' | 'Extra Scope' | 'Fines';
 
-interface TaskItem {
+export interface TaskItem {
   id: string;
   minScore: number;
   maxScore: number;
@@ -30,6 +22,7 @@ interface TaskItem {
 
 export interface Task {
   id: string;
+  title: string;
   author: string;
   state: TaskState;
   categoriesOrder: TaskItemCategory[];
@@ -47,12 +40,11 @@ export interface TaskScore {
 }
 
 /// XCheck Session
-enum CrossCheckSessionState {
-  DRAFT,
-  REQUESTS_GATHERING,
-  CROSS_CHECK,
-  COMPLETED,
-}
+export type CrossCheckSessionState =
+  | 'DRAFT'
+  | 'REQUESTS_GATHERING'
+  | 'CROSS_CHECK'
+  | 'COMPLETED';
 
 interface CrossCheckSessionAttendee {
   githubId: string;
@@ -74,11 +66,7 @@ export interface CrossCheckSession {
 }
 
 /// ReviewRequest
-enum ReviewRequestState {
-  DRAFT,
-  PUBLISHED,
-  COMPLETED,
-}
+export type ReviewRequestState = 'DRAFT' | 'PUBLISHED' | 'COMPLETED';
 
 export interface ReviewRequest {
   id: string;
@@ -90,13 +78,12 @@ export interface ReviewRequest {
 }
 
 /// Review
-enum ReviewState {
-  DRAFT,
-  PUBLISHED,
-  DISPUTED,
-  ACCEPTED,
-  REJECTED,
-}
+export type ReviewState =
+  | 'DRAFT'
+  | 'PUBLISHED'
+  | 'DISPUTED'
+  | 'ACCEPTED'
+  | 'REJECTED';
 
 export interface Review {
   id: string;
@@ -107,11 +94,7 @@ export interface Review {
 }
 
 /// Dispute
-enum DisputeState {
-  ONGOING,
-  ACCEPTED,
-  REJECTED,
-}
+export type DisputeState = 'ONGOING' | 'ACCEPTED' | 'REJECTED';
 
 export interface Dispute {
   reviewId: string;
