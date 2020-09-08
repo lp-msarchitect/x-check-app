@@ -2,6 +2,20 @@ import { combineReducers, AnyAction } from 'redux';
 import { Task, User } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
 
+const userAuthReducer = (
+  state = { githubId: '', roles: [] },
+  action: AnyAction
+): User => {
+  switch (action.type) {
+    case ACTIONS.LOGIN:
+      return action.payload as User;
+    case ACTIONS.LOGOUT:
+      return { githubId: '', roles: [] } as User;
+    default:
+      return state;
+  }
+};
+
 const tasksReducer = (state = [], action: AnyAction): Task[] => {
   switch (action.type) {
     case ACTIONS.GET_TASKS:
@@ -29,4 +43,5 @@ const usersReducer = (state = [], action: AnyAction): User[] => {
 export default combineReducers({
   tasks: tasksReducer,
   users: usersReducer,
+  auth: userAuthReducer,
 });

@@ -1,57 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import { Spin, Button } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
+import { githubUserFetch } from '../../actions';
+import { AppReduxState } from '../../models/redux-models';
 import { User } from '../../models/data-models';
-import DataService from '../../services/data-service';
 
 const clientId = '140ee27ef8df8ece846a';
-const proxyUrl = 'https://x-check-app.herokuapp.com/authenticate/';
+
+type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
 const Login = (): JSX.Element => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { githubId } = useSelector<AppReduxState, User>((state) => state.auth);
+  const dispatch: AppDispatch = useDispatch();
+  const isLoading = false;
 
   useEffect(() => {
     const url = window.location.href;
     const hasCode = url.includes('?code=');
 
     if (hasCode) {
-      setIsLoading(true);
       const newUrl = url.split('?code=');
       window.history.pushState({}, '', newUrl[0]);
 
       const code = newUrl[1];
 
-      fetch(`${proxyUrl}${code}`)
-        .then((res) => res.json())
-        .then(({ token }) => {
-          fetch(`https://api.github.com/user`, {
-            headers: { Authorization: `token ${token}` },
-          })
-            .then((res) => res.json())
-            .then((userData) => {
-              // TODO move this to Redux
-              const user: User = {
-                githubId: userData.login,
-                roles: ['student'],
-              };
-
-              const service = new DataService();
-              service.setUser(user);
-
-              localStorage.setItem('isLoggedIn', JSON.stringify(true));
-              localStorage.setItem('githubId', JSON.stringify(userData.login));
-              setIsLoggedIn(true);
-              setIsLoading(false);
-            });
-        });
+      dispatch(githubUserFetch(code));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
-      {isLoggedIn ? <Redirect to="/" /> : null}
+      {githubId ? <Redirect to="/" /> : null}
       {isLoading ? (
         <Spin />
       ) : (

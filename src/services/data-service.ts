@@ -8,11 +8,26 @@ import {
   Dispute,
 } from '../models/data-models';
 
+import { CLIENT_ID, PROXY_URL } from '../constants/urls';
+
 class DataService {
   baseURL: string;
 
+  proxyUrl: string;
+
   constructor() {
     this.baseURL = 'http://localhost:3001';
+    this.proxyUrl = 'https://x-check-app.herokuapp.com/authenticate/';
+  }
+
+  async getGitHubLogin<T>(code: string): Promise<T> {
+    const { token } = await (await fetch(`${this.proxyUrl}${code}`)).json();
+    const fetchOpt = { headers: { Authorization: `token ${token}` } };
+    const { login } = await (
+      await fetch(`https://api.github.com/user`, fetchOpt)
+    ).json();
+
+    return login;
   }
 
   async setResource<T>(url: string, resource: object): Promise<T> {

@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { Redirect } from 'react-router-dom';
+import { logoutUser } from '../../actions';
+import { User } from '../../models/data-models';
+
+type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
 const Logout = (): JSX.Element => {
+  const dispatch: AppDispatch = useDispatch();
+
+  const [isRedirect, setIsRedirect] = useState(false);
+
   const logOutHandler = (): void => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('githubId');
+    dispatch(logoutUser());
+    setIsRedirect(true);
   };
 
   return (
-    <Button icon={<LogoutOutlined />} onClick={logOutHandler}>
-      Logout
-    </Button>
+    <>
+      {isRedirect ? <Redirect to="/login" /> : null}
+      <Button icon={<LogoutOutlined />} onClick={logOutHandler}>
+        Logout
+      </Button>
+    </>
   );
 };
 

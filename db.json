@@ -1,11 +1,18 @@
 {
   "users": [
     {
-      "githubId": "lp-msarchitect",
+      "githubId": "lp-msarchitect1",
       "roles": [
         "student"
       ],
       "id": 1
+    },
+    {
+      "githubId": "lp-msarchitect",
+      "roles": [
+        "student"
+      ],
+      "id": 2
     }
   ],
   "tasks": [
@@ -51,7 +58,11 @@
       "title": "Simple task v2",
       "author": "test",
       "state": "PUBLISHED",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "id": "basic_p1",
