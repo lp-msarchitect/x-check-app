@@ -8,7 +8,10 @@ const userAuthReducer = (
 ): User => {
   switch (action.type) {
     case ACTIONS.LOGIN:
-      return action.payload as User;
+      return {
+        githubId: action.payload.githubId,
+        roles: action.payload.roles,
+      } as User;
     case ACTIONS.LOGOUT:
       return { githubId: '', roles: [] } as User;
     default:
