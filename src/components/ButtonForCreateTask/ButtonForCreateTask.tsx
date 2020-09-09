@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
-import ModalText from '../ModalText/ModalText'
+import ModalText from '../ModalText/ModalText';
+import DataService  from '../../services/data-service'
 
 class ButtonForCreateTask extends React.Component {
     state = {
@@ -33,6 +34,8 @@ class ButtonForCreateTask extends React.Component {
       this.setState({
         visible: false,
       });
+      const dataService = new DataService();
+      dataService.sendTask('/tasks',{})
     };
   
     render() {

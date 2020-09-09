@@ -1,19 +1,28 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Input } from 'antd';
 
 
-class ModalText extends React.Component {
-    render() {
+function  ModalText() {
+    const [title, setTitle] =useState('');
+    const [title, setTitle] =useState('');
+    const [title, setTitle] =useState('');
+    const [title, setTitle] =useState('');
+    const [title, setTitle] =useState('');
+    const [title, setTitle] =useState('');
+    const [title, setTitle] =useState('');
+
+  
         return(
             <div>
-                <Input placeholder="Title" />
-                
-                <Input placeholder="Author" />
+                <Input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
 
-                <Input placeholder="author" />
+                <Input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                
+                
+                
             </div>
         )
-    }
+    
 }
 
 export default ModalText;
