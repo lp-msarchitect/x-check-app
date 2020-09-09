@@ -39,3 +39,21 @@ export const getUsers = () => async (
       console.error(err);
     });
 };
+
+export const getReviews = () => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .getAllReviews()
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.GET_REVIEWS,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
