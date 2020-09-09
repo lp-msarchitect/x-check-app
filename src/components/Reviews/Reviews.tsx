@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { Link } from 'react-router-dom';
 import { Table, Tag } from 'antd';
-import { Review, TaskScore } from '../../models/data-models';
-import { getReviews } from '../../actions';
+import { Review, TaskScore, Task } from '../../models/data-models';
+import { getReviews, getTasks } from '../../actions';
 import { AppReduxState } from '../../models/redux-models';
 
 type State = Review[];
@@ -15,13 +16,16 @@ const Reviews = (): JSX.Element => {
     (state) => state.reviews
   );
 
+  const tasks = useSelector<AppReduxState, Task[]>((state) => state.tasks);
+
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getReviews());
+    dispatch(getTasks());
   }, [dispatch]);
 
-  const sortStrings = (a: Review, b: Review): number => {
+  const sortNames = (a: Review, b: Review): number => {
     const A = a.author.toUpperCase();
     const B = b.author.toUpperCase();
     if (A < B) {
@@ -29,6 +33,24 @@ const Reviews = (): JSX.Element => {
     }
     if (A > B) {
       return 1;
+    }
+    return 1;
+  };
+
+  const sortTitles = (a: Review, b: Review): number => {
+    const A = tasks.find((element) => {
+      return element.id === a.task;
+    });
+    const B = tasks.find((element) => {
+      return element.id === b.task;
+    });
+    if (A && B) {
+      if (A < B) {
+        return -1;
+      }
+      if (A > B) {
+        return 1;
+      }
     }
     return 1;
   };
@@ -72,20 +94,37 @@ const Reviews = (): JSX.Element => {
     return calcTotalScore(a.grade) - calcTotalScore(b.grade);
   };
 
+  const renderTaskTitle = (taskId: string): JSX.Element | null => {
+    const currentTask = tasks.find((element) => {
+      return element.id === taskId;
+    });
+    if (currentTask) {
+      return <Link to={`/tasks/${taskId}`}>{currentTask.title}</Link>;
+    }
+    return null;
+  };
+
   return (
     <div className="reviews">
       <Table dataSource={reviews}>
         <Table.Column
+          key="task"
+          title="Task"
+          dataIndex="task"
+          render={renderTaskTitle}
+          sorter={sortTitles}
+        />
+        <Table.Column
           key="author"
           title="Author"
           dataIndex="author"
-          sorter={sortStrings}
+          sorter={sortNames}
         />
         <Table.Column
           key="reviewer"
           title="Reviewer"
           dataIndex="reviewer"
-          sorter={sortStrings}
+          sorter={sortNames}
         />
         <Table.Column
           key="state"
@@ -93,7 +132,6 @@ const Reviews = (): JSX.Element => {
           dataIndex="state"
           render={renderTags}
         />
-        <Table.Column key="task" title="Task" dataIndex="task" />
         <Table.Column
           key="grade"
           title="Score"

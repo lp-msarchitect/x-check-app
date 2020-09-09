@@ -153,9 +153,9 @@
       "author": "WhoIsThat",
       "reviewer": "JustMeAndI",
       "state": "PUBLISHED",
-      "task": "simple-task-v1",
+      "task": "simple-task-v2",
       "grade": {
-        "task": "simple-task-v1",
+        "task": "simple-task-v2",
         "items": {
           "basic_p1": { "score": 15, "comment": "Well done!" },
           "extra_p1": {
