@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'antd';
+import ModalText from '../ModalText/ModalText'
 
 class ButtonForCreateTask extends React.Component {
     state = {
@@ -35,20 +36,20 @@ class ButtonForCreateTask extends React.Component {
     };
   
     render() {
-      const { visible, confirmLoading, ModalText } = this.state;
+      const { visible, confirmLoading,} = this.state;
       return (
         <>
           <Button type="primary" onClick={this.showModal}>
             Add Task
           </Button>
           <Modal
-            title="Title"
+            title="Add task"
             visible={visible}
             onOk={this.handleOk}
             confirmLoading={confirmLoading}
             onCancel={this.handleCancel}
           >
-            <p>{ModalText}</p>
+            <ModalText />
           </Modal>
         </>
       );
