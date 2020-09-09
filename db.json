@@ -132,8 +132,39 @@
       "id": "rev-id-1",
       "requestId": "rev-req-1",
       "author": "ButterBrot777",
+      "reviewer": "Ellankz",
       "state": "DISPUTED",
-      "grade": {}
+      "task": "simple-task-v1",
+      "grade": {
+        "task": "simple-task-v1",
+        "items": {
+          "basic_p1": { "score": 20, "comment": "Well done!" },
+          "extra_p1": {
+            "score": 15,
+            "comment": "Some things are done, some are not"
+          },
+          "fines_p1": { "score": 0, "comment": "No ticket today" }
+        }
+      }
+    },
+    {
+      "id": "rev-id-2",
+      "requestId": "rev-req-2",
+      "author": "WhoIsThat",
+      "reviewer": "JustMeAndI",
+      "state": "PUBLISHED",
+      "task": "simple-task-v1",
+      "grade": {
+        "task": "simple-task-v1",
+        "items": {
+          "basic_p1": { "score": 15, "comment": "Well done!" },
+          "extra_p1": {
+            "score": 20,
+            "comment": "Some things are done, some are not"
+          },
+          "fines_p1": { "score": -10, "comment": "Too bad" }
+        }
+      }
     }
   ],
   "disputes": [
