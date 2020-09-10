@@ -4,6 +4,7 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import { Task, TaskState } from '../../models/data-models';
 import DataService from '../../services/data-service';
 import SingleTask from '../SingleTask/SingleTask';
+import TaskCheckForm from '../TaskCheckForm/TaskCheckForm';
 import './Tasks.scss';
 
 const Tasks = (): JSX.Element => {
@@ -54,6 +55,7 @@ const Tasks = (): JSX.Element => {
               extra={genStateBadge(item.state)}
             >
               <SingleTask singleTask={item} />
+              <TaskCheckForm singleTask={item} />
             </Panel>
           );
         })}

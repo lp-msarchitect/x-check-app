@@ -1,0 +1,16 @@
+.task-container {
+  display: flex;
+  .radio-group {
+    display: flex;
+    margin-left: auto;
+    .ant-radio-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      span {
+        text-align: center;
+      }
+    }
+  }
+  
+}

@@ -6,7 +6,7 @@ const Students = (): JSX.Element => {
   const [users, setUsers] = useState<User[]>([]);
 
   const items = users.map((item: User) => {
-    return <div>{item.githubId}</div>;
+    return <div key={item.githubId}>{item.githubId}</div>;
   });
 
   useEffect(() => {
