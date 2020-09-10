@@ -1,20 +1,28 @@
-.task-check-form-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  h1,h2,h3,h4,h5,h6 {
-    margin: 0;
-  }
-  p {
-    margin: 0;
-  }
-  .title {
-    font-size: 20px;
-  }
-  .score-container {
+.task-check-form {
+  .task-check-form-header {
     display: flex;
-    .progress {
-      margin-right: 10px;
+    justify-content: space-between;
+    align-items: center;
+    h1,h2,h3,h4,h5,h6 {
+      margin: 0;
+      padding: 0;
     }
+    p {
+      margin: 0;
+      padding: 0;
+    }
+    .title {
+      font-size: 20px;
+    }
+    .score-container {
+      display: flex;
+      .progress {
+        margin-right: 10px;
+      }
+    }
+  }
+  .ant-form-item-label {
+    flex: 0 0 100%;
+    text-align: left;
   }
 }

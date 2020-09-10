@@ -27,7 +27,7 @@ const CheckTask = ({ taskItem }: TaskItemProps): JSX.Element => {
         <div className="task-description">
           <p className="task-title">{taskItem.description}</p>
           <a href="##" className="add-feedback">
-            add a feedback
+            add a comment
           </a>
         </div>
         <Radio.Group className="radio-group">

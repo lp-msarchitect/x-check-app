@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Form, Input } from 'antd';
 import { Task } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
@@ -8,8 +9,20 @@ interface SingleTaskProps {
 }
 
 const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
+  const validateMessages = {
+    required: 'Add task link',
+  };
+
+  const onFinish = (values: string): void => {
+    console.log(values);
+  };
+
   return (
-    <div className="task-check-form">
+    <Form
+      className="task-check-form"
+      validateMessages={validateMessages}
+      onFinish={onFinish}
+    >
       <div className="task-check-form-header">
         <h2 className="title">{singleTask.id}</h2>
         <div className="score-container">
@@ -20,11 +33,23 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
         </div>
       </div>
       <hr />
+      <Form.Item
+        name={['link']}
+        label="Task link"
+        rules={[{ required: true }]}
+        className="input"
+      >
+        <Input />
+      </Form.Item>
       <p className="criteria">Task criteria or description</p>
       {singleTask.items.map((elem) => {
         return <CheckTask taskItem={elem} key={elem.id} />;
       })}
-    </div>
+      <hr />
+      <Button type="primary" htmlType="submit">
+        Submit
+      </Button>
+    </Form>
   );
 };
 
