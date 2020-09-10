@@ -192,7 +192,7 @@ const Reviews = (): JSX.Element => {
 
   return (
     <div className="reviews">
-      <Table dataSource={reviews}>
+      <Table dataSource={reviews} rowKey={(review): string => review.id}>
         <Table.Column
           key="task"
           title="Task"
