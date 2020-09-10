@@ -17,10 +17,14 @@ class ButtonForCreateTask extends React.Component {
     };
   
     handleOk = () => {
+      const dataService = new DataService();
+      dataService.sendTask('/tasks',{})
       this.setState({
         ModalText: 'The modal will be closed after two seconds',
         confirmLoading: true,
       });
+     
+    
       setTimeout(() => {
         this.setState({
           visible: false,
@@ -34,8 +38,7 @@ class ButtonForCreateTask extends React.Component {
       this.setState({
         visible: false,
       });
-      const dataService = new DataService();
-      dataService.sendTask('/tasks',{})
+
     };
   
     render() {
