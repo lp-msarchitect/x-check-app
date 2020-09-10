@@ -89,7 +89,9 @@ export interface Review {
   id: string;
   requestId: string;
   author: string;
+  reviewer: string;
   state: ReviewState;
+  task: string;
   grade: TaskScore;
 }
 
