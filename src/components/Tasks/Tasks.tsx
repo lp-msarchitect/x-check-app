@@ -10,6 +10,11 @@ import './Tasks.scss';
 const Tasks = (): JSX.Element => {
   const { Panel } = Collapse;
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [displayForm, setDisplayForm] = useState(false);
+
+  const showForm = (): void => {
+    setDisplayForm(!displayForm);
+  };
 
   useEffect(() => {
     const dataService = new DataService();
@@ -54,8 +59,12 @@ const Tasks = (): JSX.Element => {
               key={item.id}
               extra={genStateBadge(item.state)}
             >
-              <SingleTask singleTask={item} />
-              <TaskCheckForm singleTask={item} />
+              <SingleTask singleTask={item} showForm={showForm} />
+              <TaskCheckForm
+                singleTask={item}
+                displayForm={displayForm}
+                showForm={showForm}
+              />
             </Panel>
           );
         })}

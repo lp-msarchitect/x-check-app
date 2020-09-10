@@ -5,9 +5,10 @@ import TaskActions from '../TaskActions/TaskActions';
 
 interface SingleTaskProps {
   singleTask: Task;
+  showForm: Function;
 }
 
-const SingleTask = ({ singleTask }: SingleTaskProps): JSX.Element => {
+const SingleTask = ({ singleTask, showForm }: SingleTaskProps): JSX.Element => {
   const [basic, extra, fines]: Array<TaskItem[]> = [[], [], []];
   singleTask.items.forEach((item) => {
     switch (item.category) {
@@ -33,7 +34,7 @@ const SingleTask = ({ singleTask }: SingleTaskProps): JSX.Element => {
       <TaskItemCategoryList items={basic} />
       <TaskItemCategoryList items={extra} />
       <TaskItemCategoryList items={fines} />
-      <TaskActions taskState={singleTask.state} />
+      <TaskActions taskState={singleTask.state} showForm={showForm} />
     </>
   );
 };

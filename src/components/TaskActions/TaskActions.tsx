@@ -5,9 +5,13 @@ import './TaskActions.scss';
 
 interface TaskActionsProps {
   taskState: TaskState;
+  showForm: Function;
 }
 
-const TaskActions = ({ taskState }: TaskActionsProps): JSX.Element => {
+const TaskActions = ({
+  taskState,
+  showForm,
+}: TaskActionsProps): JSX.Element => {
   return (
     <div className="task-actions">
       {taskState === 'DRAFT' && (
@@ -21,6 +25,9 @@ const TaskActions = ({ taskState }: TaskActionsProps): JSX.Element => {
       <Button size="small">Archive</Button>
       <Button size="small" danger>
         Delete
+      </Button>
+      <Button size="small" onClick={(): void => showForm()}>
+        Submit
       </Button>
     </div>
   );
