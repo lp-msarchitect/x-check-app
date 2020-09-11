@@ -23,7 +23,7 @@ const TaskCheckForm = ({
     return a + b.maxScore;
   }, 0);
 
-  const onFinish = (values: string): void => {
+  const submitHandler = (values: string): void => {
     console.log(values);
     showForm();
   };
@@ -33,8 +33,14 @@ const TaskCheckForm = ({
       <Form
         className="task-check-form"
         validateMessages={validateMessages}
-        onFinish={onFinish}
+        onFinish={submitHandler}
       >
+        <button
+          className="close-form"
+          onClick={(): void => showForm()}
+          type="button"
+          aria-label="Close form button"
+        />
         <div className="form-header">
           <h2 className="title">{singleTask.id}</h2>
           <div className="score-container">
@@ -51,7 +57,7 @@ const TaskCheckForm = ({
           rules={[{ required: true }]}
           className="input"
         >
-          <Input />
+          <Input allowClear />
         </Form.Item>
         <p className="criteria">Task criteria or description</p>
         {singleTask.items.map((elem) => {
