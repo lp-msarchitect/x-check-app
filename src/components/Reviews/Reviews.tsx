@@ -3,11 +3,13 @@ import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { Link } from 'react-router-dom';
-import { Table, Tag } from 'antd';
+import { Table } from 'antd';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
 import { getReviews, getTasks } from '../../actions';
 import { Review, TaskScore, Task, ReviewState } from '../../models/data-models';
 import { AppReduxState } from '../../models/redux-models';
+import calcTotalScore from '../../utils/calcTotalScore';
+import StateTag from '../StateTag/StateTag';
 
 type State = Review[];
 type AppDispatch = ThunkDispatch<State, void, AnyAction>;
@@ -26,18 +28,6 @@ const Reviews = (): JSX.Element => {
   }, [dispatch]);
 
   /// helper functions
-  const calcTotalScore = (grade: TaskScore): number => {
-    type ScoreType = { score: number; comment?: string };
-    const grades = Object.values(grade.items) as ScoreType[];
-    type Score = { score: number; comment?: string };
-    const totalScore = grades.reduce<number>(
-      (total: number, item: ScoreType) => {
-        return (total + item.score) as number;
-      },
-      0
-    );
-    return totalScore;
-  };
 
   const compareStrings = (A: string, B: string): number => {
     if (A < B) {
@@ -94,25 +84,7 @@ const Reviews = (): JSX.Element => {
 
   const rendering = {
     tag: (state: string): JSX.Element => {
-      const tagColor = (): string => {
-        switch (state) {
-          case 'PUBLISHED':
-            return 'blue';
-          case 'DISPUTED':
-            return 'orange';
-          case 'ACCEPTED':
-            return 'green';
-          case 'REJECTED':
-            return 'red';
-          default:
-            return 'default';
-        }
-      };
-      return (
-        <Tag color={tagColor()} key={state}>
-          {state}
-        </Tag>
-      );
+      return <StateTag state={state} />;
     },
     taskTitle: (taskId: string, review: Review): JSX.Element | null => {
       const currentTask = tasks.find((element) => {
