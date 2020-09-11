@@ -9,6 +9,7 @@ import Home from '../Home/Home';
 import Tasks from '../Tasks/Tasks';
 import ReviewRequests from '../ReviewRequests/ReviewRequests';
 import Reviews from '../Reviews/Reviews';
+import SingleReview from '../SingleReview/SingleReview';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
 import './App.scss';
@@ -64,6 +65,9 @@ const App = (): JSX.Element => {
               </ProtectedRoute>
               <ProtectedRoute path="/review-requests" redirectPath="/login">
                 <ReviewRequests />
+              </ProtectedRoute>
+              <ProtectedRoute path="/reviews/:reviewId" redirectPath="/login">
+                <SingleReview />
               </ProtectedRoute>
               <ProtectedRoute path="/reviews" redirectPath="/login">
                 <Reviews />
