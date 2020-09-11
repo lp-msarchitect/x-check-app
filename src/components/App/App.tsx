@@ -6,6 +6,7 @@ import Home from '../Home/Home';
 import Tasks from '../Tasks/Tasks';
 import ReviewRequests from '../ReviewRequests/ReviewRequests';
 import Reviews from '../Reviews/Reviews';
+import SingleReview from '../SingleReview/SingleReview';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
 import './App.scss';
@@ -47,6 +48,9 @@ const App = (): JSX.Element => {
               </Route>
               <Route path="/review-requests">
                 <ReviewRequests />
+              </Route>
+              <Route path="/reviews/:id">
+                <SingleReview />
               </Route>
               <Route path="/reviews">
                 <Reviews />

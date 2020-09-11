@@ -114,12 +114,12 @@ const Reviews = (): JSX.Element => {
         </Tag>
       );
     },
-    taskTitle: (taskId: string): JSX.Element | null => {
+    taskTitle: (taskId: string, review: Review): JSX.Element | null => {
       const currentTask = tasks.find((element) => {
         return element.id === taskId;
       });
       if (currentTask) {
-        return <Link to={`/tasks/${taskId}`}>{currentTask.title}</Link>;
+        return <Link to={`/reviews/${review.id}`}>{currentTask.title}</Link>;
       }
       return null;
     },
