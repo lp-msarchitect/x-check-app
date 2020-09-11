@@ -1,160 +1,170 @@
-import React,{useState} from 'react';
-import { Input } from 'antd';
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { Form, Input, Select, Button } from 'antd';
+import { TaskItem, TaskItemCategory } from '../../models/data-models';
+import './ModalText.scss';
 
 const { TextArea } = Input;
 
+function ModalText(): JSX.Element {
+  const [title, setTitle] = useState('');
+  const [items, setItems] = useState<TaskItem[]>([]);
 
-function  ModalText() {
-    const [title, setTitle] =useState('');
+  const [titleItem, setTitleItem] = useState('');
+  const [descriptionItem, setDescriptionItem] = useState('');
+  const [categoryItem, setCategoryItem] = useState<TaskItemCategory>(
+    'Basic Scope'
+  );
+  const [minItem, setMinItem] = useState('');
+  const [maxItem, setMaxItem] = useState('');
 
-    const [titleItem1, setTitleItem1] =useState('');
-    const [descriptionItem1, setDescriptionItem1] =useState('');
-    const [minItem1, setMinItem1] =useState('');
-    const [maxItem1, setMaxItem1] =useState('');
+  const { Option } = Select;
+  const scopes = ['Basic Scope', 'Extra Scope', 'Fines'];
 
-    const [titleItem2, setTitleItem2] =useState('');
-    const [descriptionItem2, setDescriptionItem2] =useState('');
-    const [minItem2, setMinItem2] =useState('');
-    const [maxItem2, setMaxItem2] =useState('');
+  const resetItemInfo = (): void => {
+    setTitleItem('');
+    setDescriptionItem('');
+    setCategoryItem('Basic Scope');
+    setMinItem('');
+    setMaxItem('');
+  };
 
-    const [titleItem3, setTitleItem3] =useState('');
-    const [descriptionItem3, setDescriptionItem3] =useState('');
-    const [minItem3, setMinItem3] =useState('');
-    const [maxItem3, setMaxItem3] =useState('');
+  const handleAddItem = (): void => {
+    const minNum = parseInt(minItem, 10);
+    const maxNum = parseInt(maxItem, 10);
+    const item = {
+      id: uuidv4(),
+      minScore: !Number.isNaN(minNum) ? minNum : 0,
+      maxScore: !Number.isNaN(maxNum) ? maxNum : 0,
+      category: categoryItem,
+      title: titleItem,
+      description: descriptionItem,
+    } as TaskItem;
+    const newArray = [...items, item];
+    setItems(
+      newArray.sort((prev, cur) => {
+        return scopes.indexOf(prev.category) - scopes.indexOf(cur.category);
+      })
+    );
+    resetItemInfo();
+  };
 
+  const handleDeleteItem = (index: number): void => {
+    const newItems = items.filter((item, i) => {
+      return index !== i;
+    });
+    setItems(newItems);
+  };
 
-
-
-  
-        return(
-            <div>
-                <Input 
-                    placeholder="Title of Task" 
-                    value={title} 
-                    onChange={(e) => setTitle(e.target.value)} />
-
-                <h3>Basic Scope</h3>
-
-                <Input 
-                    placeholder="Title of Basic Scope" 
-                    value={titleItem1} 
-                    onChange={(e:any) => setTitleItem1(e.target.value)} />
-                <TextArea 
-                    rows={4} 
-                    placeholder='Description of Item' 
-                    value={descriptionItem1} 
-                    onChange={(e) => setDescriptionItem1(e.target.value)}/>
-                <Input 
-                    style={{ width: 100, textAlign: 'center' }}
-                    placeholder="Minimum Score"
-                    value={minItem1}
-                    onChange={(e) => setMinItem1(e.target.value)}
-                     />
-                <Input
-                    className="site-input-split"
-                    style={{
-                    width: 30,
-                    borderLeft: 0,
-                    borderRight: 0,
-                    pointerEvents: 'none',
-                    }}
-                    placeholder="~"
-                    disabled
-                />
-                <Input
-                    className="site-input-right"
-                    style={{
-                    width: 100,
-                    textAlign: 'center',
-                    }}
-                    placeholder="Maximum"
-                    value={maxItem1}
-                    onChange={(e) => setMaxItem1(e.target.value)}
-
-                />
-                <h3>Extra Scope</h3>
-
-                <Input 
-                    placeholder="Title of Basic Scope" 
-                    value={titleItem2} 
-                    onChange={(e:any) => setTitleItem2(e.target.value)} />
-                <TextArea 
-                    rows={4} 
-                    placeholder='Description of Item' 
-                    value={descriptionItem2} 
-                    onChange={(e) => setDescriptionItem2(e.target.value)}/>
-                <Input 
-                    style={{ width: 100, textAlign: 'center' }}
-                    placeholder="Minimum Score"
-                    value={minItem2}
-                    onChange={(e) => setMinItem2(e.target.value)}
-                     />
-                <Input
-                    className="site-input-split"
-                    style={{
-                    width: 30,
-                    borderLeft: 0,
-                    borderRight: 0,
-                    pointerEvents: 'none',
-                    }}
-                    placeholder="~"
-                    disabled
-                />
-                <Input
-                    className="site-input-right"
-                    style={{
-                    width: 100,
-                    textAlign: 'center',
-                    }}
-                    placeholder="Maximum"
-                    value={maxItem2}
-                    onChange={(e) => setMaxItem2(e.target.value)}
-
-                />
-                <h3>Fines</h3>
-
-                <Input 
-                    placeholder="Title of Basic Scope" 
-                    value={titleItem3} 
-                    onChange={(e:any) => setTitleItem3(e.target.value)} />
-                <TextArea 
-                    rows={4} 
-                    placeholder='Description of Item' 
-                    value={descriptionItem3} 
-                    onChange={(e) => setDescriptionItem3(e.target.value)}/>
-                <Input 
-                    style={{ width: 100, textAlign: 'center' }}
-                    placeholder="Minimum Score"
-                    value={minItem3}
-                    onChange={(e) => setMinItem3(e.target.value)}
-                     />
-                <Input
-                    className="site-input-split"
-                    style={{
-                    width: 30,
-                    borderLeft: 0,
-                    borderRight: 0,
-                    pointerEvents: 'none',
-                    }}
-                    placeholder="~"
-                    disabled
-                />
-                <Input
-                    className="site-input-right"
-                    style={{
-                    width: 100,
-                    textAlign: 'center',
-                    }}
-                    placeholder="Maximum"
-                    value={maxItem3}
-                    onChange={(e) => setMaxItem3(e.target.value)}
-
-                />
-                
-                
-            </div>
-        )
-    
+  return (
+    <Form layout="vertical">
+      <Form.Item label="Task Title" required>
+        <Input
+          placeholder="Task Title"
+          value={title}
+          onChange={(e): void => setTitle(e.target.value)}
+        />
+      </Form.Item>
+      <div>
+        <h3>Added Items</h3>
+        <ul className="added-items">
+          {items.length > 0 &&
+            items.map((item, index) => {
+              const addCategory =
+                index === 0 ||
+                (index > 0 && item.category !== items[index - 1].category);
+              return (
+                <>
+                  {addCategory && (
+                    <li>
+                      <strong>{item.category}</strong>
+                    </li>
+                  )}
+                  <li>
+                    {index + 1}. {item.title}.{' '}
+                    <em>
+                      Score: {item.minScore}-{item.maxScore}
+                    </em>
+                    <div className="create-task-item-desc">
+                      {item.description}
+                    </div>
+                    <Button
+                      type="link"
+                      onClick={(): void => handleDeleteItem(index)}
+                    >
+                      delete
+                    </Button>
+                  </li>
+                </>
+              );
+            })}
+        </ul>
+      </div>
+      <Form.Item label="Item Title" required>
+        <Input
+          placeholder="Item Title"
+          value={titleItem}
+          onChange={(e): void => setTitleItem(e.target.value)}
+        />
+      </Form.Item>
+      <Form.Item label="Item Description">
+        <TextArea
+          rows={4}
+          placeholder="Item Description"
+          value={descriptionItem}
+          onChange={(e): void => setDescriptionItem(e.target.value)}
+        />
+      </Form.Item>
+      <Form.Item label="Item Category">
+        <Select
+          defaultValue={categoryItem}
+          onChange={(e): void => setCategoryItem(e)}
+        >
+          {scopes.map((scope) => {
+            return <Option value={scope}>{scope}</Option>;
+          })}
+        </Select>
+      </Form.Item>
+      <Form.Item label="Score Range">
+        <Input
+          style={{ width: 100, textAlign: 'center' }}
+          placeholder="Min Score"
+          value={minItem}
+          onChange={(e): void => setMinItem(e.target.value)}
+        />
+        <Input
+          className="site-input-split"
+          style={{
+            width: 30,
+            borderLeft: 0,
+            borderRight: 0,
+            pointerEvents: 'none',
+          }}
+          placeholder="~"
+          disabled
+        />
+        <Input
+          className="site-input-right"
+          style={{
+            width: 100,
+            textAlign: 'center',
+          }}
+          placeholder="Max Score"
+          value={maxItem}
+          onChange={(e): void => setMaxItem(e.target.value)}
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button
+          type="primary"
+          onClick={handleAddItem}
+          disabled={titleItem.length < 1}
+        >
+          Add Item
+        </Button>
+      </Form.Item>
+    </Form>
+  );
 }
 
 export default ModalText;
