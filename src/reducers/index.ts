@@ -1,19 +1,36 @@
 import { combineReducers, AnyAction } from 'redux';
-import { Task, User } from '../models/data-models';
+import { Task, User, Auth } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
 
 const userAuthReducer = (
-  state = { githubId: '', roles: [] },
+  state = {
+    githubId: '',
+    roles: [],
+    isLoading: false,
+    isShowRoleSelector: false,
+  },
   action: AnyAction
-): User => {
+): Auth => {
   switch (action.type) {
+    case ACTIONS.LOGIN_STARTED:
+      return { ...state, isLoading: true };
+    case ACTIONS.LOGIN_CHOSE_ROLE:
+      return {
+        ...state,
+        githubId: action.payload.githubId,
+        isShowRoleSelector: true,
+        isLoading: false,
+      };
     case ACTIONS.LOGIN:
       return {
+        ...state,
+        isShowRoleSelector: false,
+        isLoading: false,
         githubId: action.payload.githubId,
         roles: action.payload.roles,
-      } as User;
+      };
     case ACTIONS.LOGOUT:
-      return { githubId: '', roles: [] } as User;
+      return { ...state, githubId: '', roles: [], isLoading: false };
     default:
       return state;
   }

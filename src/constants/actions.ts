@@ -3,3 +3,4 @@ export const GET_USERS = 'GET_USERS';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const LOGIN_STARTED = 'LOGIN_STARTED';
+export const LOGIN_CHOSE_ROLE = 'LOGIN_CHOSE_ROLE';

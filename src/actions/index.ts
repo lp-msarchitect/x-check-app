@@ -5,10 +5,23 @@ import { User } from '../models/data-models';
 
 const dataService = new DataService();
 
-const loginUser = (userObj: User): AnyAction => ({
-  type: ACTIONS.LOGIN,
-  payload: userObj,
-});
+export const loginUser = (userObj: User) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  const { githubId, roles } = userObj;
+  const user: User = await dataService.getSingleUser(githubId);
+  console.log('user from json-server', user);
+  if (!user) {
+    await dataService.setUser({
+      githubId,
+      roles,
+    });
+  }
+  dispatch({
+    type: ACTIONS.LOGIN,
+    payload: { ...userObj },
+  });
+};
 
 export const logoutUser = (): AnyAction => {
   localStorage.removeItem('githubId');
@@ -17,19 +30,29 @@ export const logoutUser = (): AnyAction => {
   };
 };
 
+export const authChooseUserRole = (userObj: User): AnyAction => {
+  return {
+    type: ACTIONS.LOGIN_CHOSE_ROLE,
+    payload: { ...userObj },
+  };
+};
+
 export const githubUserFetch = (code: string) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
+  dispatch({ type: ACTIONS.LOGIN_STARTED });
   const githubId: string = await dataService.getGitHubLogin(code);
-  const user: User = await dataService.getSingleUser(githubId);
-  if (!user) {
-    await dataService.setUser({
-      githubId,
-      roles: ['student'],
-    });
-  }
+  console.log('githubId', githubId);
+
+  // const user: User = await dataService.getSingleUser(githubId);
+  // if (!user) {
+  //   await dataService.setUser({
+  //     githubId,
+  //     roles: ['student'],
+  //   });
+  // }
   localStorage.setItem('githubId', githubId);
-  dispatch(loginUser(user));
+  dispatch(authChooseUserRole({ githubId, roles: ['student'] }));
 };
 
 export const postUserFetch = () => async (
@@ -38,7 +61,7 @@ export const postUserFetch = () => async (
   const githubId = localStorage.getItem('githubId') || '';
   if (githubId) {
     const user: User = await dataService.getSingleUser(githubId);
-    dispatch(loginUser(user));
+    dispatch({ type: ACTIONS.LOGIN, payload: { githubId, roles: user.roles } });
   }
 };
 

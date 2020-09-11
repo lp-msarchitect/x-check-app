@@ -6,6 +6,12 @@ export interface User {
   roles: UserRole[];
 }
 
+// Auth
+export interface Auth extends User {
+  isLoading: boolean;
+  isShowRoleSelector: boolean;
+}
+
 /// Task
 export type TaskState = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
 
