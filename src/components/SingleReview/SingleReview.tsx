@@ -47,6 +47,20 @@ const SingleReview = (): JSX.Element => {
     }
   }, [review, tasks]);
 
+  const renderDisputeButton = (
+    thisScore: number,
+    maxScore: number
+  ): JSX.Element | null => {
+    if (thisScore < maxScore) {
+      return (
+        <Button type="primary" size="small">
+          Dispute
+        </Button>
+      );
+    }
+    return null;
+  };
+
   return (
     <Descriptions title="Review Info" layout="vertical" bordered>
       {task && (
@@ -73,7 +87,7 @@ const SingleReview = (): JSX.Element => {
       {task && review && (
         <Descriptions.Item label="Detailed Score" span={3}>
           <List itemLayout="horizontal">
-            {task.items.map((item: TaskItem) => {
+            {task.items.map((item: TaskItem, i: number) => {
               if (review.grade.items[item.id]) {
                 return (
                   <List.Item className="single-review-item">
@@ -85,9 +99,10 @@ const SingleReview = (): JSX.Element => {
                     {review.grade.items[item.id].comment && (
                       <Comment
                         actions={[
-                          <Button type="primary" size="small">
-                            Dispute
-                          </Button>,
+                          renderDisputeButton(
+                            review.grade.items[item.id].score,
+                            task.items[i].maxScore
+                          ),
                         ]}
                         author={review.reviewer}
                         avatar={`https://github.com/${review.reviewer}.png?size=40`}
