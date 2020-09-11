@@ -47,6 +47,23 @@ class DataService {
     return body;
   }
 
+  async putResource<T>(url: string, resource: object): Promise<T> {
+    const res = await fetch(this.baseURL + url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(resource),
+    });
+    if (!res.ok) {
+      console.log(res);
+
+      throw new Error(`Could not fetch ${url}, status ${res.status}`);
+    }
+    const body = await res.json();
+    return body;
+  }
+
   async getResource<T>(url: string): Promise<T> {
     const res = await fetch(this.baseURL + url);
     if (!res.ok) {
@@ -67,7 +84,14 @@ class DataService {
     return result[0];
   }
 
-  async setUser(user: User): Promise<User> {
+  async putUser(user: User): Promise<User> {
+    const { id } = await this.getSingleUser(user.githubId);
+    console.log('id', id);
+    const url = `/users/${id}/`;
+    return (await this.putResource(url, user)) as User;
+  }
+
+  async addUser(user: User): Promise<User> {
     return this.setResource<User>(`/users`, user);
   }
 

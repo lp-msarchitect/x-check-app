@@ -12,10 +12,12 @@ export const loginUser = (userObj: User) => async (
   const user: User = await dataService.getSingleUser(githubId);
   console.log('user from json-server', user);
   if (!user) {
-    await dataService.setUser({
+    await dataService.addUser({
       githubId,
       roles,
     });
+  } else {
+    await dataService.putUser(userObj);
   }
   dispatch({
     type: ACTIONS.LOGIN,
@@ -61,7 +63,12 @@ export const postUserFetch = () => async (
   const githubId = localStorage.getItem('githubId') || '';
   if (githubId) {
     const user: User = await dataService.getSingleUser(githubId);
-    dispatch({ type: ACTIONS.LOGIN, payload: { githubId, roles: user.roles } });
+    if (user) {
+      dispatch({
+        type: ACTIONS.LOGIN,
+        payload: { githubId, roles: user.roles },
+      });
+    }
   }
 };
 
