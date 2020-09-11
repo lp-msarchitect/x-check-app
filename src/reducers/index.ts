@@ -1,5 +1,5 @@
 import { combineReducers, AnyAction } from 'redux';
-import { Task, User, Auth } from '../models/data-models';
+import { Task, User, Auth, Review } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
 
 const userAuthReducer = (
@@ -60,8 +60,21 @@ const usersReducer = (state = [], action: AnyAction): User[] => {
   }
 };
 
+const reviewsReducer = (state = [], action: AnyAction): Review[] => {
+  switch (action.type) {
+    case ACTIONS.GET_REVIEWS:
+      if (action.payload) {
+        return action.payload.res as Review[];
+      }
+      return state;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   tasks: tasksReducer,
   users: usersReducer,
   auth: userAuthReducer,
+  reviews: reviewsReducer,
 });
