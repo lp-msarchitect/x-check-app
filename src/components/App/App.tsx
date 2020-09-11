@@ -49,7 +49,7 @@ const App = (): JSX.Element => {
               <Route path="/review-requests">
                 <ReviewRequests />
               </Route>
-              <Route path="/reviews/:id">
+              <Route path="/reviews/:reviewId">
                 <SingleReview />
               </Route>
               <Route path="/reviews">
