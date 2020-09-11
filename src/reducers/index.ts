@@ -1,12 +1,13 @@
 import { combineReducers, AnyAction } from 'redux';
-import { Task, User, Review } from '../models/data-models';
+import keyBy from 'lodash.keyby';
 import * as ACTIONS from '../constants/actions';
+import { ReviewsState, TasksState, UsersState } from '../models/redux-models';
 
-const tasksReducer = (state = [], action: AnyAction): Task[] => {
+const tasksReducer = (state = {}, action: AnyAction): TasksState => {
   switch (action.type) {
     case ACTIONS.GET_TASKS:
       if (action.payload) {
-        return action.payload.res as Task[];
+        return keyBy(action.payload.res, 'id') as TasksState;
       }
       return state;
     default:
@@ -14,11 +15,11 @@ const tasksReducer = (state = [], action: AnyAction): Task[] => {
   }
 };
 
-const usersReducer = (state = [], action: AnyAction): User[] => {
+const usersReducer = (state = {}, action: AnyAction): UsersState => {
   switch (action.type) {
     case ACTIONS.GET_USERS:
       if (action.payload) {
-        return action.payload.res as User[];
+        return keyBy(action.payload.res, 'githubId') as UsersState;
       }
       return state;
     default:
@@ -26,11 +27,11 @@ const usersReducer = (state = [], action: AnyAction): User[] => {
   }
 };
 
-const reviewsReducer = (state = [], action: AnyAction): Review[] => {
+const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
   switch (action.type) {
     case ACTIONS.GET_REVIEWS:
       if (action.payload) {
-        return action.payload.res as Review[];
+        return keyBy(action.payload.res, 'id') as ReviewsState;
       }
       return state;
     default:

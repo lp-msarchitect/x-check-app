@@ -5,7 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { Descriptions, List, Comment, Button } from 'antd';
 import './SingleReview.scss';
-import { AppReduxState } from '../../models/redux-models';
+import {
+  AppReduxState,
+  ReviewsState,
+  TasksState,
+} from '../../models/redux-models';
 import { Review, Task, TaskItem } from '../../models/data-models';
 import { getReviews, getTasks } from '../../actions';
 import calcTotalScore from '../../utils/calcTotalScore';
@@ -17,10 +21,10 @@ const SingleReview = (): JSX.Element => {
   type State = Review[];
   type AppDispatch = ThunkDispatch<State, void, AnyAction>;
 
-  const reviews = useSelector<AppReduxState, Review[]>(
+  const reviews = useSelector<AppReduxState, ReviewsState>(
     (state) => state.reviews
   );
-  const tasks = useSelector<AppReduxState, Task[]>((state) => state.tasks);
+  const tasks = useSelector<AppReduxState, TasksState>((state) => state.tasks);
 
   const [review, setReview] = useState<Review | null>(null);
   const [task, setTask] = useState<Task | null>(null);
@@ -32,39 +36,44 @@ const SingleReview = (): JSX.Element => {
   }, [dispatch]);
 
   useEffect(() => {
-    const thisReview = reviews.find((element) => element.id === reviewId);
+    const thisReview = reviews[reviewId];
     setReview(thisReview || null);
   }, [reviews, reviewId]);
 
   useEffect(() => {
     if (review && tasks) {
-      const thisTask = tasks.find((element) => element.id === review.task);
+      const thisTask = tasks[review.task];
       setTask(thisTask || null);
     }
   }, [review, tasks]);
 
   return (
     <Descriptions title="Review Info" layout="vertical" bordered>
-      <Descriptions.Item label="Task" span={2}>
-        {task && task.title}
-      </Descriptions.Item>
-      <Descriptions.Item label="State" span={1}>
-        {review && <StateTag state={review.state} />}
-      </Descriptions.Item>
-      <Descriptions.Item label="Author" span={1}>
-        {review && review.author}
-      </Descriptions.Item>
-      <Descriptions.Item label="Reviewer" span={1}>
-        {review && review.reviewer}
-      </Descriptions.Item>
-      <Descriptions.Item label="Total Score" span={1}>
-        {review && calcTotalScore(review.grade)}
-      </Descriptions.Item>
-      <Descriptions.Item label="Detailed Score" span={3}>
-        <List itemLayout="horizontal">
-          {task &&
-            review &&
-            task.items.map((item: TaskItem) => {
+      {task && (
+        <Descriptions.Item label="Task" span={2}>
+          {task.title}
+        </Descriptions.Item>
+      )}
+      {review && (
+        <>
+          <Descriptions.Item label="State" span={1}>
+            <StateTag state={review.state} />
+          </Descriptions.Item>
+          <Descriptions.Item label="Author" span={1}>
+            {review.author}
+          </Descriptions.Item>
+          <Descriptions.Item label="Reviewer" span={1}>
+            {review.reviewer}
+          </Descriptions.Item>
+          <Descriptions.Item label="Total Score" span={1}>
+            {calcTotalScore(review.grade)}
+          </Descriptions.Item>
+        </>
+      )}
+      {task && review && (
+        <Descriptions.Item label="Detailed Score" span={3}>
+          <List itemLayout="horizontal">
+            {task.items.map((item: TaskItem) => {
               if (review.grade.items[item.id]) {
                 return (
                   <List.Item className="single-review-item">
@@ -90,8 +99,9 @@ const SingleReview = (): JSX.Element => {
               }
               return null;
             })}
-        </List>
-      </Descriptions.Item>
+          </List>
+        </Descriptions.Item>
+      )}
     </Descriptions>
   );
 };

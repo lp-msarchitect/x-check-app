@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -6,29 +6,37 @@ import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
 import { getReviews, getTasks } from '../../actions';
-import { Review, TaskScore, Task, ReviewState } from '../../models/data-models';
-import { AppReduxState } from '../../models/redux-models';
+import { Review, TaskScore, ReviewState } from '../../models/data-models';
+import {
+  AppReduxState,
+  ReviewsState,
+  TasksState,
+} from '../../models/redux-models';
 import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
 
-type State = Review[];
+type State = ReviewsState;
 type AppDispatch = ThunkDispatch<State, void, AnyAction>;
 
 const Reviews = (): JSX.Element => {
-  const reviews = useSelector<AppReduxState, Review[]>(
+  const reviews = useSelector<AppReduxState, ReviewsState>(
     (state) => state.reviews
   );
-  const tasks = useSelector<AppReduxState, Task[]>((state) => state.tasks);
+  const tasks = useSelector<AppReduxState, TasksState>((state) => state.tasks);
 
   const dispatch: AppDispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getReviews());
     dispatch(getTasks());
   }, [dispatch]);
 
-  /// helper functions
+  const [reviewsArr, setReviewsArr] = useState<Review[]>([]);
 
+  useEffect(() => {
+    setReviewsArr(Object.values(reviews));
+  }, [reviews]);
+
+  /// helper functions
   const compareStrings = (A: string, B: string): number => {
     if (A < B) {
       return -1;
@@ -40,7 +48,7 @@ const Reviews = (): JSX.Element => {
   };
 
   const getTaskTitle = (taskId: string): string | undefined => {
-    const task = tasks.find((element) => element.id === taskId);
+    const task = tasks[taskId];
     return task ? task.title : undefined;
   };
 
@@ -48,7 +56,7 @@ const Reviews = (): JSX.Element => {
     role: 'author' | 'reviewer'
   ): ColumnFilterItem[] => {
     const names: string[] = [];
-    reviews.forEach((review) => {
+    reviewsArr.forEach((review) => {
       if (!names.includes(review[role])) {
         names.push(review[role]);
       }
@@ -66,12 +74,8 @@ const Reviews = (): JSX.Element => {
       return compareStrings(A, B);
     },
     titles: (a: Review, b: Review): number => {
-      const A = tasks.find((element) => {
-        return element.id === a.task;
-      });
-      const B = tasks.find((element) => {
-        return element.id === b.task;
-      });
+      const A = tasks[a.task];
+      const B = tasks[b.task];
       if (A && B) {
         return compareStrings(A.title, B.title);
       }
@@ -87,9 +91,7 @@ const Reviews = (): JSX.Element => {
       return <StateTag state={state} />;
     },
     taskTitle: (taskId: string, review: Review): JSX.Element | null => {
-      const currentTask = tasks.find((element) => {
-        return element.id === taskId;
-      });
+      const currentTask = tasks[taskId];
       if (currentTask) {
         return <Link to={`/reviews/${review.id}`}>{currentTask.title}</Link>;
       }
@@ -103,7 +105,7 @@ const Reviews = (): JSX.Element => {
   const filters = {
     createTaskFilters: (): ColumnFilterItem[] => {
       const reviewedTasks: string[] = [];
-      reviews.forEach((review) => {
+      reviewsArr.forEach((review) => {
         if (!reviewedTasks.includes(review.task)) {
           reviewedTasks.push(review.task);
         }
@@ -164,7 +166,7 @@ const Reviews = (): JSX.Element => {
 
   return (
     <div className="reviews">
-      <Table dataSource={reviews} rowKey={(review): string => review.id}>
+      <Table dataSource={reviewsArr} rowKey={(review): string => review.id}>
         <Table.Column
           key="task"
           title="Task"
