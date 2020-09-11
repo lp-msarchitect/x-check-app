@@ -10,9 +10,16 @@
     {
       "githubId": "lp-msarchitect",
       "roles": [
-        "student"
+        "supervisor"
       ],
       "id": 2
+    },
+    {
+      "githubId": "ellankz",
+      "roles": [
+        "author"
+      ],
+      "id": 3
     }
   ],
   "tasks": [
