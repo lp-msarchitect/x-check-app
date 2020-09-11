@@ -1,12 +1,18 @@
 {
   "users": [
     {
-      "githubId": "torvalds",
-      "roles": ["author", "student", "supervisor", "course_manager"]
+      "githubId": "lp-msarchitect1",
+      "roles": [
+        "student"
+      ],
+      "id": 1
     },
     {
-      "githubId": "test",
-      "roles": ["student"]
+      "githubId": "lp-msarchitect",
+      "roles": [
+        "student"
+      ],
+      "id": 2
     }
   ],
   "tasks": [
@@ -15,7 +21,11 @@
       "title": "Simple task v1",
       "author": "cardamo",
       "state": "DRAFT",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "id": "basic_p1",
@@ -48,7 +58,11 @@
       "title": "Simple task v2",
       "author": "test",
       "state": "PUBLISHED",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "id": "basic_p1",
@@ -89,12 +103,18 @@
     {
       "task": "simple-task-v1",
       "items": {
-        "basic_p1": { "score": 20, "comment": "Well done!" },
+        "basic_p1": {
+          "score": 20,
+          "comment": "Well done!"
+        },
         "extra_p1": {
           "score": 15,
           "comment": "Some things are done, some are not"
         },
-        "fines_p1": { "score": 0, "comment": "No ticket today" }
+        "fines_p1": {
+          "score": 0,
+          "comment": "No ticket today"
+        }
       }
     }
   ],
@@ -111,9 +131,25 @@
       "minReiewsAmount": 1,
       "desiredReviewersAmount": 2,
       "attendees": [
-        { "githubId": "ButterBrot777", "reviewerOf": ["torvalds", "cardamo"] },
-        { "githubId": "torvalds", "reviewerOf": ["cardamo"] },
-        { "githubId": "cardamo", "reviewerOf": ["ButterBrot777"] }
+        {
+          "githubId": "ButterBrot777",
+          "reviewerOf": [
+            "torvalds",
+            "cardamo"
+          ]
+        },
+        {
+          "githubId": "torvalds",
+          "reviewerOf": [
+            "cardamo"
+          ]
+        },
+        {
+          "githubId": "cardamo",
+          "reviewerOf": [
+            "ButterBrot777"
+          ]
+        }
       ]
     }
   ],

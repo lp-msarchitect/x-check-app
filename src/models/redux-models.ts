@@ -1,8 +1,9 @@
-import { User, Task, Review } from './data-models';
+import { User, Task, Auth, Review } from './data-models';
 
 export interface AppReduxState {
   tasks: Task[];
   users: User[];
+  auth: Auth;
   reviews: Review[];
 }
 

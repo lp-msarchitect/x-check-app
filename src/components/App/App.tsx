@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import Users from '../Users/Users';
 import Home from '../Home/Home';
 import Tasks from '../Tasks/Tasks';
@@ -9,7 +12,12 @@ import Reviews from '../Reviews/Reviews';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
 import './App.scss';
-import { UserRole } from '../../models/data-models';
+import { UserRole, User } from '../../models/data-models';
+import Login from '../Login/Login';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { postUserFetch } from '../../actions';
+
+type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
 const App = (): JSX.Element => {
   const [role, setRole] = useState<UserRole>('student');
@@ -20,6 +28,12 @@ const App = (): JSX.Element => {
   ): void => {
     setRole(event.currentTarget.value as UserRole);
   };
+
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(postUserFetch());
+  }, [dispatch]);
 
   return (
     <Router>
@@ -39,21 +53,24 @@ const App = (): JSX.Element => {
           </div>
           <div className="router-switch-wrap">
             <Switch>
-              <Route path="/users">
+              <Route path="/login">
+                <Login />
+              </Route>
+              <ProtectedRoute path="/users" redirectPath="/login">
                 <Users />
-              </Route>
-              <Route path="/tasks">
+              </ProtectedRoute>
+              <ProtectedRoute path="/tasks" redirectPath="/login">
                 <Tasks />
-              </Route>
-              <Route path="/review-requests">
+              </ProtectedRoute>
+              <ProtectedRoute path="/review-requests" redirectPath="/login">
                 <ReviewRequests />
-              </Route>
-              <Route path="/reviews">
+              </ProtectedRoute>
+              <ProtectedRoute path="/reviews" redirectPath="/login">
                 <Reviews />
-              </Route>
-              <Route path="/sessions">
+              </ProtectedRoute>
+              <ProtectedRoute path="/sessions" redirectPath="/login">
                 <Sessions />
-              </Route>
+              </ProtectedRoute>
               <Route path="/">
                 <Home />
               </Route>
