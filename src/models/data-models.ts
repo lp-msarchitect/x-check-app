@@ -2,8 +2,15 @@
 export type UserRole = 'author' | 'student' | 'supervisor' | 'coursemanager';
 
 export interface User {
+  id?: number;
   githubId: string;
   roles: UserRole[];
+}
+
+// Auth
+export interface Auth extends User {
+  isLoading: boolean;
+  isShowRoleSelector: boolean;
 }
 
 /// Task

@@ -1,4 +1,4 @@
-import { User, Task, Review } from './data-models';
+import { User, Task, Auth, Review } from './data-models';
 
 export type actions = 'GET_TASKS' | 'GET_USERS' | 'GET_REVIEWS';
 
@@ -18,4 +18,5 @@ export interface AppReduxState {
   tasks: TasksState;
   users: UsersState;
   reviews: ReviewsState;
+  auth: Auth;
 }
