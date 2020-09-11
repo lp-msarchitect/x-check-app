@@ -39,8 +39,6 @@ class DataService {
       body: JSON.stringify(resource),
     });
     if (!res.ok) {
-      console.log(res);
-
       throw new Error(`Could not fetch ${url}, status ${res.status}`);
     }
     const body = await res.json();
@@ -56,8 +54,6 @@ class DataService {
       body: JSON.stringify(resource),
     });
     if (!res.ok) {
-      console.log(res);
-
       throw new Error(`Could not fetch ${url}, status ${res.status}`);
     }
     const body = await res.json();
@@ -86,7 +82,6 @@ class DataService {
 
   async putUser(user: User): Promise<User> {
     const { id } = await this.getSingleUser(user.githubId);
-    console.log('id', id);
     const url = `/users/${id}/`;
     return (await this.putResource(url, user)) as User;
   }

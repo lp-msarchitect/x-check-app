@@ -12,7 +12,6 @@ const ProtectedRoute: React.FC<PrivateRouteProps> = ({
   ...rest
 }) => {
   const isAuth = localStorage.getItem('githubId') || null;
-  console.log(isAuth);
 
   return isAuth ? (
     <Route {...rest} component={component} render={undefined} />

@@ -10,7 +10,6 @@ export const loginUser = (userObj: User) => async (
 ): Promise<void> => {
   const { githubId, roles } = userObj;
   const user: User = await dataService.getSingleUser(githubId);
-  console.log('user from json-server', user);
   if (!user) {
     await dataService.addUser({
       githubId,
@@ -44,15 +43,7 @@ export const githubUserFetch = (code: string) => async (
 ): Promise<void> => {
   dispatch({ type: ACTIONS.LOGIN_STARTED });
   const githubId: string = await dataService.getGitHubLogin(code);
-  console.log('githubId', githubId);
 
-  // const user: User = await dataService.getSingleUser(githubId);
-  // if (!user) {
-  //   await dataService.setUser({
-  //     githubId,
-  //     roles: ['student'],
-  //   });
-  // }
   localStorage.setItem('githubId', githubId);
   dispatch(authChooseUserRole({ githubId, roles: ['student'] }));
 };
