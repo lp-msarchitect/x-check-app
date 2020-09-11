@@ -17,7 +17,9 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 40px;
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     z-index: 1;
     margin-left: auto;
     cursor: pointer;
@@ -60,7 +62,6 @@ body {
   .ant-form {
     position: absolute;
     background: lightsteelblue;
-    margin-top: 30px;
     padding: 20px;
     z-index: 60;
     width: 90%;
@@ -72,9 +73,13 @@ body {
       width: 100%;
     }
     .form-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        background-color: lightsteelblue;
+        padding: 50px 0 10px;
+        border-bottom: 5px solid black;
       h1,h2,h3,h4,h5,h6 {
         margin: 0;
         padding: 0;

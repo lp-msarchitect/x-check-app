@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
+import { Affix, Button, Form, Input } from 'antd';
 import { Task } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
@@ -19,10 +19,6 @@ const TaskCheckForm = ({
     required: 'Add task link',
   };
 
-  const totalScore = singleTask.items.reduce((a, b) => {
-    return a + b.maxScore;
-  }, 0);
-
   const submitHandler = (values: string): void => {
     console.log(values);
     showForm();
@@ -35,22 +31,25 @@ const TaskCheckForm = ({
         validateMessages={validateMessages}
         onFinish={submitHandler}
       >
-        <button
-          className="close-form"
-          onClick={(): void => showForm()}
-          type="button"
-          aria-label="Close form button"
-        />
-        <div className="form-header">
-          <h2 className="title">{singleTask.id}</h2>
-          <div className="score-container">
-            <p className="progress">Checked 0 out of {totalScore}</p>
-            <p className="score-board">
-              Total points: <span className="score">0</span>
-            </p>
+        <Affix offsetTop={0}>
+          <button
+            className="close-form"
+            onClick={(): void => showForm()}
+            type="button"
+            aria-label="Close form button"
+          />
+          <div className="form-header">
+            <h2 className="title">{singleTask.id}</h2>
+            <div className="score-container">
+              <p className="progress">
+                Checked 0 out of {singleTask.items.length}
+              </p>
+              <p className="score-board">
+                Total points: <span className="score">0</span>
+              </p>
+            </div>
           </div>
-        </div>
-        <hr />
+        </Affix>
         <Form.Item
           name={['link']}
           label="Task link"
