@@ -2,23 +2,17 @@
   "users": [
     {
       "githubId": "lp-msarchitect1",
-      "roles": [
-        "student"
-      ],
+      "roles": ["student"],
       "id": 1
     },
     {
       "githubId": "lp-msarchitect",
-      "roles": [
-        "supervisor"
-      ],
+      "roles": ["student"],
       "id": 2
     },
     {
       "githubId": "ellankz",
-      "roles": [
-        "author"
-      ],
+      "roles": ["author"],
       "id": 3
     }
   ],
@@ -28,11 +22,7 @@
       "title": "Simple task v1",
       "author": "cardamo",
       "state": "DRAFT",
-      "categoriesOrder": [
-        "Basic Scope",
-        "Extra Scope",
-        "Fines"
-      ],
+      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
       "items": [
         {
           "id": "basic_p1",
@@ -65,11 +55,7 @@
       "title": "Simple task v2",
       "author": "test",
       "state": "PUBLISHED",
-      "categoriesOrder": [
-        "Basic Scope",
-        "Extra Scope",
-        "Fines"
-      ],
+      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
       "items": [
         {
           "id": "basic_p1",
@@ -140,22 +126,15 @@
       "attendees": [
         {
           "githubId": "ButterBrot777",
-          "reviewerOf": [
-            "torvalds",
-            "cardamo"
-          ]
+          "reviewerOf": ["torvalds", "cardamo"]
         },
         {
           "githubId": "torvalds",
-          "reviewerOf": [
-            "cardamo"
-          ]
+          "reviewerOf": ["cardamo"]
         },
         {
           "githubId": "cardamo",
-          "reviewerOf": [
-            "ButterBrot777"
-          ]
+          "reviewerOf": ["ButterBrot777"]
         }
       ]
     }
@@ -181,12 +160,18 @@
       "grade": {
         "task": "simple-task-v1",
         "items": {
-          "basic_p1": { "score": 20, "comment": "Well done!" },
+          "basic_p1": {
+            "score": 20,
+            "comment": "Well done!"
+          },
           "extra_p1": {
             "score": 15,
             "comment": "Some things are done, some are not"
           },
-          "fines_p1": { "score": 0, "comment": "No ticket today" }
+          "fines_p1": {
+            "score": 0,
+            "comment": "No ticket today"
+          }
         }
       }
     },
@@ -200,12 +185,18 @@
       "grade": {
         "task": "simple-task-v2",
         "items": {
-          "basic_p1": { "score": 15, "comment": "Well done!" },
+          "basic_p1": {
+            "score": 15,
+            "comment": "Well done!"
+          },
           "extra_p1": {
-            "score": 20,
+            "score": 30,
             "comment": "Some things are done, some are not"
           },
-          "fines_p1": { "score": -10, "comment": "Too bad" }
+          "fines_p1": {
+            "score": -10,
+            "comment": "Too bad"
+          }
         }
       }
     }

@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { getUsers } from '../../actions';
+import { AppReduxState, UsersState } from '../../models/redux-models';
 import { User } from '../../models/data-models';
-import { AppReduxState } from '../../models/redux-models';
 
-type State = User[];
+type State = UsersState;
 type AppDispatch = ThunkDispatch<State, void, AnyAction>;
 
 const Students = (): JSX.Element => {
-  const users = useSelector<AppReduxState, User[]>((state) => state.users);
+  const users = useSelector<AppReduxState, UsersState>((state) => state.users);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -18,7 +18,7 @@ const Students = (): JSX.Element => {
     dispatch(getUsers());
   }, [dispatch]);
 
-  const items = users.map((item: User) => {
+  const items = Object.values(users).map((item: User) => {
     return <div key={item.githubId}>{item.githubId}</div>;
   });
 
