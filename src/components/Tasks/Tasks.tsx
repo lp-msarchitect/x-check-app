@@ -5,6 +5,7 @@ import { Task, TaskState } from '../../models/data-models';
 import DataService from '../../services/data-service';
 import SingleTask from '../SingleTask/SingleTask';
 import './Tasks.scss';
+import Modal from '../ModalWrap/ModalWrap';
 
 const Tasks = (): JSX.Element => {
   const { Panel } = Collapse;
@@ -38,6 +39,7 @@ const Tasks = (): JSX.Element => {
   return (
     <div className="tasks">
       <h2>Tasks</h2>
+      <Modal />
       <Collapse
         accordion
         // bordered={false}
