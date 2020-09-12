@@ -22,7 +22,11 @@
       "title": "Simple task v1",
       "author": "cardamo",
       "state": "DRAFT",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "id": "basic_p1",
@@ -55,7 +59,11 @@
       "title": "Simple task v2",
       "author": "test",
       "state": "PUBLISHED",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "id": "basic_p1",
@@ -90,6 +98,43 @@
           "description": "App causes BSoD!"
         }
       ]
+    },
+    {
+      "title": "Simple task v1",
+      "author": "cardamo",
+      "state": "DRAFT",
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
+      "items": [
+        {
+          "id": "basic_p1",
+          "minScore": 0,
+          "maxScore": 20,
+          "category": "Basic Scope",
+          "title": "Basic things",
+          "description": "You need to make things right, not wrong"
+        },
+        {
+          "id": "extra_p1",
+          "minScore": 0,
+          "maxScore": 30,
+          "category": "Extra Scope",
+          "title": "More awesome things",
+          "description": "Be creative and make up some more awesome things"
+        },
+        {
+          "id": "fines_p1",
+          "minScore": -10,
+          "maxScore": 0,
+          "category": "Fines",
+          "title": "App crashes",
+          "description": "App causes BSoD!"
+        }
+      ],
+      "id": "ppusd-v"
     }
   ],
   "taskScores": [
@@ -126,15 +171,22 @@
       "attendees": [
         {
           "githubId": "ButterBrot777",
-          "reviewerOf": ["torvalds", "cardamo"]
+          "reviewerOf": [
+            "torvalds",
+            "cardamo"
+          ]
         },
         {
           "githubId": "torvalds",
-          "reviewerOf": ["cardamo"]
+          "reviewerOf": [
+            "cardamo"
+          ]
         },
         {
           "githubId": "cardamo",
-          "reviewerOf": ["ButterBrot777"]
+          "reviewerOf": [
+            "ButterBrot777"
+          ]
         }
       ]
     }

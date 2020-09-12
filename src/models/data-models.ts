@@ -16,7 +16,7 @@ export interface Auth extends User {
 /// Task
 export type TaskState = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
 
-type TaskItemCategory = 'Basic Scope' | 'Extra Scope' | 'Fines';
+export type TaskItemCategory = 'Basic Scope' | 'Extra Scope' | 'Fines';
 
 export interface TaskItem {
   id: string;
