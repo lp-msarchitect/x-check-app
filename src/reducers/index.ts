@@ -1,8 +1,13 @@
 import { combineReducers, AnyAction } from 'redux';
 import keyBy from 'lodash.keyby';
-import { Auth } from '../models/data-models';
+import { Auth, ReviewRequest } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
-import { ReviewsState, TasksState, UsersState } from '../models/redux-models';
+import {
+  ReviewRequestsAppState,
+  ReviewsState,
+  TasksState,
+  UsersState,
+} from '../models/redux-models';
 
 const userAuthReducer = (
   state = {
@@ -74,9 +79,30 @@ const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
   }
 };
 
+const requestsReducer = (
+  state = {},
+  action: AnyAction
+): ReviewRequestsAppState => {
+  switch (action.type) {
+    case ACTIONS.GET_REVIEW_REQUESTS:
+      if (action.payload) {
+        return keyBy(action.payload.res, 'id') as ReviewRequestsAppState;
+      }
+      return state;
+    case ACTIONS.ADD_REVIEW_REQUEST:
+      return {
+        ...state,
+        [action.payload.id]: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   tasks: tasksReducer,
   users: usersReducer,
   auth: userAuthReducer,
   reviews: reviewsReducer,
+  reviewRequests: requestsReducer,
 });
