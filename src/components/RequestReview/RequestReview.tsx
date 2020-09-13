@@ -1,8 +1,6 @@
 import React from 'react';
-import { Select } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 import { Task } from '../../models/data-models';
-
-const { Option } = Select;
 
 export interface RequestReviewProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -10,102 +8,44 @@ export interface RequestReviewProps
 }
 
 const RequestReview = (props: RequestReviewProps): JSX.Element => {
-  //   const { tasks } = props;
-
-  // Mock data
-  const tasks = [
-    {
-      id: 'simple-task-v1',
-      title: 'Simple task v1',
-      author: 'cardamo',
-      state: 'DRAFT',
-      categoriesOrder: ['Basic Scope', 'Extra Scope', 'Fines'],
-      items: [
-        {
-          id: 'basic_p1',
-          minScore: 0,
-          maxScore: 20,
-          category: 'Basic Scope',
-          title: 'Basic things',
-          description: 'You need to make things right, not wrong',
-        },
-        {
-          id: 'extra_p1',
-          minScore: 0,
-          maxScore: 30,
-          category: 'Extra Scope',
-          title: 'More awesome things',
-          description: 'Be creative and make up some more awesome things',
-        },
-        {
-          id: 'fines_p1',
-          minScore: -10,
-          maxScore: 0,
-          category: 'Fines',
-          title: 'App crashes',
-          description: 'App causes BSoD!',
-        },
-      ],
-    },
-    {
-      id: 'simple-task-v2',
-      title: 'Simple task v2',
-      author: 'test',
-      state: 'PUBLISHED',
-      categoriesOrder: ['Basic Scope', 'Extra Scope', 'Fines'],
-      items: [
-        {
-          id: 'basic_p1',
-          minScore: 0,
-          maxScore: 20,
-          category: 'Basic Scope',
-          title: 'Basic things',
-          description: 'You need to make things right, not wrong',
-        },
-        {
-          id: 'extra_p1',
-          minScore: 0,
-          maxScore: 30,
-          category: 'Extra Scope',
-          title: 'More awesome things',
-          description: 'Be creative and make up some more awesome things',
-        },
-        {
-          id: 'extra_p2',
-          minScore: 0,
-          maxScore: 50,
-          category: 'Extra Scope',
-          title: 'Even more awesome things',
-          description: 'Be creative and make up some more awesome things',
-        },
-        {
-          id: 'fines_p1',
-          minScore: -10,
-          maxScore: 0,
-          category: 'Fines',
-          title: 'App crashes',
-          description: 'App causes BSoD!',
-        },
-      ],
-    },
-  ];
+  const { tasks } = props;
 
   const tasksOptions: JSX.Element[] = tasks.map((task) => {
-    return <Option value={task.id}>{task.title}</Option>;
+    return <Select.Option value={task.id}>{task.title}</Select.Option>;
   });
 
-  const changeTaskValue = () => {};
+  const onFinish = (values: object): void => {
+    console.log(values);
+  };
 
   return (
-    <div>
-      <Select
-        defaultValue="lucy"
-        style={{ width: 120 }}
-        onChange={changeTaskValue}
+    <Form
+      // {...formItemLayout}
+      name="request-review"
+      layout="vertical"
+      onFinish={onFinish}
+    >
+      <Form.Item label="Task:" name="task" rules={[{ required: true }]}>
+        <Select>{tasksOptions}</Select>
+      </Form.Item>
+      <Form.Item
+        label="PR URL:"
+        name="pr-url"
+        rules={[{ required: true, type: 'url' }]}
       >
-        {tasksOptions}
-      </Select>
-    </div>
+        <Input placeholder="https://github.com/user/repo/pull/1" />
+      </Form.Item>
+      <Form.Item
+        label="Demo URL:"
+        name="demo-url"
+        rules={[{ required: true, type: 'url' }]}
+      >
+        <Input placeholder="http://mysite.com" />
+      </Form.Item>
+      <Button type="primary" htmlType="submit">
+        Submit
+      </Button>
+    </Form>
   );
 };
 
