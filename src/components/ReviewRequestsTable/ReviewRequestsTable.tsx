@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import { Link } from 'react-router-dom';
 import { ReviewRequestsAppState, TasksState } from '../../models/redux-models';
 import StateTag from '../StateTag/StateTag';
+import { compareStrings } from '../../utils/helpers';
 
 export interface ReviewRequestsTableProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -15,8 +16,6 @@ export interface ReviewRequestsTableProps
 const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
   const { reviewRequests, tasks } = props;
   const reviewRequestsArr = Object.values(reviewRequests);
-
-  console.log(reviewRequestsArr);
 
   const rendering = {
     tag: (state: string): JSX.Element => {
