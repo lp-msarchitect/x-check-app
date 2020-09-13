@@ -6,10 +6,11 @@ export interface RequestReviewProps
   extends React.HTMLAttributes<HTMLDivElement> {
   tasks: TasksState;
   onHide?: Function;
+  onSubmitClick: Function;
 }
 
 const RequestReview = (props: RequestReviewProps): JSX.Element => {
-  const { tasks, onHide } = props;
+  const { tasks, onHide, onSubmitClick } = props;
 
   const tasksList = Object.keys(tasks).map((key) => {
     return {
@@ -30,7 +31,7 @@ const RequestReview = (props: RequestReviewProps): JSX.Element => {
     if (onHide) {
       onHide();
     }
-    console.log(values);
+    onSubmitClick(values);
   };
 
   return (
