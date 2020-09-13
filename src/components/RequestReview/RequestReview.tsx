@@ -12,12 +12,15 @@ export interface RequestReviewProps
 const RequestReview = (props: RequestReviewProps): JSX.Element => {
   const { tasks, onHide, onSubmitClick } = props;
 
-  const tasksList = Object.keys(tasks).map((key) => {
-    return {
-      id: tasks[key].id,
-      title: tasks[key].title,
-    };
-  });
+  const tasksList = Object.keys(tasks)
+    .map((key) => {
+      return {
+        id: tasks[key].id,
+        title: tasks[key].title,
+        state: tasks[key].state,
+      };
+    })
+    .filter((task) => task.state === 'PUBLISHED');
 
   const tasksOptions: JSX.Element[] = tasksList.map((taskItem) => {
     return (
