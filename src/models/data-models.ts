@@ -76,12 +76,14 @@ export interface CrossCheckSession {
 export type ReviewRequestState = 'DRAFT' | 'PUBLISHED' | 'COMPLETED';
 
 export interface ReviewRequest {
-  id: string;
+  id?: string;
   crossCheckSessionId: string | null;
   author: string;
   task: string;
+  prUrl: string;
+  demoUrl: string;
   state: ReviewRequestState;
-  selfGrade: TaskScore;
+  selfGrade: TaskScore | null;
 }
 
 /// Review
