@@ -16,8 +16,12 @@ import './App.scss';
 import { UserRole, User, Auth } from '../../models/data-models';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { getTasks, postUserFetch } from '../../actions';
-import { AppReduxState, TasksState } from '../../models/redux-models';
+import { getReviewRequests, getTasks, postUserFetch } from '../../actions';
+import {
+  AppReduxState,
+  ReviewRequestsAppState,
+  TasksState,
+} from '../../models/redux-models';
 
 type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
@@ -35,6 +39,11 @@ const App = (): JSX.Element => {
     shallowEqual
   );
 
+  const requests = useSelector<AppReduxState, ReviewRequestsAppState>(
+    (state) => state.reviewRequests,
+    shallowEqual
+  );
+
   const handleRoleChange = (
     event: React.FormEvent<HTMLSelectElement>
   ): void => {
@@ -46,6 +55,7 @@ const App = (): JSX.Element => {
   useEffect(() => {
     dispatch(postUserFetch());
     dispatch(getTasks());
+    dispatch(getReviewRequests());
   }, [dispatch]);
 
   return (
@@ -76,7 +86,11 @@ const App = (): JSX.Element => {
                 <Tasks />
               </ProtectedRoute>
               <ProtectedRoute path="/review-requests" redirectPath="/login">
-                <ReviewRequests auth={auth} tasks={tasks} />
+                <ReviewRequests
+                  auth={auth}
+                  tasks={tasks}
+                  reviewRequests={requests}
+                />
               </ProtectedRoute>
               <ProtectedRoute path="/reviews/:reviewId" redirectPath="/login">
                 <SingleReview />
