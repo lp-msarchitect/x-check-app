@@ -1,4 +1,4 @@
-import { User, Task, Auth, Review } from './data-models';
+import { User, Task, Auth, Review, ReviewRequest } from './data-models';
 
 export type actions = 'GET_TASKS' | 'GET_USERS' | 'GET_REVIEWS';
 
@@ -14,9 +14,14 @@ export type UsersState = {
   [dynamic: string]: User;
 };
 
+export type ReviewRequestsAppState = {
+  [dynamic: string]: ReviewRequest;
+};
+
 export interface AppReduxState {
   tasks: TasksState;
   users: UsersState;
   reviews: ReviewsState;
   auth: Auth;
+  reviewRequests: ReviewRequestsAppState;
 }
