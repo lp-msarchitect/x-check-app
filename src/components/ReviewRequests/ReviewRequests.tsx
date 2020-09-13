@@ -1,4 +1,3 @@
-import { NotificationFilled } from '@ant-design/icons';
 import { Button } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
@@ -7,6 +6,7 @@ import { addReviewRequest } from '../../actions';
 import { Auth, ReviewRequest } from '../../models/data-models';
 import { ReviewRequestsAppState, TasksState } from '../../models/redux-models';
 import RequestReview from '../RequestReview/RequestReview';
+import ReviewRequestsTable from '../ReviewRequestsTable/ReviewRequestsTable';
 
 export interface ReviewRequestsProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,14 +20,13 @@ const ReviewRequests = (props: ReviewRequestsProps): JSX.Element => {
   const { auth, tasks, reviewRequests } = props;
   const dispatch = useDispatch();
 
-  console.log('reviewRequest', reviewRequests);
-
   const onModalBtnsClick = (): void => {
     setShowSubmit(!showSubmit);
   };
 
   const onSubmitReviewRequest = (values: Record<string, any>): void => {
     const request: ReviewRequest = {
+      id: '',
       crossCheckSessionId: null,
       author: auth.githubId,
       task: values.task,
@@ -36,7 +35,6 @@ const ReviewRequests = (props: ReviewRequestsProps): JSX.Element => {
       state: 'DRAFT',
       selfGrade: null,
     };
-    console.log('req', request);
     dispatch(addReviewRequest(request));
   };
 
@@ -52,9 +50,7 @@ const ReviewRequests = (props: ReviewRequestsProps): JSX.Element => {
           onSubmitClick={onSubmitReviewRequest}
         />
       </Modal>
-      <ul>
-        <li>Review Request</li>
-      </ul>
+      <ReviewRequestsTable reviewRequests={reviewRequests} tasks={tasks} />
     </div>
   );
 };
