@@ -76,7 +76,7 @@ export interface CrossCheckSession {
 export type ReviewRequestState = 'DRAFT' | 'PUBLISHED' | 'COMPLETED';
 
 export interface ReviewRequest {
-  id?: string;
+  id: string;
   crossCheckSessionId: string | null;
   author: string;
   task: string;
