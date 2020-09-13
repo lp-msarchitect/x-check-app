@@ -46,7 +46,11 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
       return author;
     },
     url: (url: string): JSX.Element => {
-      return <Link to={`${url}`}>{url}</Link>;
+      return (
+        <a href={`${url}`} target="_blank" rel="noopener noreferrer">
+          {url}
+        </a>
+      );
     },
   };
 
