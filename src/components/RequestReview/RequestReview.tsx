@@ -1,30 +1,40 @@
 import React from 'react';
 import { Form, Input, Button, Select } from 'antd';
-import { Task } from '../../models/data-models';
+import { TasksState } from '../../models/redux-models';
 
 export interface RequestReviewProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  tasks: Task[];
+  tasks: TasksState;
+  onHide?: Function;
 }
 
 const RequestReview = (props: RequestReviewProps): JSX.Element => {
-  const { tasks } = props;
+  const { tasks, onHide } = props;
 
-  const tasksOptions: JSX.Element[] = tasks.map((task) => {
-    return <Select.Option value={task.id}>{task.title}</Select.Option>;
+  const tasksList = Object.keys(tasks).map((key) => {
+    return {
+      id: tasks[key].id,
+      title: tasks[key].title,
+    };
+  });
+
+  const tasksOptions: JSX.Element[] = tasksList.map((taskItem) => {
+    return (
+      <Select.Option value={taskItem.id} key={taskItem.id}>
+        {taskItem.title}
+      </Select.Option>
+    );
   });
 
   const onFinish = (values: object): void => {
+    if (onHide) {
+      onHide();
+    }
     console.log(values);
   };
 
   return (
-    <Form
-      // {...formItemLayout}
-      name="request-review"
-      layout="vertical"
-      onFinish={onFinish}
-    >
+    <Form name="request-review" layout="vertical" onFinish={onFinish}>
       <Form.Item label="Task:" name="task" rules={[{ required: true }]}>
         <Select>{tasksOptions}</Select>
       </Form.Item>
