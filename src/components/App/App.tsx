@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
-import { useDispatch } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import Users from '../Users/Users';
@@ -13,16 +13,27 @@ import SingleReview from '../SingleReview/SingleReview';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
 import './App.scss';
-import { UserRole, User } from '../../models/data-models';
+import { UserRole, User, Auth } from '../../models/data-models';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { postUserFetch } from '../../actions';
+import { getTasks, postUserFetch } from '../../actions';
+import { AppReduxState, TasksState } from '../../models/redux-models';
 
 type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
 const App = (): JSX.Element => {
   const [role, setRole] = useState<UserRole>('student');
   const { Header, Content } = Layout;
+
+  const auth = useSelector<AppReduxState, Auth>(
+    (state) => state.auth,
+    shallowEqual
+  );
+
+  const tasks = useSelector<AppReduxState, TasksState>(
+    (state) => state.tasks,
+    shallowEqual
+  );
 
   const handleRoleChange = (
     event: React.FormEvent<HTMLSelectElement>
@@ -34,6 +45,7 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(postUserFetch());
+    dispatch(getTasks());
   }, [dispatch]);
 
   return (
@@ -64,7 +76,7 @@ const App = (): JSX.Element => {
                 <Tasks />
               </ProtectedRoute>
               <ProtectedRoute path="/review-requests" redirectPath="/login">
-                <ReviewRequests />
+                <ReviewRequests auth={auth} tasks={tasks} />
               </ProtectedRoute>
               <ProtectedRoute path="/reviews/:reviewId" redirectPath="/login">
                 <SingleReview />
