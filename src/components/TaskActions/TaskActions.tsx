@@ -16,7 +16,7 @@ const TaskActions = ({ taskState }: TaskActionsProps): JSX.Element => {
         </Button>
       )}
       <Button type="primary" size="small">
-        Create Copy
+        Publish
       </Button>
       <Button size="small">Archive</Button>
       <Button size="small" danger>

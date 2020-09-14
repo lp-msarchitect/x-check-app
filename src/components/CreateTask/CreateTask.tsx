@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { Form, Input, Select, Button } from 'antd';
-import { TaskItem, TaskItemCategory } from '../../models/data-models';
+import {
+  Auth,
+  Task,
+  TaskItem,
+  TaskItemCategory,
+  TaskState,
+} from '../../models/data-models';
 import './CreateTask.scss';
+import { createTask } from '../../actions';
+import { AppReduxState } from '../../models/redux-models';
 
 const { TextArea } = Input;
+type AppDispatch = ThunkDispatch<Task, void, AnyAction>;
 
 const CreateTask = (): JSX.Element => {
   const [title, setTitle] = useState('');
@@ -55,6 +68,23 @@ const CreateTask = (): JSX.Element => {
     });
     setItems(newItems);
   };
+
+  const history = useHistory();
+  const dispatch: AppDispatch = useDispatch();
+  const { githubId } = useSelector<AppReduxState, Auth>((state) => state.auth);
+
+  const handleTaskSubmit = (state: TaskState): void => {
+    const newTask: Task = {
+      id: uuidv4(),
+      title,
+      author: githubId,
+      state,
+      categoriesOrder: scopes as TaskItemCategory[],
+      items,
+    };
+    dispatch(createTask(newTask));
+    history.push('/tasks');
+  };
   return (
     <Form layout="vertical">
       <Form.Item label="Task Title" required>
@@ -85,7 +115,11 @@ const CreateTask = (): JSX.Element => {
           onChange={(e): void => setCategoryItem(e)}
         >
           {scopes.map((scope) => {
-            return <Option value={scope}>{scope}</Option>;
+            return (
+              <Option key={scope} value={scope}>
+                {scope}
+              </Option>
+            );
           })}
         </Select>
       </Form.Item>
@@ -136,13 +170,13 @@ const CreateTask = (): JSX.Element => {
                 index === 0 ||
                 (index > 0 && item.category !== items[index - 1].category);
               return (
-                <>
+                <React.Fragment key={item.id}>
                   {addCategory && (
-                    <li>
+                    <li key={item.category}>
                       <strong>{item.category}</strong>
                     </li>
                   )}
-                  <li>
+                  <li key={item.id}>
                     {index + 1}. {item.title}.{' '}
                     <em>
                       Score: {item.minScore}-{item.maxScore}
@@ -157,11 +191,21 @@ const CreateTask = (): JSX.Element => {
                       delete
                     </Button>
                   </li>
-                </>
+                </React.Fragment>
               );
             })}
         </ul>
       </div>
+      <Button
+        className="create-task-publish"
+        type="primary"
+        onClick={(): void => handleTaskSubmit('PUBLISHED')}
+      >
+        Submit task
+      </Button>
+      <Button type="default" onClick={(): void => handleTaskSubmit('DRAFT')}>
+        Save draft
+      </Button>
     </Form>
   );
 };

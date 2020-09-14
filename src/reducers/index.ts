@@ -47,7 +47,13 @@ const tasksReducer = (state = {}, action: AnyAction): TasksState => {
       return state;
     case ACTIONS.CREATE_TASK:
       if (action.payload) {
-        return { ...state, [action.payload.id]: action.payload as Task };
+        return keyBy(
+          {
+            ...state,
+            [action.payload.res.id]: action.payload.res as Task,
+          },
+          'id'
+        ) as TasksState;
       }
       return state;
     default:
