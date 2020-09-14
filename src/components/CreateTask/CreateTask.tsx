@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Form, Input, Select, Button } from 'antd';
 import { TaskItem, TaskItemCategory } from '../../models/data-models';
-import './ModalText.scss';
+import './CreateTask.scss';
 
 const { TextArea } = Input;
 
-function ModalText(): JSX.Element {
+const CreateTask = (): JSX.Element => {
   const [title, setTitle] = useState('');
   const [items, setItems] = useState<TaskItem[]>([]);
 
@@ -55,7 +55,6 @@ function ModalText(): JSX.Element {
     });
     setItems(newItems);
   };
-
   return (
     <Form layout="vertical">
       <Form.Item label="Task Title" required>
@@ -65,41 +64,6 @@ function ModalText(): JSX.Element {
           onChange={(e): void => setTitle(e.target.value)}
         />
       </Form.Item>
-      <div>
-        <h3>Added Items</h3>
-        <ul className="added-items">
-          {items.length > 0 &&
-            items.map((item, index) => {
-              const addCategory =
-                index === 0 ||
-                (index > 0 && item.category !== items[index - 1].category);
-              return (
-                <>
-                  {addCategory && (
-                    <li>
-                      <strong>{item.category}</strong>
-                    </li>
-                  )}
-                  <li>
-                    {index + 1}. {item.title}.{' '}
-                    <em>
-                      Score: {item.minScore}-{item.maxScore}
-                    </em>
-                    <div className="create-task-item-desc">
-                      {item.description}
-                    </div>
-                    <Button
-                      type="link"
-                      onClick={(): void => handleDeleteItem(index)}
-                    >
-                      delete
-                    </Button>
-                  </li>
-                </>
-              );
-            })}
-        </ul>
-      </div>
       <Form.Item label="Item Title" required>
         <Input
           placeholder="Item Title"
@@ -163,8 +127,43 @@ function ModalText(): JSX.Element {
           Add Item
         </Button>
       </Form.Item>
+      <div>
+        <h3>Added Items</h3>
+        <ul className="added-items">
+          {items.length > 0 &&
+            items.map((item, index) => {
+              const addCategory =
+                index === 0 ||
+                (index > 0 && item.category !== items[index - 1].category);
+              return (
+                <>
+                  {addCategory && (
+                    <li>
+                      <strong>{item.category}</strong>
+                    </li>
+                  )}
+                  <li>
+                    {index + 1}. {item.title}.{' '}
+                    <em>
+                      Score: {item.minScore}-{item.maxScore}
+                    </em>
+                    <div className="create-task-item-desc">
+                      {item.description}
+                    </div>
+                    <Button
+                      type="link"
+                      onClick={(): void => handleDeleteItem(index)}
+                    >
+                      delete
+                    </Button>
+                  </li>
+                </>
+              );
+            })}
+        </ul>
+      </div>
     </Form>
   );
-}
+};
 
-export default ModalText;
+export default CreateTask;

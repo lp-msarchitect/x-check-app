@@ -12,6 +12,7 @@ import Reviews from '../Reviews/Reviews';
 import SingleReview from '../SingleReview/SingleReview';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
+import CreateTask from '../CreateTask/CreateTask';
 import './App.scss';
 import { UserRole, User } from '../../models/data-models';
 import Login from '../Login/Login';
@@ -62,6 +63,9 @@ const App = (): JSX.Element => {
               </ProtectedRoute>
               <ProtectedRoute path="/tasks" redirectPath="/login">
                 <Tasks />
+              </ProtectedRoute>
+              <ProtectedRoute path="/create-task" redirectPath="/login">
+                <CreateTask />
               </ProtectedRoute>
               <ProtectedRoute path="/review-requests" redirectPath="/login">
                 <ReviewRequests />

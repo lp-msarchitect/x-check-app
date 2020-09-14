@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Collapse } from 'antd';
+import { Button, Collapse } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from '../ModalWrap/ModalWrap';
+import { useHistory } from 'react-router-dom';
 import SingleTask from '../SingleTask/SingleTask';
 import { AppReduxState, TasksState } from '../../models/redux-models';
 import { Task } from '../../models/data-models';
@@ -24,10 +24,21 @@ const Tasks = (): JSX.Element => {
     dispatch(getTasks());
   }, [dispatch]);
 
+  const history = useHistory();
+  const handleAddTask = (): void => {
+    history.push('/create-task');
+  };
+
   return (
     <div className="tasks">
       <h2>Tasks</h2>
-      <Modal />
+      <Button
+        type="primary"
+        onClick={handleAddTask}
+        className="create-task-btn"
+      >
+        Add Task
+      </Button>
       <Collapse
         accordion
         expandIcon={({ isActive }): JSX.Element => (
