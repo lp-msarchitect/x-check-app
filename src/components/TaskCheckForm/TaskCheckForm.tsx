@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Affix, Button, Form, Input } from 'antd';
 import { Task } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
@@ -15,9 +15,8 @@ const TaskCheckForm = ({
   displayForm,
   showForm,
 }: SingleTaskProps): JSX.Element => {
-  const validateMessages = {
-    required: 'Add task link',
-  };
+  const [taskScore, setTaskScore] = useState<number>(0);
+  const [checkedTaskItems, setCheckedTaskItems] = useState<number>(0);
 
   const submitHandler = (values: string): void => {
     console.log(values);
@@ -26,11 +25,7 @@ const TaskCheckForm = ({
 
   return (
     <div className={displayForm ? 'form-container' : 'form-container disabled'}>
-      <Form
-        className="task-check-form"
-        validateMessages={validateMessages}
-        onFinish={submitHandler}
-      >
+      <Form className="task-check-form" onFinish={submitHandler}>
         <Affix offsetTop={0}>
           <button
             className="close-form"
@@ -42,10 +37,10 @@ const TaskCheckForm = ({
             <h2 className="title">{singleTask.id}</h2>
             <div className="score-container">
               <p className="progress">
-                Checked 0 out of {singleTask.items.length}
+                Checked {checkedTaskItems} out of {singleTask.items.length}
               </p>
               <p className="score-board">
-                Total points: <span className="score">0</span>
+                Total points: <span className="score">{taskScore}</span>
               </p>
             </div>
           </div>
@@ -53,14 +48,22 @@ const TaskCheckForm = ({
         <Form.Item
           name={['link']}
           label="Task link"
-          rules={[{ required: true }]}
-          className="input"
+          rules={[{ required: true, message: 'Add task link' }]}
         >
           <Input allowClear />
         </Form.Item>
         <p className="criteria">Task criteria or description</p>
         {singleTask.items.map((elem) => {
-          return <CheckTask taskItem={elem} key={elem.id} />;
+          return (
+            <CheckTask
+              taskItem={elem}
+              key={elem.id}
+              taskScore={taskScore}
+              setTaskScore={setTaskScore}
+              checkedTaskItems={checkedTaskItems}
+              setCheckedTaskItems={setCheckedTaskItems}
+            />
+          );
         })}
         <hr />
         <Button
