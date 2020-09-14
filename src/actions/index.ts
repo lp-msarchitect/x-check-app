@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
-import { User } from '../models/data-models';
+import { Task, User } from '../models/data-models';
 
 const dataService = new DataService();
 
@@ -95,6 +95,19 @@ export const getReviews = () => async (
   dataService.getAllReviews().then((body) => {
     dispatch({
       type: ACTIONS.GET_REVIEWS,
+      payload: {
+        res: body,
+      },
+    });
+  });
+};
+
+export const createTask = (task: Task) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService.addTask(task).then((body) => {
+    dispatch({
+      type: ACTIONS.CREATE_TASK,
       payload: {
         res: body,
       },
