@@ -66,53 +66,38 @@ export const postUserFetch = () => async (
 export const getTasks = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
-    .getAllTasks()
-    .then((body) => {
-      dispatch({
-        type: ACTIONS.GET_TASKS,
-        payload: {
-          res: body,
-        },
-      });
-    })
-    .catch((err) => {
-      console.error(err);
+  dataService.getAllTasks().then((body) => {
+    dispatch({
+      type: ACTIONS.GET_TASKS,
+      payload: {
+        res: body,
+      },
     });
+  });
 };
 
 export const getUsers = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
-    .getAllUsers()
-    .then((body) => {
-      dispatch({
-        type: ACTIONS.GET_USERS,
-        payload: {
-          res: body,
-        },
-      });
-    })
-    .catch((err) => {
-      console.error(err);
+  dataService.getAllUsers().then((body) => {
+    dispatch({
+      type: ACTIONS.GET_USERS,
+      payload: {
+        res: body,
+      },
     });
+  });
 };
 
 export const getReviews = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
-    .getAllReviews()
-    .then((body) => {
-      dispatch({
-        type: ACTIONS.GET_REVIEWS,
-        payload: {
-          res: body,
-        },
-      });
-    })
-    .catch((err) => {
-      console.error(err);
+  dataService.getAllReviews().then((body) => {
+    dispatch({
+      type: ACTIONS.GET_REVIEWS,
+      payload: {
+        res: body,
+      },
     });
+  });
 };
