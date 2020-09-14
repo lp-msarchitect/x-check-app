@@ -11,13 +11,15 @@ const TaskActions = ({ taskState }: TaskActionsProps): JSX.Element => {
   return (
     <div className="task-actions">
       {taskState === 'DRAFT' && (
-        <Button type="primary" size="small">
-          Edit
-        </Button>
+        <>
+          <Button type="primary" size="small">
+            Edit
+          </Button>
+          <Button type="primary" size="small">
+            Publish
+          </Button>
+        </>
       )}
-      <Button type="primary" size="small">
-        Publish
-      </Button>
       <Button size="small">Archive</Button>
       <Button size="small" danger>
         Delete

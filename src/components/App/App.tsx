@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import { useDispatch } from 'react-redux';
@@ -14,7 +14,7 @@ import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
 import CreateTask from '../CreateTask/CreateTask';
 import './App.scss';
-import { UserRole, User } from '../../models/data-models';
+import { User } from '../../models/data-models';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { postUserFetch } from '../../actions';
@@ -22,14 +22,7 @@ import { postUserFetch } from '../../actions';
 type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
 const App = (): JSX.Element => {
-  const [role, setRole] = useState<UserRole>('student');
   const { Header, Content } = Layout;
-
-  const handleRoleChange = (
-    event: React.FormEvent<HTMLSelectElement>
-  ): void => {
-    setRole(event.currentTarget.value as UserRole);
-  };
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -42,17 +35,9 @@ const App = (): JSX.Element => {
       <Layout className="layout">
         <Header>
           <div className="logo" />
-          <Navbar role={role} />
+          <Navbar />
         </Header>
         <Content className="app-content">
-          <div>
-            <select value={role} onChange={handleRoleChange}>
-              <option value="author">Author</option>
-              <option value="student">Student</option>
-              <option value="supervisor">Supervisor</option>
-              <option value="coursemanager">Course Manager</option>
-            </select>
-          </div>
           <div className="router-switch-wrap">
             <Switch>
               <Route path="/login">
