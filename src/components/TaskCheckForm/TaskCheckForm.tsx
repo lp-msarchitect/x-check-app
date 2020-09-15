@@ -20,18 +20,28 @@ const TaskCheckForm = ({
   );
   const [totalScore, setTotalScore] = useState<number>(0);
   const [checkedTaskItems, setCheckedTaskItems] = useState<number>(0);
+  const [form] = Form.useForm();
 
   const submitHandler = (values: string): void => {
     console.log(values);
     showForm();
   };
+
+  const closeForm = (): void => {
+    setTaskScores(new Array(singleTask.items.length).fill(0));
+    setTotalScore(0);
+    setCheckedTaskItems(0);
+    form.resetFields();
+    showForm();
+  };
+
   return (
     <div className={displayForm ? 'form-container' : 'form-container disabled'}>
-      <Form className="task-check-form" onFinish={submitHandler}>
+      <Form className="task-check-form" onFinish={submitHandler} form={form}>
         <Affix offsetTop={0}>
           <button
             className="close-form"
-            onClick={(): void => showForm()}
+            onClick={(): void => closeForm()}
             type="button"
             aria-label="Close form button"
           />
