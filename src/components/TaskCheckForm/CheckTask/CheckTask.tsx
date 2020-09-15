@@ -20,15 +20,32 @@ const CheckTask = ({
   checkedTaskItems,
 }: TaskItemProps): JSX.Element => {
   const [prevScore, setPrevScore] = useState(0);
+  const [selected, setSelected] = useState<boolean>(false);
 
   const selectHandler = (value: number): void => {
+    console.log(value);
     setPrevScore(value);
-    setCheckedTaskItems(checkedTaskItems + 1);
-    let score = taskScore - prevScore + value;
-    if (score < 0) {
-      score = 0;
+    if (!selected) {
+      setSelected(true);
+      setCheckedTaskItems(checkedTaskItems + 1);
     }
+    let score = 0;
+    if (taskScore === 0 && prevScore < 0) {
+      score = 0;
+    } else {
+      score = taskScore - prevScore + value;
+      if (score < 0) {
+        score = 0;
+      }
+    }
+
     setTaskScore(score);
+  };
+
+  const onClear = (): void => {
+    setSelected(false);
+    selectHandler(0);
+    setCheckedTaskItems(checkedTaskItems - 1);
   };
 
   return (
@@ -63,10 +80,7 @@ const CheckTask = ({
               placeholder="Select a option"
               allowClear
               onSelect={(value: number): void => selectHandler(value)}
-              onClear={(): void => {
-                selectHandler(0);
-                setCheckedTaskItems(checkedTaskItems - 1);
-              }}
+              onClear={(): void => onClear()}
             >
               <Option value={taskItem.minScore}>Yes</Option>
               <Option value={taskItem.maxScore}>No</Option>
@@ -76,10 +90,7 @@ const CheckTask = ({
               placeholder="Select a option"
               allowClear
               onSelect={(value: number): void => selectHandler(value)}
-              onClear={(): void => {
-                selectHandler(0);
-                setCheckedTaskItems(checkedTaskItems - 1);
-              }}
+              onClear={(): void => onClear()}
             >
               <Option value={0}>Not completed</Option>
               <Option value={taskItem.maxScore / 2}>Partially completed</Option>

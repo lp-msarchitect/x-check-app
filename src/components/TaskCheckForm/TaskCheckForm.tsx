@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Affix, Button, Form, Input } from 'antd';
+import { Affix, Button, Form } from 'antd';
 import { Task } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
@@ -45,13 +45,6 @@ const TaskCheckForm = ({
             </div>
           </div>
         </Affix>
-        <Form.Item
-          name={['link']}
-          label="Task link"
-          rules={[{ required: true, message: 'Add task link' }]}
-        >
-          <Input allowClear />
-        </Form.Item>
         <p className="criteria">Task criteria or description</p>
         {singleTask.items.map((elem) => {
           return (
