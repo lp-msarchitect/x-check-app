@@ -46,6 +46,12 @@ const CreateTask = (): JSX.Element => {
     dispatch(createTask(newTask));
     history.push('/tasks');
   };
+
+  const handleTaskCancel = (): void => {
+    setItems([]);
+    setTitle('');
+    history.push('/tasks');
+  };
   return (
     <Form layout="vertical">
       <Form.Item label="Task Title" required>
@@ -61,7 +67,10 @@ const CreateTask = (): JSX.Element => {
         scopes={scopes}
       />
       <CreateTaskAddedItems items={items} onChangeItems={handleChangeItems} />
-      <CreateTaskActions onTaskSubmit={handleTaskSubmit} />
+      <CreateTaskActions
+        onTaskSubmit={handleTaskSubmit}
+        onTaskCancel={handleTaskCancel}
+      />
     </Form>
   );
 };
