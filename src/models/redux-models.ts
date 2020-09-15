@@ -14,9 +14,12 @@ export type UsersState = {
   [dynamic: string]: User;
 };
 
+export type ErrorState = null | string;
+
 export interface AppReduxState {
   tasks: TasksState;
   users: UsersState;
   reviews: ReviewsState;
   auth: Auth;
+  error: ErrorState;
 }

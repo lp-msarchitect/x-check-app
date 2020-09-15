@@ -13,6 +13,7 @@ import SingleReview from '../SingleReview/SingleReview';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
 import CreateTask from '../CreateTask/CreateTask';
+import ErrorNotification from '../ErrorNotification/ErrorNotification';
 import './App.scss';
 import { User } from '../../models/data-models';
 import Login from '../Login/Login';
@@ -37,6 +38,7 @@ const App = (): JSX.Element => {
           <div className="logo" />
           <Navbar />
         </Header>
+        <ErrorNotification />
         <Content className="app-content">
           <div className="router-switch-wrap">
             <Switch>
