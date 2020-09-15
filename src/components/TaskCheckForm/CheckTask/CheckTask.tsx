@@ -4,48 +4,53 @@ import { TaskItem } from '../../../models/data-models';
 import './CheckTask.scss';
 
 const { Option } = Select;
-interface TaskItemProps {
+interface CheckTaskProps {
   taskItem: TaskItem;
-  taskScore: number;
   checkedTaskItems: number;
   setCheckedTaskItems: Function;
-  setTaskScore: Function;
+  setTotalScore: Function;
+  itemId: number;
+  taskScores: number[];
+  setTaskScores: Function;
 }
 
 const CheckTask = ({
   taskItem,
-  taskScore,
   setCheckedTaskItems,
-  setTaskScore,
+  setTotalScore,
   checkedTaskItems,
-}: TaskItemProps): JSX.Element => {
-  const [prevScore, setPrevScore] = useState(0);
+  itemId,
+  taskScores,
+  setTaskScores,
+}: CheckTaskProps): JSX.Element => {
   const [selected, setSelected] = useState<boolean>(false);
 
+  const checkScore = (value: number): void => {
+    const copy = taskScores;
+    copy[itemId] = value;
+    setTaskScores(copy);
+    const score = copy.reduce((a, b) => {
+      return a + b;
+    }, 0);
+    if (score < 0) {
+      setTotalScore(0);
+    } else {
+      setTotalScore(score);
+    }
+  };
+
   const selectHandler = (value: number): void => {
-    console.log(value);
-    setPrevScore(value);
     if (!selected) {
       setSelected(true);
       setCheckedTaskItems(checkedTaskItems + 1);
     }
-    let score = 0;
-    if (taskScore === 0 && prevScore < 0) {
-      score = 0;
-    } else {
-      score = taskScore - prevScore + value;
-      if (score < 0) {
-        score = 0;
-      }
-    }
-
-    setTaskScore(score);
+    checkScore(value);
   };
 
   const onClear = (): void => {
     setSelected(false);
-    selectHandler(0);
     setCheckedTaskItems(checkedTaskItems - 1);
+    checkScore(0);
   };
 
   return (

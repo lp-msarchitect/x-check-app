@@ -15,14 +15,16 @@ const TaskCheckForm = ({
   displayForm,
   showForm,
 }: SingleTaskProps): JSX.Element => {
-  const [taskScore, setTaskScore] = useState<number>(0);
+  const [taskScores, setTaskScores] = useState<number[]>(
+    new Array(singleTask.items.length).fill(0)
+  );
+  const [totalScore, setTotalScore] = useState<number>(0);
   const [checkedTaskItems, setCheckedTaskItems] = useState<number>(0);
 
   const submitHandler = (values: string): void => {
     console.log(values);
     showForm();
   };
-
   return (
     <div className={displayForm ? 'form-container' : 'form-container disabled'}>
       <Form className="task-check-form" onFinish={submitHandler}>
@@ -39,22 +41,22 @@ const TaskCheckForm = ({
               <p className="progress">
                 Checked {checkedTaskItems} out of {singleTask.items.length}
               </p>
-              <p className="score-board">
-                Total points: <span className="score">{taskScore}</span>
-              </p>
+              <p className="score-board">Total points: {totalScore}</p>
             </div>
           </div>
         </Affix>
         <p className="criteria">Task criteria or description</p>
-        {singleTask.items.map((elem) => {
+        {singleTask.items.map((elem, id) => {
           return (
             <CheckTask
               taskItem={elem}
               key={elem.id}
-              taskScore={taskScore}
-              setTaskScore={setTaskScore}
+              taskScores={taskScores}
+              setTaskScores={setTaskScores}
+              setTotalScore={setTotalScore}
               checkedTaskItems={checkedTaskItems}
               setCheckedTaskItems={setCheckedTaskItems}
+              itemId={id}
             />
           );
         })}
