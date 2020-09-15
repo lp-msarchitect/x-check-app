@@ -1,6 +1,6 @@
 import { combineReducers, AnyAction } from 'redux';
 import keyBy from 'lodash.keyby';
-import { Auth } from '../models/data-models';
+import { Auth, Task } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
 import { ReviewsState, TasksState, UsersState } from '../models/redux-models';
 
@@ -43,6 +43,17 @@ const tasksReducer = (state = {}, action: AnyAction): TasksState => {
     case ACTIONS.GET_TASKS:
       if (action.payload) {
         return keyBy(action.payload.res, 'id') as TasksState;
+      }
+      return state;
+    case ACTIONS.CREATE_TASK:
+      if (action.payload) {
+        return keyBy(
+          {
+            ...state,
+            [action.payload.res.id]: action.payload.res as Task,
+          },
+          'id'
+        ) as TasksState;
       }
       return state;
     default:

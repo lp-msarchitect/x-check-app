@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Form, Input, Select, Button } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import { TaskItem, TaskItemCategory } from '../../models/data-models';
-import './ModalText.scss';
 
 const { TextArea } = Input;
+const { Option } = Select;
 
-function ModalText(): JSX.Element {
-  const [title, setTitle] = useState('');
-  const [items, setItems] = useState<TaskItem[]>([]);
+interface CreateTaskAddOneItemProps {
+  scopes: TaskItemCategory[];
+  items: TaskItem[];
+  onChangeItems: (newItems: TaskItem[]) => void;
+}
 
+const CreateTaskAddOneItem = ({
+  scopes,
+  items,
+  onChangeItems,
+}: CreateTaskAddOneItemProps): JSX.Element => {
   const [titleItem, setTitleItem] = useState('');
   const [descriptionItem, setDescriptionItem] = useState('');
   const [categoryItem, setCategoryItem] = useState<TaskItemCategory>(
@@ -17,9 +24,6 @@ function ModalText(): JSX.Element {
   );
   const [minItem, setMinItem] = useState('');
   const [maxItem, setMaxItem] = useState('');
-
-  const { Option } = Select;
-  const scopes = ['Basic Scope', 'Extra Scope', 'Fines'];
 
   const resetItemInfo = (): void => {
     setTitleItem('');
@@ -41,7 +45,7 @@ function ModalText(): JSX.Element {
       description: descriptionItem,
     } as TaskItem;
     const newArray = [...items, item];
-    setItems(
+    onChangeItems(
       newArray.sort((prev, cur) => {
         return scopes.indexOf(prev.category) - scopes.indexOf(cur.category);
       })
@@ -49,57 +53,8 @@ function ModalText(): JSX.Element {
     resetItemInfo();
   };
 
-  const handleDeleteItem = (index: number): void => {
-    const newItems = items.filter((item, i) => {
-      return index !== i;
-    });
-    setItems(newItems);
-  };
-
   return (
-    <Form layout="vertical">
-      <Form.Item label="Task Title" required>
-        <Input
-          placeholder="Task Title"
-          value={title}
-          onChange={(e): void => setTitle(e.target.value)}
-        />
-      </Form.Item>
-      <div>
-        <h3>Added Items</h3>
-        <ul className="added-items">
-          {items.length > 0 &&
-            items.map((item, index) => {
-              const addCategory =
-                index === 0 ||
-                (index > 0 && item.category !== items[index - 1].category);
-              return (
-                <>
-                  {addCategory && (
-                    <li>
-                      <strong>{item.category}</strong>
-                    </li>
-                  )}
-                  <li>
-                    {index + 1}. {item.title}.{' '}
-                    <em>
-                      Score: {item.minScore}-{item.maxScore}
-                    </em>
-                    <div className="create-task-item-desc">
-                      {item.description}
-                    </div>
-                    <Button
-                      type="link"
-                      onClick={(): void => handleDeleteItem(index)}
-                    >
-                      delete
-                    </Button>
-                  </li>
-                </>
-              );
-            })}
-        </ul>
-      </div>
+    <>
       <Form.Item label="Item Title" required>
         <Input
           placeholder="Item Title"
@@ -121,7 +76,11 @@ function ModalText(): JSX.Element {
           onChange={(e): void => setCategoryItem(e)}
         >
           {scopes.map((scope) => {
-            return <Option value={scope}>{scope}</Option>;
+            return (
+              <Option key={scope} value={scope}>
+                {scope}
+              </Option>
+            );
           })}
         </Select>
       </Form.Item>
@@ -163,8 +122,8 @@ function ModalText(): JSX.Element {
           Add Item
         </Button>
       </Form.Item>
-    </Form>
+    </>
   );
-}
+};
 
-export default ModalText;
+export default CreateTaskAddOneItem;

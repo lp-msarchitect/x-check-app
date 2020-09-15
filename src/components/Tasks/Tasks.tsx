@@ -1,59 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { Collapse, Badge } from 'antd';
+import React, { useEffect } from 'react';
+import { Button, Collapse } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Task, TaskState } from '../../models/data-models';
-import DataService from '../../services/data-service';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import SingleTask from '../SingleTask/SingleTask';
+import { AppReduxState, TasksState } from '../../models/redux-models';
+import { Task } from '../../models/data-models';
 import './Tasks.scss';
-import Modal from '../ModalWrap/ModalWrap';
+import { getTasks } from '../../actions';
+import StateBadge from '../StateBadge/StateBadge';
+
+type AppDispatch = ThunkDispatch<TasksState, void, AnyAction>;
 
 const Tasks = (): JSX.Element => {
   const { Panel } = Collapse;
-  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const tasks = useSelector<AppReduxState, TasksState>((state) => state.tasks);
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    const dataService = new DataService();
-    dataService
-      .getAllTasks()
-      .then((body) => {
-        setTasks(body || []);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+    dispatch(getTasks());
+  }, [dispatch]);
 
-  const genStateBadge = (state: TaskState): JSX.Element => {
-    switch (state) {
-      case 'DRAFT':
-        return <Badge status="warning" text="Draft" />;
-      case 'PUBLISHED':
-        return <Badge status="success" text="Published" />;
-      case 'ARCHIVED':
-        return <Badge status="default" text="Archived" />;
-      default:
-        return <Badge status="warning" text="Draft" />;
-    }
+  const history = useHistory();
+  const handleAddTask = (): void => {
+    history.push('/create-task');
   };
 
   return (
     <div className="tasks">
       <h2>Tasks</h2>
-      <Modal />
+      <Button
+        type="primary"
+        onClick={handleAddTask}
+        className="create-task-btn"
+      >
+        Add Task
+      </Button>
       <Collapse
         accordion
-        // bordered={false}
-        // ghost
         expandIcon={({ isActive }): JSX.Element => (
           <CaretRightOutlined rotate={isActive ? 90 : 0} />
         )}
       >
-        {tasks.map((item) => {
+        {Object.values(tasks).map((item: Task) => {
           return (
             <Panel
               header={item.title}
               key={item.id}
-              extra={genStateBadge(item.state)}
+              extra={<StateBadge state={item.state} />}
             >
               <SingleTask singleTask={item} />
             </Panel>
