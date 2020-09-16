@@ -2,7 +2,12 @@ import { combineReducers, AnyAction } from 'redux';
 import keyBy from 'lodash.keyby';
 import { Auth, Task } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
-import { ReviewsState, TasksState, UsersState } from '../models/redux-models';
+import {
+  ErrorState,
+  ReviewsState,
+  TasksState,
+  UsersState,
+} from '../models/redux-models';
 
 const userAuthReducer = (
   state = {
@@ -85,9 +90,20 @@ const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
   }
 };
 
+const errorReducer = (state = null, action: AnyAction): ErrorState => {
+  if (action.type === ACTIONS.ADD_ERROR) {
+    return action.error.message;
+  }
+  if (action.type === ACTIONS.HIDE_ERROR) {
+    return null;
+  }
+  return state;
+};
+
 export default combineReducers({
   tasks: tasksReducer,
   users: usersReducer,
   auth: userAuthReducer,
   reviews: reviewsReducer,
+  error: errorReducer,
 });
