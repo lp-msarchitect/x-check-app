@@ -5,10 +5,9 @@ import TaskActions from '../TaskActions/TaskActions';
 
 interface SingleTaskProps {
   singleTask: Task;
-  showForm: Function;
 }
 
-const SingleTask = ({ singleTask, showForm }: SingleTaskProps): JSX.Element => {
+const SingleTask = ({ singleTask }: SingleTaskProps): JSX.Element => {
   const [basic, extra, fines]: Array<TaskItem[]> = [[], [], []];
   singleTask.items.forEach((item) => {
     switch (item.category) {
@@ -31,10 +30,10 @@ const SingleTask = ({ singleTask, showForm }: SingleTaskProps): JSX.Element => {
       <p>
         <strong>Author: {singleTask.author}</strong>
       </p>
-      <TaskItemCategoryList items={basic} />
-      <TaskItemCategoryList items={extra} />
-      <TaskItemCategoryList items={fines} />
-      <TaskActions taskState={singleTask.state} showForm={showForm} />
+      {basic.length > 0 && <TaskItemCategoryList items={basic} />}
+      {extra.length > 0 && <TaskItemCategoryList items={extra} />}
+      {fines.length > 0 && <TaskItemCategoryList items={fines} />}
+      <TaskActions taskState={singleTask.state} />
     </>
   );
 };

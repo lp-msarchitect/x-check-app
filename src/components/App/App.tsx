@@ -1,59 +1,71 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import Users from '../Users/Users';
 import Home from '../Home/Home';
 import Tasks from '../Tasks/Tasks';
 import ReviewRequests from '../ReviewRequests/ReviewRequests';
 import Reviews from '../Reviews/Reviews';
+import SingleReview from '../SingleReview/SingleReview';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
+import CreateTask from '../CreateTask/CreateTask';
+import ErrorNotification from '../ErrorNotification/ErrorNotification';
 import './App.scss';
-import { UserRole } from '../../models/data-models';
+import { User } from '../../models/data-models';
+import Login from '../Login/Login';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { postUserFetch } from '../../actions';
+
+type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
 const App = (): JSX.Element => {
-  const [role, setRole] = useState<UserRole>('student');
   const { Header, Content } = Layout;
 
-  const handleRoleChange = (
-    event: React.FormEvent<HTMLSelectElement>
-  ): void => {
-    setRole(event.currentTarget.value as UserRole);
-  };
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(postUserFetch());
+  }, [dispatch]);
 
   return (
     <Router>
       <Layout className="layout">
         <Header>
           <div className="logo" />
-          <Navbar role={role} />
+          <Navbar />
         </Header>
+        <ErrorNotification />
         <Content className="app-content">
-          <div>
-            <select value={role} onChange={handleRoleChange}>
-              <option value="author">Author</option>
-              <option value="student">Student</option>
-              <option value="supervisor">Supervisor</option>
-              <option value="coursemanager">Course Manager</option>
-            </select>
-          </div>
           <div className="router-switch-wrap">
             <Switch>
-              <Route path="/users">
+              <Route path="/login">
+                <Login />
+              </Route>
+              <ProtectedRoute path="/users" redirectPath="/login">
                 <Users />
-              </Route>
-              <Route path="/tasks">
+              </ProtectedRoute>
+              <ProtectedRoute path="/tasks" redirectPath="/login">
                 <Tasks />
-              </Route>
-              <Route path="/review-requests">
+              </ProtectedRoute>
+              <ProtectedRoute path="/create-task" redirectPath="/login">
+                <CreateTask />
+              </ProtectedRoute>
+              <ProtectedRoute path="/review-requests" redirectPath="/login">
                 <ReviewRequests />
-              </Route>
-              <Route path="/reviews">
+              </ProtectedRoute>
+              <ProtectedRoute path="/reviews/:reviewId" redirectPath="/login">
+                <SingleReview />
+              </ProtectedRoute>
+              <ProtectedRoute path="/reviews" redirectPath="/login">
                 <Reviews />
-              </Route>
-              <Route path="/sessions">
+              </ProtectedRoute>
+              <ProtectedRoute path="/sessions" redirectPath="/login">
                 <Sessions />
-              </Route>
+              </ProtectedRoute>
               <Route path="/">
                 <Home />
               </Route>

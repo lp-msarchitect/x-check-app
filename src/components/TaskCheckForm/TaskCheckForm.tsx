@@ -6,24 +6,23 @@ import './TaskCheckForm.scss';
 
 interface SingleTaskProps {
   singleTask: Task;
-  displayForm: boolean;
-  showForm: Function;
 }
 
-const TaskCheckForm = ({
-  singleTask,
-  displayForm,
-  showForm,
-}: SingleTaskProps): JSX.Element => {
+const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
   const [taskScores, setTaskScores] = useState<number[]>(
     new Array(singleTask.items.length).fill(0)
   );
   const [totalScore, setTotalScore] = useState<number>(0);
   const [checkedTaskItems, setCheckedTaskItems] = useState<number>(0);
   const [form] = Form.useForm();
+  const [displayForm, setDisplayForm] = useState<boolean>(false);
+
+  const showForm = (): void => {
+    setDisplayForm(!displayForm);
+  };
 
   const submitHandler = (values: string): void => {
-    console.log(values);
+    console.log(values, totalScore);
     showForm();
   };
 
