@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -12,8 +12,10 @@ import Reviews from '../Reviews/Reviews';
 import SingleReview from '../SingleReview/SingleReview';
 import Sessions from '../Sessions/Sessions';
 import Navbar from '../Navbar/Navbar';
+import CreateTask from '../CreateTask/CreateTask';
+import ErrorNotification from '../ErrorNotification/ErrorNotification';
 import './App.scss';
-import { UserRole, User, Auth } from '../../models/data-models';
+import { User } from '../../models/data-models';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { getReviewRequests, getTasks, postUserFetch } from '../../actions';
@@ -26,29 +28,7 @@ import {
 type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
 const App = (): JSX.Element => {
-  const [role, setRole] = useState<UserRole>('student');
   const { Header, Content } = Layout;
-
-  const auth = useSelector<AppReduxState, Auth>(
-    (state) => state.auth,
-    shallowEqual
-  );
-
-  const tasks = useSelector<AppReduxState, TasksState>(
-    (state) => state.tasks,
-    shallowEqual
-  );
-
-  const requests = useSelector<AppReduxState, ReviewRequestsAppState>(
-    (state) => state.reviewRequests,
-    shallowEqual
-  );
-
-  const handleRoleChange = (
-    event: React.FormEvent<HTMLSelectElement>
-  ): void => {
-    setRole(event.currentTarget.value as UserRole);
-  };
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -63,17 +43,10 @@ const App = (): JSX.Element => {
       <Layout className="layout">
         <Header>
           <div className="logo" />
-          <Navbar role={role} />
+          <Navbar />
         </Header>
+        <ErrorNotification />
         <Content className="app-content">
-          <div>
-            <select value={role} onChange={handleRoleChange}>
-              <option value="author">Author</option>
-              <option value="student">Student</option>
-              <option value="supervisor">Supervisor</option>
-              <option value="coursemanager">Course Manager</option>
-            </select>
-          </div>
           <div className="router-switch-wrap">
             <Switch>
               <Route path="/login">
@@ -85,12 +58,11 @@ const App = (): JSX.Element => {
               <ProtectedRoute path="/tasks" redirectPath="/login">
                 <Tasks />
               </ProtectedRoute>
+              <ProtectedRoute path="/create-task" redirectPath="/login">
+                <CreateTask />
+              </ProtectedRoute>
               <ProtectedRoute path="/review-requests" redirectPath="/login">
-                <ReviewRequests
-                  auth={auth}
-                  tasks={tasks}
-                  reviewRequests={requests}
-                />
+                <ReviewRequests />
               </ProtectedRoute>
               <ProtectedRoute path="/reviews/:reviewId" redirectPath="/login">
                 <SingleReview />

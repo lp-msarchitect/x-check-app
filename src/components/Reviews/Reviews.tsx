@@ -16,8 +16,7 @@ import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
 import { compareStrings } from '../../utils/helpers';
 
-type State = ReviewsState;
-type AppDispatch = ThunkDispatch<State, void, AnyAction>;
+type AppDispatch = ThunkDispatch<ReviewsState, void, AnyAction>;
 
 const Reviews = (): JSX.Element => {
   const reviews = useSelector<AppReduxState, ReviewsState>(

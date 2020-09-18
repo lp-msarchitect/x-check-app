@@ -2,18 +2,31 @@
   "users": [
     {
       "githubId": "lp-msarchitect1",
-      "roles": ["student"],
+      "roles": [
+        "student"
+      ],
       "id": 1
     },
     {
       "githubId": "lp-msarchitect",
-      "roles": ["student"],
+      "roles": [
+        "student"
+      ],
       "id": 2
     },
     {
       "githubId": "ellankz",
-      "roles": ["author"],
+      "roles": [
+        "author"
+      ],
       "id": 3
+    },
+    {
+      "githubId": "Tsyman",
+      "roles": [
+        "student"
+      ],
+      "id": 4
     }
   ],
   "tasks": [

@@ -30,9 +30,9 @@ const SingleTask = ({ singleTask }: SingleTaskProps): JSX.Element => {
       <p>
         <strong>Author: {singleTask.author}</strong>
       </p>
-      <TaskItemCategoryList items={basic} />
-      <TaskItemCategoryList items={extra} />
-      <TaskItemCategoryList items={fines} />
+      {basic.length > 0 && <TaskItemCategoryList items={basic} />}
+      {extra.length > 0 && <TaskItemCategoryList items={extra} />}
+      {fines.length > 0 && <TaskItemCategoryList items={fines} />}
       <TaskActions taskState={singleTask.state} />
     </>
   );

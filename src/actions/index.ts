@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
-import { ReviewRequest, User } from '../models/data-models';
+import { ReviewRequest, Task, User } from '../models/data-models';
 
 const dataService = new DataService();
 
@@ -9,19 +9,28 @@ export const loginUser = (userObj: User) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
   const { githubId, roles } = userObj;
-  const user: User = await dataService.getSingleUser(githubId);
-  if (!user) {
-    await dataService.addUser({
-      githubId,
-      roles,
+  try {
+    const user: User = await dataService.getSingleUser(githubId);
+    if (!user) {
+      await dataService.addUser({
+        githubId,
+        roles,
+      });
+    } else {
+      await dataService.putUser(userObj);
+    }
+    dispatch({
+      type: ACTIONS.LOGIN,
+      payload: { ...userObj },
     });
-  } else {
-    await dataService.putUser(userObj);
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while login.',
+      },
+    });
   }
-  dispatch({
-    type: ACTIONS.LOGIN,
-    payload: { ...userObj },
-  });
 };
 
 export const logoutUser = (): AnyAction => {
@@ -41,25 +50,43 @@ export const authChooseUserRole = (userObj: User): AnyAction => {
 export const githubUserFetch = (code: string) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dispatch({ type: ACTIONS.LOGIN_STARTED });
-  const githubId: string = await dataService.getGitHubLogin(code);
+  try {
+    dispatch({ type: ACTIONS.LOGIN_STARTED });
+    const githubId: string = await dataService.getGitHubLogin(code);
 
-  localStorage.setItem('githubId', githubId);
-  dispatch(authChooseUserRole({ githubId, roles: ['student'] }));
+    localStorage.setItem('githubId', githubId);
+    dispatch(authChooseUserRole({ githubId, roles: ['student'] }));
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while login.',
+      },
+    });
+  }
 };
 
 export const postUserFetch = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  const githubId = localStorage.getItem('githubId') || '';
-  if (githubId) {
-    const user: User = await dataService.getSingleUser(githubId);
-    if (user) {
-      dispatch({
-        type: ACTIONS.LOGIN,
-        payload: { githubId, roles: user.roles },
-      });
+  try {
+    const githubId = localStorage.getItem('githubId') || '';
+    if (githubId) {
+      const user: User = await dataService.getSingleUser(githubId);
+      if (user) {
+        dispatch({
+          type: ACTIONS.LOGIN,
+          payload: { githubId, roles: user.roles },
+        });
+      }
     }
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while loading user.',
+      },
+    });
   }
 };
 
@@ -76,8 +103,13 @@ export const getTasks = () => async (
         },
       });
     })
-    .catch((err) => {
-      console.error(err);
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading tasks.',
+        },
+      });
     });
 };
 
@@ -94,8 +126,13 @@ export const getUsers = () => async (
         },
       });
     })
-    .catch((err) => {
-      console.error(err);
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading users.',
+        },
+      });
     });
 };
 
@@ -112,8 +149,36 @@ export const getReviews = () => async (
         },
       });
     })
-    .catch((err) => {
-      console.error(err);
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading reviews.',
+        },
+      });
+    });
+};
+
+export const createTask = (task: Task) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .addTask(task)
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.CREATE_TASK,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while adding task.',
+        },
+      });
     });
 };
 

@@ -99,6 +99,10 @@ class DataService {
     return result[0];
   }
 
+  async addTask(task: Task): Promise<Task> {
+    return this.setResource<Task>('/tasks', task);
+  }
+
   getAllTaskScores(): Promise<TaskScore[]> {
     return this.getResource<TaskScore[]>('/taskScores');
   }
@@ -170,77 +174,6 @@ class DataService {
     );
     return result[0];
   }
-
-  async sendTask<Task>(url: string, data: object): Promise<any> {
-    await fetch(`${this.baseURL}/tasks`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: 'Simple task v1',
-        author: 'cardamo',
-        state: 'DRAFT',
-        categoriesOrder: ['Basic Scope', 'Extra Scope', 'Fines'],
-        items: [
-          {
-            id: 'basic_p1',
-            minScore: 0,
-            maxScore: 20,
-            category: 'Basic Scope',
-            title: 'Basic things',
-            description: 'You need to make things right, not wrong',
-          },
-          {
-            id: 'extra_p1',
-            minScore: 0,
-            maxScore: 30,
-            category: 'Extra Scope',
-            title: 'More awesome things',
-            description: 'Be creative and make up some more awesome things',
-          },
-          {
-            id: 'fines_p1',
-            minScore: -10,
-            maxScore: 0,
-            category: 'Fines',
-            title: 'App crashes',
-            description: 'App causes BSoD!',
-          },
-        ],
-      }),
-    })
-      .then(function (response: any) {
-        if (!response.ok) {
-          return Promise.reject(
-            new Error(
-              `Response failed: ${response.status} (${response.statusText})`
-            )
-          );
-        }
-
-        return response.json();
-      })
-      .then(function (data: any) {
-        console.log(data);
-      })
-      .catch(function (error: any) {
-        console.log('error');
-      });
-  }
 }
 
 export default DataService;
-
-/// usage example
-// const [users, setUsers] = useState<User[]>([]);
-// const dataService = new DataService();
-// dataService
-//   .getAllUsers()
-//   .then((body) => {
-//     setUsers(body || []);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });

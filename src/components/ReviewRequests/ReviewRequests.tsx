@@ -1,23 +1,35 @@
 import { Button } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addReviewRequest } from '../../actions';
 import { Auth, ReviewRequest } from '../../models/data-models';
-import { ReviewRequestsAppState, TasksState } from '../../models/redux-models';
+import {
+  AppReduxState,
+  ReviewRequestsAppState,
+  TasksState,
+} from '../../models/redux-models';
 import RequestReview from '../RequestReview/RequestReview';
 import ReviewRequestsTable from '../ReviewRequestsTable/ReviewRequestsTable';
 
-export interface ReviewRequestsProps
-  extends React.HTMLAttributes<HTMLDivElement> {
-  auth: Auth;
-  tasks: TasksState;
-  reviewRequests: ReviewRequestsAppState;
-}
-
-const ReviewRequests = (props: ReviewRequestsProps): JSX.Element => {
+const ReviewRequests = (): JSX.Element => {
   const [showSubmit, setShowSubmit] = useState(false);
-  const { auth, tasks, reviewRequests } = props;
+
+  const auth = useSelector<AppReduxState, Auth>(
+    (state) => state.auth,
+    shallowEqual
+  );
+
+  const tasks = useSelector<AppReduxState, TasksState>(
+    (state) => state.tasks,
+    shallowEqual
+  );
+
+  const reviewRequests = useSelector<AppReduxState, ReviewRequestsAppState>(
+    (state) => state.reviewRequests,
+    shallowEqual
+  );
+
   const dispatch = useDispatch();
 
   const onModalBtnsClick = (): void => {

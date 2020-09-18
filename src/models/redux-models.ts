@@ -18,10 +18,13 @@ export type ReviewRequestsAppState = {
   [dynamic: string]: ReviewRequest;
 };
 
+export type ErrorState = null | string;
+
 export interface AppReduxState {
   tasks: TasksState;
   users: UsersState;
   reviews: ReviewsState;
   auth: Auth;
   reviewRequests: ReviewRequestsAppState;
+  error: ErrorState;
 }
