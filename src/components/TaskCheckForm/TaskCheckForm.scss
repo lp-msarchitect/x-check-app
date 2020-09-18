@@ -1,0 +1,131 @@
+body {
+  position: relative;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  .close-form {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+  }
+  .close-form:before {
+      content: '+';
+      color: #337AB7;
+      position: absolute;
+      z-index: 2;
+      transform: rotate(45deg);
+      font-size: 50px;
+      line-height: 1;
+      top: -7px;
+      left: 6px;
+      transition: all 0.3s cubic-bezier(0.77, 0, 0.2, 0.85);
+  }
+  .close-form:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      background: #337AB7;
+      z-index: 1;
+      transition: all 0.3s cubic-bezier(0.77, 0, 0.2, 0.85);
+      transform: scale(0.01);
+  }
+  .close-form:hover:after {
+      transform: scale(1);
+  }
+  .close-form:hover:before {
+      transform: scale(0.8) rotate(45deg);
+      color: #fff;
+  }
+  .ant-form {
+    position: absolute;
+    background: lightsteelblue;
+    padding: 20px;
+    z-index: 60;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    animation-name: showForm;
+    animation-duration: 0.4s;
+    hr {
+      width: 100%;
+    }
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        background-color: lightsteelblue;
+        padding: 50px 0 10px;
+        border-bottom: 5px solid black;
+      h1,h2,h3,h4,h5,h6 {
+        margin: 0;
+        padding: 0;
+      }
+      p {
+        margin: 0;
+        padding: 0;
+      }
+      .title {
+        font-size: 20px;
+      }
+      .score-container {
+        display: flex;
+        .progress {
+          margin-right: 10px;
+        }
+      }
+    }
+    .ant-form-item-label {
+      flex: 0 0 100%;
+      text-align: left;
+    }
+    .submit-button {
+      width: 50%;
+      align-self: center;
+    }
+    .task-link-input {
+      width: 100%;
+      border: none;
+      outline: none;
+    }
+  }
+}
+
+.disabled {
+  display: none;
+}
+
+@keyframes showForm {
+  from {
+      top: -100px;
+      opacity: 0;
+  }
+  to {
+      top: 0px;
+      opacity: 1;
+  }
+}
+
