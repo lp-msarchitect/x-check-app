@@ -15,7 +15,7 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
   const [totalScore, setTotalScore] = useState<number>(0);
   const [checkedTaskItems, setCheckedTaskItems] = useState<number>(0);
   const [form] = Form.useForm();
-  const [displayForm, setDisplayForm] = useState<boolean>(false);
+  const [displayForm, setDisplayForm] = useState<boolean>(true);
 
   const showForm = (): void => {
     setDisplayForm(!displayForm);
