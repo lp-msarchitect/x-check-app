@@ -3,17 +3,18 @@ import { useParams } from 'react-router-dom';
 import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { Descriptions, List, Comment, Button } from 'antd';
+import { Descriptions } from 'antd';
 import './SingleReview.scss';
 import {
   AppReduxState,
   ReviewsState,
   TasksState,
 } from '../../models/redux-models';
-import { Review, Task, TaskItem } from '../../models/data-models';
+import { Review, Task } from '../../models/data-models';
 import { getReviews, getTasks } from '../../actions';
 import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
+import ReviewScoreDetailed from '../ReviewScoreDetailed/ReviewScoreDetailed';
 
 const SingleReview = (): JSX.Element => {
   const { reviewId } = useParams<{ reviewId: string }>();
@@ -47,20 +48,6 @@ const SingleReview = (): JSX.Element => {
     }
   }, [review, tasks]);
 
-  const renderDisputeButton = (
-    thisScore: number,
-    maxScore: number
-  ): JSX.Element | null => {
-    if (thisScore < maxScore) {
-      return (
-        <Button type="primary" size="small">
-          Dispute
-        </Button>
-      );
-    }
-    return null;
-  };
-
   return (
     <Descriptions title="Review Info" layout="vertical" bordered>
       {task && (
@@ -86,35 +73,7 @@ const SingleReview = (): JSX.Element => {
       )}
       {task && review && (
         <Descriptions.Item label="Detailed Score" span={3}>
-          <List itemLayout="horizontal">
-            {task.items.map((item: TaskItem, i: number) => {
-              if (review.grade.items[item.id]) {
-                return (
-                  <List.Item className="single-review-item">
-                    <List.Item.Meta
-                      title={item.title}
-                      description={item.description}
-                    />
-                    <div>{review.grade.items[item.id].score}</div>
-                    {review.grade.items[item.id].comment && (
-                      <Comment
-                        actions={[
-                          renderDisputeButton(
-                            review.grade.items[item.id].score,
-                            task.items[i].maxScore
-                          ),
-                        ]}
-                        author={review.reviewer}
-                        avatar={`https://github.com/${review.reviewer}.png?size=40`}
-                        content={<p>{review.grade.items[item.id].comment}</p>}
-                      />
-                    )}
-                  </List.Item>
-                );
-              }
-              return null;
-            })}
-          </List>
+          <ReviewScoreDetailed taskItems={task.items} review={review} />
         </Descriptions.Item>
       )}
     </Descriptions>
