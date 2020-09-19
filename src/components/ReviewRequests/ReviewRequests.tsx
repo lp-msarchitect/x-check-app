@@ -14,6 +14,7 @@ import ReviewRequestsTable from '../ReviewRequestsTable/ReviewRequestsTable';
 
 const ReviewRequests = (): JSX.Element => {
   const [showSubmit, setShowSubmit] = useState(false);
+  const [showSelfCheck, setShowSelfCheck] = useState(false);
 
   const auth = useSelector<AppReduxState, Auth>(
     (state) => state.auth,
@@ -32,8 +33,13 @@ const ReviewRequests = (): JSX.Element => {
 
   const dispatch = useDispatch();
 
-  const onModalBtnsClick = (): void => {
-    setShowSubmit(!showSubmit);
+  const onSubmitRequestBtnClick = (): void => {
+    setShowSubmit(true);
+  };
+
+  const onCancel = (): void => {
+    setShowSubmit(false);
+    setShowSelfCheck(false);
   };
 
   const onSubmitReviewRequest = (values: Record<string, any>): void => {
@@ -48,19 +54,23 @@ const ReviewRequests = (): JSX.Element => {
       selfGrade: null,
     };
     dispatch(addReviewRequest(request));
+    setShowSelfCheck(true);
   };
 
   return (
     <div>
-      <Button type="primary" onClick={onModalBtnsClick}>
+      <Button type="primary" onClick={onSubmitRequestBtnClick}>
         Submit request
       </Button>
-      <Modal visible={showSubmit} footer={null} onCancel={onModalBtnsClick}>
+      <Modal visible={showSubmit} footer={null} onCancel={onCancel}>
         <RequestReview
           tasks={tasks}
-          onHide={onModalBtnsClick}
+          onHide={onCancel}
           onSubmitClick={onSubmitReviewRequest}
         />
+      </Modal>
+      <Modal visible={showSelfCheck} footer={null} onCancel={onCancel}>
+        SelfCheck
       </Modal>
       <ReviewRequestsTable reviewRequests={reviewRequests} tasks={tasks} />
     </div>
