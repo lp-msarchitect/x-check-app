@@ -6,24 +6,27 @@ import './TaskCheckForm.scss';
 
 interface SingleTaskProps {
   singleTask: Task;
+  open: boolean;
+  onSubmit: Function;
+  onCancel: Function;
 }
 
-const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
+const TaskCheckForm = ({
+  singleTask,
+  open,
+  onSubmit,
+  onCancel,
+}: SingleTaskProps): JSX.Element => {
   const [taskScores, setTaskScores] = useState<number[]>(
     new Array(singleTask.items.length).fill(0)
   );
   const [totalScore, setTotalScore] = useState<number>(0);
   const [checkedTaskItems, setCheckedTaskItems] = useState<number>(0);
   const [form] = Form.useForm();
-  const [displayForm, setDisplayForm] = useState<boolean>(true);
-
-  const showForm = (): void => {
-    setDisplayForm(!displayForm);
-  };
 
   const submitHandler = (values: string): void => {
     console.log(values, totalScore);
-    showForm();
+    onSubmit(values);
   };
 
   const closeForm = (): void => {
@@ -31,11 +34,11 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
     setTotalScore(0);
     setCheckedTaskItems(0);
     form.resetFields();
-    showForm();
+    onCancel();
   };
 
   return (
-    <div className={displayForm ? 'form-container' : 'form-container disabled'}>
+    <div className={open ? 'form-container' : 'form-container disabled'}>
       <Form className="task-check-form" onFinish={submitHandler} form={form}>
         <Affix offsetTop={0}>
           <button
