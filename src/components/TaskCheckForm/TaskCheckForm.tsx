@@ -25,7 +25,6 @@ const TaskCheckForm = ({
   const [form] = Form.useForm();
 
   const submitHandler = (values: string): void => {
-    console.log(values, totalScore);
     onSubmit(values);
   };
 

@@ -13,48 +13,6 @@ import RequestReview from '../RequestReview/RequestReview';
 import ReviewRequestsTable from '../ReviewRequestsTable/ReviewRequestsTable';
 import TaskCheckForm from '../TaskCheckForm/TaskCheckForm';
 
-const taskMock: Task = {
-  id: 'simple-task-v2',
-  title: 'Simple task v2',
-  author: 'test',
-  state: 'PUBLISHED',
-  categoriesOrder: ['Basic Scope', 'Extra Scope', 'Fines'],
-  items: [
-    {
-      id: 'basic_p1',
-      minScore: 0,
-      maxScore: 20,
-      category: 'Basic Scope',
-      title: 'Basic things',
-      description: 'You need to make things right, not wrong',
-    },
-    {
-      id: 'extra_p1',
-      minScore: 0,
-      maxScore: 30,
-      category: 'Extra Scope',
-      title: 'More awesome things',
-      description: 'Be creative and make up some more awesome things',
-    },
-    {
-      id: 'extra_p2',
-      minScore: 0,
-      maxScore: 50,
-      category: 'Extra Scope',
-      title: 'Even more awesome things',
-      description: 'Be creative and make up some more awesome things',
-    },
-    {
-      id: 'fines_p1',
-      minScore: -10,
-      maxScore: 0,
-      category: 'Fines',
-      title: 'App crashes',
-      description: 'App causes BSoD!',
-    },
-  ],
-};
-
 const ReviewRequests = (): JSX.Element => {
   const [showSubmit, setShowSubmit] = useState(false);
   const [showSelfCheck, setShowSelfCheck] = useState(false);
