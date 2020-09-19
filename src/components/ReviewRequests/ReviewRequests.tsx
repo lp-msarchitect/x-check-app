@@ -102,6 +102,11 @@ const ReviewRequests = (): JSX.Element => {
     setShowSelfCheck(true);
   };
 
+  const onSubmitSelfCheck = (values: string): void => {
+    setShowSelfCheck(false);
+    console.log(values);
+  };
+
   return (
     <>
       <Button type="primary" onClick={onSubmitRequestBtnClick}>
@@ -114,7 +119,14 @@ const ReviewRequests = (): JSX.Element => {
           onSubmitClick={onSubmitReviewRequest}
         />
       </Modal>
-      {showSelfCheck ? <TaskCheckForm singleTask={selectedTask} /> : null}
+      {showSelfCheck ? (
+        <TaskCheckForm
+          singleTask={selectedTask}
+          open={showSelfCheck}
+          onSubmit={onSubmitSelfCheck}
+          onCancel={onCancel}
+        />
+      ) : null}
       <ReviewRequestsTable reviewRequests={reviewRequests} tasks={tasks} />
     </>
   );
