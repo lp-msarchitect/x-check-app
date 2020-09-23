@@ -364,5 +364,27 @@ export const rejectDispute = (dispute: Dispute, review: Review) => async (
   }
 };
 
-// TODO: calculate the score after accepting dispute
-// TODO: let reviwer add comment (add form)
+export const addFeedbackToReview = (message: string, review: Review) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  const newAuthorFeedback = review.authorFeedback
+    ? [...review.authorFeedback, message]
+    : [message];
+  const newReview = { ...review, authorFeedback: newAuthorFeedback };
+  try {
+    const receivedReview = await dataService.updateReview(newReview);
+    dispatch({
+      type: ACTIONS.CHANGE_REVIEW,
+      payload: {
+        res: receivedReview,
+      },
+    });
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while adding feedback.',
+      },
+    });
+  }
+};

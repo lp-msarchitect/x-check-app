@@ -100,6 +100,7 @@ export interface Review {
   state: ReviewState;
   task: string;
   grade: TaskScore;
+  authorFeedback?: string[];
 }
 
 /// Dispute

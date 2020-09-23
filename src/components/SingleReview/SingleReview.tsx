@@ -12,6 +12,7 @@ import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
 import ReviewScoreDetailed from '../ReviewScoreDetailed/ReviewScoreDetailed';
 import DisputeDetails from '../DisputeDetails/DisputeDetails';
+import FeedbackToReviewer from '../FeedbackToReviewer/FeedbackToReviewer';
 
 const SingleReview = (): JSX.Element => {
   const { reviewId } = useParams<{ reviewId: string }>();
@@ -85,6 +86,11 @@ const SingleReview = (): JSX.Element => {
       {review && review.state !== 'DRAFT' && review.state !== 'PUBLISHED' && (
         <Descriptions.Item label="Dispute Details" span={2}>
           <DisputeDetails review={review} task={task} />
+        </Descriptions.Item>
+      )}
+      {review && (
+        <Descriptions.Item label="Feedback to Reviewer">
+          <FeedbackToReviewer review={review} />
         </Descriptions.Item>
       )}
     </Descriptions>
