@@ -17,7 +17,7 @@
     {
       "githubId": "ellankz",
       "roles": [
-        "author"
+        "supervisor"
       ],
       "id": 3
     },
@@ -220,7 +220,7 @@
       "requestId": "rev-req-1",
       "author": "ButterBrot777",
       "reviewer": "Ellankz",
-      "state": "REJECTED",
+      "state": "ACCEPTED",
       "task": "simple-task-v1",
       "grade": {
         "task": "simple-task-v1",
@@ -272,17 +272,63 @@
       "authorFeedback": [
         "Please review faster."
       ]
+    },
+    {
+      "id": "rev-id-3",
+      "requestId": "rev-req-13",
+      "author": "ellankz",
+      "reviewer": "Tsyman",
+      "state": "DISPUTED",
+      "task": "simple-task-v1",
+      "grade": {
+        "task": "simple-task-v1",
+        "items": {
+          "basic_p1": {
+            "score": 15,
+            "comment": "Well done!"
+          },
+          "extra_p1": {
+            "score": 25,
+            "comment": "Some things are done, some are not"
+          },
+          "fines_p1": {
+            "score": 0,
+            "comment": "No ticket today"
+          }
+        }
+      },
+      "authorFeedback": [
+        "Try me!"
+      ]
     }
   ],
   "disputes": [
     {
       "id": "randomid",
       "reviewId": "rev-id-1",
-      "state": "REJECTED",
+      "state": "ACCEPTED",
       "items": [
         {
           "taskItem": "extra_p1",
           "comment": "Check out the 'All things' page to see all things that were implemented",
+          "suggestedScore": 30
+        }
+      ],
+      "reviewerComments": []
+    },
+    {
+      "id": "4923ea37-4ea4-4a58-8825-47c743bef0f2",
+      "reviewId": "rev-id-3",
+      "state": "ONGOING",
+      "items": [
+        {
+          "taskItem": "basic_p1",
+          "comment": "i belive you're wrong",
+          "suggestedScore": 20
+        },
+        {
+          "taskItem": "extra_p1",
+          "comment": "so wrong",
           "suggestedScore": 30
         }
       ],

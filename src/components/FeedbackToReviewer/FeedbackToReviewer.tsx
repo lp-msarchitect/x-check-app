@@ -2,10 +2,11 @@ import React from 'react';
 import { Comment } from 'antd';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { useDispatch } from 'react-redux';
-import { Review } from '../../models/data-models';
+import { useDispatch, useSelector } from 'react-redux';
+import { Auth, Review } from '../../models/data-models';
 import FeedbackForm from '../FeedbackForm/FeedbackForm';
 import { addFeedbackToReview } from '../../actions';
+import { AppReduxState } from '../../models/redux-models';
 
 const FeedbackToReviewer = ({ review }: { review: Review }): JSX.Element => {
   type State = Review[];
@@ -15,6 +16,8 @@ const FeedbackToReviewer = ({ review }: { review: Review }): JSX.Element => {
   const handleAddFeedback = (message: string): void => {
     dispatch(addFeedbackToReview(message, review));
   };
+
+  const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
 
   return (
     <>
@@ -29,7 +32,9 @@ const FeedbackToReviewer = ({ review }: { review: Review }): JSX.Element => {
             />
           );
         })}
-      <FeedbackForm onSubmit={handleAddFeedback} />
+      {review.author.toLowerCase() === auth.githubId.toLowerCase() && (
+        <FeedbackForm onSubmit={handleAddFeedback} />
+      )}
     </>
   );
 };

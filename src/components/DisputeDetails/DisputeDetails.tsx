@@ -4,9 +4,16 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { Button, Comment } from 'antd';
 import { acceptDispute, getSingleDispute, rejectDispute } from '../../actions';
-import { Dispute, Review, Task, TaskItem } from '../../models/data-models';
+import {
+  Auth,
+  Dispute,
+  Review,
+  Task,
+  TaskItem,
+} from '../../models/data-models';
 import { AppReduxState } from '../../models/redux-models';
 import StateTag from '../StateTag/StateTag';
+import './DisputeDetails.scss';
 
 interface DisputeDetailsProps {
   review: Review;
@@ -20,6 +27,8 @@ const DisputeDetails = ({ review, task }: DisputeDetailsProps): JSX.Element => {
   const dispute = useSelector<AppReduxState, Dispute>(
     (state) => state.disputes[review.id]
   );
+
+  const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -76,16 +85,20 @@ const DisputeDetails = ({ review, task }: DisputeDetailsProps): JSX.Element => {
           })}
         </div>
       )}
-      {dispute && dispute.state === 'ONGOING' && (
-        <div>
-          <Button type="primary" size="small" onClick={handleAccept}>
-            Accept
-          </Button>
-          <Button type="primary" size="small" danger onClick={handleReject}>
-            Reject
-          </Button>
-        </div>
-      )}
+      {dispute &&
+        dispute.state === 'ONGOING' &&
+        (auth.githubId.toLowerCase() === review.reviewer.toLowerCase() ||
+          auth.roles.includes('supervisor') ||
+          auth.roles.includes('coursemanager')) && (
+          <div className="dispute-buttons">
+            <Button type="primary" size="small" onClick={handleAccept}>
+              Accept
+            </Button>
+            <Button type="primary" size="small" danger onClick={handleReject}>
+              Reject
+            </Button>
+          </div>
+        )}
     </div>
   );
 };

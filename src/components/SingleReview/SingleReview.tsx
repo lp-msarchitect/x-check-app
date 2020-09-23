@@ -6,7 +6,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Button, Descriptions } from 'antd';
 import './SingleReview.scss';
 import { AppReduxState, TasksState } from '../../models/redux-models';
-import { Review, Task } from '../../models/data-models';
+import { Auth, Review, Task } from '../../models/data-models';
 import { getSignleReview, getTasks } from '../../actions';
 import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
@@ -19,6 +19,8 @@ const SingleReview = (): JSX.Element => {
 
   type State = Review[];
   type AppDispatch = ThunkDispatch<State, void, AnyAction>;
+
+  const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
 
   const review = useSelector<AppReduxState, Review>(
     (state) => state.reviews[reviewId]
@@ -56,16 +58,17 @@ const SingleReview = (): JSX.Element => {
         <>
           <Descriptions.Item label="State" span={1}>
             <StateTag state={review.state} />
-            {review.state === 'PUBLISHED' && (
-              <Button
-                type="primary"
-                size="small"
-                className="dispute-btn"
-                onClick={handleAddDispute}
-              >
-                Dispute
-              </Button>
-            )}
+            {review.author.toLowerCase() === auth.githubId.toLowerCase() &&
+              review.state === 'PUBLISHED' && (
+                <Button
+                  type="primary"
+                  size="small"
+                  className="dispute-btn"
+                  onClick={handleAddDispute}
+                >
+                  Dispute
+                </Button>
+              )}
           </Descriptions.Item>
           <Descriptions.Item label="Author" span={1}>
             {review.author}
