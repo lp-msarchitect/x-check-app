@@ -19,6 +19,7 @@ import { User } from '../../models/data-models';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { postUserFetch } from '../../actions';
+import CreateDispute from '../CreateDispute/CreateDispute';
 
 type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
@@ -65,6 +66,12 @@ const App = (): JSX.Element => {
               </ProtectedRoute>
               <ProtectedRoute path="/sessions" redirectPath="/login">
                 <Sessions />
+              </ProtectedRoute>
+              <ProtectedRoute
+                path="/create-dispute/:reviewId"
+                redirectPath="/login"
+              >
+                <CreateDispute />
               </ProtectedRoute>
               <Route path="/">
                 <Home />

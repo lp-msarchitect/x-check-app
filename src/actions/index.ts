@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
-import { Task, User } from '../models/data-models';
+import { Dispute, Review, Task, TaskScore, User } from '../models/data-models';
 
 const dataService = new DataService();
 
@@ -113,6 +113,29 @@ export const getTasks = () => async (
     });
 };
 
+export const getSignleTask = (taskId: string) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .getSingleTask(taskId)
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.GET_SINGLE_TASK,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading task.',
+        },
+      });
+    });
+};
+
 export const getUsers = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
@@ -159,6 +182,29 @@ export const getReviews = () => async (
     });
 };
 
+export const getSignleReview = (reviewId: string) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .getSingleReview(reviewId)
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.GET_SINGLE_REVIEW,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading review.',
+        },
+      });
+    });
+};
+
 export const createTask = (task: Task) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
@@ -181,3 +227,142 @@ export const createTask = (task: Task) => async (
       });
     });
 };
+
+export const getDisputes = () => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .getAllDisputes()
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.GET_DISPUTES,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading disputes.',
+        },
+      });
+    });
+};
+
+export const getSingleDispute = (reviewId: string) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .getSingleDispute(reviewId)
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.GET_SINGLE_DISPUTE,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading dispute.',
+        },
+      });
+    });
+};
+
+export const addDispute = (dispute: Dispute, review: Review) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  try {
+    const receivedDispute = await dataService.addDispute(dispute);
+    const receivedReview = await dataService.updateReview(review);
+    dispatch({
+      type: ACTIONS.ADD_DISPUTE,
+      payload: {
+        res: receivedDispute,
+      },
+    });
+    dispatch({
+      type: ACTIONS.CHANGE_REVIEW,
+      payload: {
+        res: receivedReview,
+      },
+    });
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while adding dispute.',
+      },
+    });
+  }
+};
+
+export const acceptDispute = (dispute: Dispute, review: Review) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  const newDispute = { ...dispute, state: 'ACCEPTED' } as Dispute;
+  try {
+    const receivedDispute = await dataService.updateDispute(newDispute);
+    dispatch({
+      type: ACTIONS.ACCEPT_DISPUTE,
+      payload: {
+        res: receivedDispute,
+      },
+    });
+    const newScore: TaskScore = { ...review.grade };
+    dispute.items.forEach((disputeItem) => {
+      newScore.items[disputeItem.taskItem].score = disputeItem.suggestedScore;
+    });
+    const newReview = { ...review, grade: newScore } as Review;
+    const receivedReview = await dataService.updateReview(newReview);
+    dispatch({
+      type: ACTIONS.CHANGE_REVIEW,
+      payload: {
+        res: receivedReview,
+      },
+    });
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while editing dispute.',
+      },
+    });
+  }
+};
+
+export const rejectDispute = (dispute: Dispute, review: Review) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  const newDispute = { ...dispute, state: 'REJECTED' } as Dispute;
+  try {
+    const receivedDispute = await dataService.updateDispute(newDispute);
+    dispatch({
+      type: ACTIONS.REJECT_DISPUTE,
+      payload: {
+        res: receivedDispute,
+      },
+    });
+    dispatch({
+      type: ACTIONS.CHANGE_REVIEW,
+      payload: {
+        res: review,
+      },
+    });
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while editing dispute.',
+      },
+    });
+  }
+};
+
+// TODO: calculate the score after accepting dispute
+// TODO: let reviwer add comment (add form)

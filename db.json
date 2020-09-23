@@ -1,6 +1,5 @@
 {
-  "users": [
-    {
+  "users": [{
       "githubId": "lp-msarchitect1",
       "roles": [
         "student"
@@ -29,8 +28,7 @@
       "id": 4
     }
   ],
-  "tasks": [
-    {
+  "tasks": [{
       "id": "simple-task-v1",
       "title": "Simple task v1",
       "author": "cardamo",
@@ -40,8 +38,7 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [
-        {
+      "items": [{
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -77,8 +74,7 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [
-        {
+      "items": [{
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -121,8 +117,7 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [
-        {
+      "items": [{
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -150,77 +145,69 @@
       "id": "ppusd-v"
     }
   ],
-  "taskScores": [
-    {
-      "task": "simple-task-v1",
-      "items": {
-        "basic_p1": {
-          "score": 20,
-          "comment": "Well done!"
-        },
-        "extra_p1": {
-          "score": 15,
-          "comment": "Some things are done, some are not"
-        },
-        "fines_p1": {
-          "score": 0,
-          "comment": "No ticket today"
-        }
+  "taskScores": [{
+    "task": "simple-task-v1",
+    "items": {
+      "basic_p1": {
+        "score": 20,
+        "comment": "Well done!"
+      },
+      "extra_p1": {
+        "score": 15,
+        "comment": "Some things are done, some are not"
+      },
+      "fines_p1": {
+        "score": 0,
+        "comment": "No ticket today"
       }
     }
-  ],
-  "crossCheckSessions": [
-    {
-      "id": "rss2020Q3react-xcheck",
-      "state": "DRAFT",
-      "taskId": "simple-task-v1",
-      "coefficient": 0.7,
-      "startDate": "2020-07-07",
-      "endDate": "2020-07-14",
-      "discardMinScore": true,
-      "discardMaxScore": false,
-      "minReiewsAmount": 1,
-      "desiredReviewersAmount": 2,
-      "attendees": [
-        {
-          "githubId": "ButterBrot777",
-          "reviewerOf": [
-            "torvalds",
-            "cardamo"
-          ]
-        },
-        {
-          "githubId": "torvalds",
-          "reviewerOf": [
-            "cardamo"
-          ]
-        },
-        {
-          "githubId": "cardamo",
-          "reviewerOf": [
-            "ButterBrot777"
-          ]
-        }
-      ]
-    }
-  ],
-  "reviewRequests": [
-    {
-      "id": "rev-req-1",
-      "crossCheckSessionId": "rss2020Q3react-xcheck",
-      "author": "cardamo",
-      "task": "simple-task-v1",
-      "state": "PUBLISHED",
-      "selfGrade": {}
-    }
-  ],
-  "reviews": [
-    {
+  }],
+  "crossCheckSessions": [{
+    "id": "rss2020Q3react-xcheck",
+    "state": "DRAFT",
+    "taskId": "simple-task-v1",
+    "coefficient": 0.7,
+    "startDate": "2020-07-07",
+    "endDate": "2020-07-14",
+    "discardMinScore": true,
+    "discardMaxScore": false,
+    "minReiewsAmount": 1,
+    "desiredReviewersAmount": 2,
+    "attendees": [{
+        "githubId": "ButterBrot777",
+        "reviewerOf": [
+          "torvalds",
+          "cardamo"
+        ]
+      },
+      {
+        "githubId": "torvalds",
+        "reviewerOf": [
+          "cardamo"
+        ]
+      },
+      {
+        "githubId": "cardamo",
+        "reviewerOf": [
+          "ButterBrot777"
+        ]
+      }
+    ]
+  }],
+  "reviewRequests": [{
+    "id": "rev-req-1",
+    "crossCheckSessionId": "rss2020Q3react-xcheck",
+    "author": "cardamo",
+    "task": "simple-task-v1",
+    "state": "PUBLISHED",
+    "selfGrade": {}
+  }],
+  "reviews": [{
       "id": "rev-id-1",
       "requestId": "rev-req-1",
       "author": "ButterBrot777",
       "reviewer": "Ellankz",
-      "state": "DISPUTED",
+      "state": "REJECTED",
       "task": "simple-task-v1",
       "grade": {
         "task": "simple-task-v1",
@@ -230,7 +217,7 @@
             "comment": "Well done!"
           },
           "extra_p1": {
-            "score": 15,
+            "score": 30,
             "comment": "Some things are done, some are not"
           },
           "fines_p1": {
@@ -251,7 +238,7 @@
         "task": "simple-task-v2",
         "items": {
           "basic_p1": {
-            "score": 15,
+            "score": 17,
             "comment": "Well done!"
           },
           "extra_p1": {
@@ -259,20 +246,22 @@
             "comment": "Some things are done, some are not"
           },
           "fines_p1": {
-            "score": -10,
+            "score": 0,
             "comment": "Too bad"
           }
         }
       }
     }
   ],
-  "disputes": [
-    {
-      "reviewId": "rev-id-1",
-      "state": "ONGOING",
-      "item": "extra_p1",
+  "disputes": [{
+    "id": "randomid",
+    "reviewId": "rev-id-1",
+    "state": "REJECTED",
+    "items": [{
+      "taskItem": "extra_p1",
       "comment": "Check out the 'All things' page to see all things that were implemented",
       "suggestedScore": 30
-    }
-  ]
+    }],
+    "reviewerComments": []
+  }]
 }

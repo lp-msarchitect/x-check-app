@@ -1,8 +1,9 @@
 import { combineReducers, AnyAction } from 'redux';
 import keyBy from 'lodash.keyby';
-import { Auth, Task } from '../models/data-models';
+import { Auth, Dispute, Review, Task } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
 import {
+  DisputesState,
   ErrorState,
   ReviewsState,
   TasksState,
@@ -43,6 +44,16 @@ const userAuthReducer = (
   }
 };
 
+const addOneTaskToStore = (task: Task, state: TasksState): TasksState => {
+  return keyBy(
+    {
+      ...state,
+      [task.id]: task,
+    },
+    'id'
+  ) as TasksState;
+};
+
 const tasksReducer = (state = {}, action: AnyAction): TasksState => {
   switch (action.type) {
     case ACTIONS.GET_TASKS:
@@ -52,13 +63,12 @@ const tasksReducer = (state = {}, action: AnyAction): TasksState => {
       return state;
     case ACTIONS.CREATE_TASK:
       if (action.payload) {
-        return keyBy(
-          {
-            ...state,
-            [action.payload.res.id]: action.payload.res as Task,
-          },
-          'id'
-        ) as TasksState;
+        return addOneTaskToStore(action.payload.res, state);
+      }
+      return state;
+    case ACTIONS.GET_SINGLE_TASK:
+      if (action.payload) {
+        return addOneTaskToStore(action.payload.res, state);
       }
       return state;
     default:
@@ -78,11 +88,34 @@ const usersReducer = (state = {}, action: AnyAction): UsersState => {
   }
 };
 
+const addOneReviewToStore = (
+  review: Review,
+  state: ReviewsState
+): ReviewsState => {
+  return keyBy(
+    {
+      ...state,
+      [review.id]: review,
+    },
+    'id'
+  ) as ReviewsState;
+};
+
 const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
   switch (action.type) {
     case ACTIONS.GET_REVIEWS:
       if (action.payload) {
         return keyBy(action.payload.res, 'id') as ReviewsState;
+      }
+      return state;
+    case ACTIONS.GET_SINGLE_REVIEW:
+      if (action.payload) {
+        return addOneReviewToStore(action.payload.res, state);
+      }
+      return state;
+    case ACTIONS.CHANGE_REVIEW:
+      if (action.payload) {
+        return addOneReviewToStore(action.payload.res, state);
       }
       return state;
     default:
@@ -100,10 +133,56 @@ const errorReducer = (state = null, action: AnyAction): ErrorState => {
   return state;
 };
 
+const addOneDisputeToStore = (
+  dispute: Dispute,
+  state: DisputesState
+): DisputesState => {
+  return keyBy(
+    {
+      ...state,
+      [dispute.reviewId]: dispute,
+    },
+    'reviewId'
+  ) as DisputesState;
+};
+
+const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
+  switch (action.type) {
+    case ACTIONS.GET_DISPUTES:
+      if (action.payload) {
+        return keyBy(action.payload.res, 'reviewId') as DisputesState;
+      }
+      return state;
+    case ACTIONS.ADD_DISPUTE:
+      if (action.payload) {
+        return addOneDisputeToStore(action.payload.res, state);
+      }
+      return state;
+    case ACTIONS.GET_SINGLE_DISPUTE:
+      if (action.payload) {
+        return addOneDisputeToStore(action.payload.res, state);
+      }
+      return state;
+    case ACTIONS.ACCEPT_DISPUTE:
+      if (action.payload) {
+        return addOneDisputeToStore(action.payload.res, state);
+      }
+      return state;
+    case ACTIONS.REJECT_DISPUTE:
+      if (action.payload) {
+        return addOneDisputeToStore(action.payload.res, state);
+      }
+      return state;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   tasks: tasksReducer,
   users: usersReducer,
   auth: userAuthReducer,
   reviews: reviewsReducer,
+  disputes: disputesReducer,
   error: errorReducer,
 });

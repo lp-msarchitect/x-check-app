@@ -145,6 +145,10 @@ class DataService {
     return result[0];
   }
 
+  async updateReview(review: Review): Promise<Review> {
+    return (await this.putResource(`/reviews/${review.id}`, review)) as Review;
+  }
+
   getAllDisputes(): Promise<Dispute[]> {
     return this.getResource<Dispute[]>('/disputes');
   }
@@ -154,6 +158,17 @@ class DataService {
       `/disputes?reviewId=${reviewId}`
     );
     return result[0];
+  }
+
+  async addDispute(dispute: Dispute): Promise<Dispute> {
+    return this.setResource<Dispute>('/disputes', dispute);
+  }
+
+  async updateDispute(dispute: Dispute): Promise<Dispute> {
+    return (await this.putResource(
+      `/disputes/${dispute.id}`,
+      dispute
+    )) as Dispute;
   }
 }
 
