@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Select } from 'antd';
 import { TaskItem } from '../../../models/data-models';
 import './CheckTask.scss';
@@ -12,6 +12,8 @@ interface CheckTaskProps {
   itemId: number;
   taskScores: number[];
   setTaskScores: Function;
+  selected: boolean;
+  setSelected: Function;
 }
 
 const CheckTask = ({
@@ -22,9 +24,9 @@ const CheckTask = ({
   itemId,
   taskScores,
   setTaskScores,
+  selected,
+  setSelected,
 }: CheckTaskProps): JSX.Element => {
-  const [selected, setSelected] = useState<boolean>(false);
-
   const checkScore = (value: number): void => {
     const copy = taskScores;
     copy[itemId] = value;

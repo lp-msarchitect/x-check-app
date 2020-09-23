@@ -98,6 +98,14 @@ body {
         }
       }
     }
+    .fast-score-buttons {
+      .button {
+        margin-right: 20px;
+      }
+      .button:last-child {
+        margin-right: 0px;
+      }
+    }
     .ant-form-item-label {
       flex: 0 0 100%;
       text-align: left;
