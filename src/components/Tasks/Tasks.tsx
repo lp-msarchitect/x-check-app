@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SingleTask from '../SingleTask/SingleTask';
 import { AppReduxState, TasksState } from '../../models/redux-models';
-import { Task } from '../../models/data-models';
+import { Auth, Task } from '../../models/data-models';
 import './Tasks.scss';
 import { getTasks } from '../../actions';
 import StateBadge from '../StateBadge/StateBadge';
@@ -17,7 +17,21 @@ type AppDispatch = ThunkDispatch<TasksState, void, AnyAction>;
 const Tasks = (): JSX.Element => {
   const { Panel } = Collapse;
 
-  const tasks = useSelector<AppReduxState, TasksState>((state) => state.tasks);
+  const tasks = useSelector<AppReduxState, Task[]>((state) => {
+    if (
+      state.auth.roles.includes('supervisor') ||
+      state.auth.roles.includes('coursemanager') ||
+      state.auth.roles.includes('author')
+    ) {
+      return Object.values(state.tasks);
+    }
+    return Object.values(state.tasks).filter(
+      (task: Task) => task.state === 'PUBLISHED'
+    );
+  });
+
+  const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
+
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -32,13 +46,16 @@ const Tasks = (): JSX.Element => {
   return (
     <div className="tasks">
       <h2>Tasks</h2>
-      <Button
-        type="primary"
-        onClick={handleAddTask}
-        className="create-task-btn"
-      >
-        Add Task
-      </Button>
+      {(auth.roles.includes('author') ||
+        auth.roles.includes('coursemanager')) && (
+        <Button
+          type="primary"
+          onClick={handleAddTask}
+          className="create-task-btn"
+        >
+          Add Task
+        </Button>
+      )}
       <Collapse
         accordion
         expandIcon={({ isActive }): JSX.Element => (
