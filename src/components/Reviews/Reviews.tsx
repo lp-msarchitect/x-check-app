@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -14,13 +14,28 @@ import {
 } from '../../models/redux-models';
 import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
+import './Reviews.scss';
 
 type AppDispatch = ThunkDispatch<ReviewsState, void, AnyAction>;
 
 const Reviews = (): JSX.Element => {
-  const reviews = useSelector<AppReduxState, ReviewsState>(
-    (state) => state.reviews
-  );
+  const reviewsArr = useSelector<AppReduxState, Review[]>((state): Review[] => {
+    if (
+      state.auth.roles.includes('supervisor') ||
+      state.auth.roles.includes('coursemanager')
+    ) {
+      return Object.values(state.reviews);
+    }
+    const reviewsArray = Object.values(state.reviews).filter(
+      (review: Review) => {
+        return (
+          review.author.toLowerCase() === state.auth.githubId.toLowerCase() ||
+          review.reviewer.toLowerCase() === state.auth.githubId.toLowerCase()
+        );
+      }
+    );
+    return reviewsArray;
+  });
   const tasks = useSelector<AppReduxState, TasksState>((state) => state.tasks);
 
   const dispatch: AppDispatch = useDispatch();
@@ -28,12 +43,6 @@ const Reviews = (): JSX.Element => {
     dispatch(getReviews());
     dispatch(getTasks());
   }, [dispatch]);
-
-  const [reviewsArr, setReviewsArr] = useState<Review[]>([]);
-
-  useEffect(() => {
-    setReviewsArr(Object.values(reviews));
-  }, [reviews]);
 
   /// helper functions
   const compareStrings = (A: string, B: string): number => {

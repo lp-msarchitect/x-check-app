@@ -100,15 +100,27 @@ export interface Review {
   state: ReviewState;
   task: string;
   grade: TaskScore;
+  authorFeedback?: string[];
 }
 
 /// Dispute
 export type DisputeState = 'ONGOING' | 'ACCEPTED' | 'REJECTED';
 
 export interface Dispute {
+  id: string;
   reviewId: string;
   state: DisputeState;
-  item: string;
+  items: DisputeItem[];
+  reviewerComments: DisputeComment[];
+}
+
+interface DisputeComment {
+  githubId: string;
+  comment: string;
+}
+
+export interface DisputeItem {
+  taskItem: string;
   comment: string;
   suggestedScore: number;
 }

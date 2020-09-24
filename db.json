@@ -17,7 +17,7 @@
     {
       "githubId": "ellankz",
       "roles": [
-        "author"
+        "supervisor"
       ],
       "id": 3
     },
@@ -220,7 +220,7 @@
       "requestId": "rev-req-1",
       "author": "ButterBrot777",
       "reviewer": "Ellankz",
-      "state": "DISPUTED",
+      "state": "ACCEPTED",
       "task": "simple-task-v1",
       "grade": {
         "task": "simple-task-v1",
@@ -230,7 +230,7 @@
             "comment": "Well done!"
           },
           "extra_p1": {
-            "score": 15,
+            "score": 30,
             "comment": "Some things are done, some are not"
           },
           "fines_p1": {
@@ -238,7 +238,12 @@
             "comment": "No ticket today"
           }
         }
-      }
+      },
+      "authorFeedback": [
+        "Thank you very much!",
+        "You're welcome.",
+        "Now I'm talking to myself."
+      ]
     },
     {
       "id": "rev-id-2",
@@ -251,7 +256,7 @@
         "task": "simple-task-v2",
         "items": {
           "basic_p1": {
-            "score": 15,
+            "score": 17,
             "comment": "Well done!"
           },
           "extra_p1": {
@@ -259,20 +264,75 @@
             "comment": "Some things are done, some are not"
           },
           "fines_p1": {
-            "score": -10,
+            "score": 0,
             "comment": "Too bad"
           }
         }
-      }
+      },
+      "authorFeedback": [
+        "Please review faster."
+      ]
+    },
+    {
+      "id": "rev-id-3",
+      "requestId": "rev-req-13",
+      "author": "ellankz",
+      "reviewer": "Tsyman",
+      "state": "DISPUTED",
+      "task": "simple-task-v1",
+      "grade": {
+        "task": "simple-task-v1",
+        "items": {
+          "basic_p1": {
+            "score": 15,
+            "comment": "Well done!"
+          },
+          "extra_p1": {
+            "score": 25,
+            "comment": "Some things are done, some are not"
+          },
+          "fines_p1": {
+            "score": 0,
+            "comment": "No ticket today"
+          }
+        }
+      },
+      "authorFeedback": [
+        "Try me!"
+      ]
     }
   ],
   "disputes": [
     {
+      "id": "randomid",
       "reviewId": "rev-id-1",
+      "state": "ACCEPTED",
+      "items": [
+        {
+          "taskItem": "extra_p1",
+          "comment": "Check out the 'All things' page to see all things that were implemented",
+          "suggestedScore": 30
+        }
+      ],
+      "reviewerComments": []
+    },
+    {
+      "id": "4923ea37-4ea4-4a58-8825-47c743bef0f2",
+      "reviewId": "rev-id-3",
       "state": "ONGOING",
-      "item": "extra_p1",
-      "comment": "Check out the 'All things' page to see all things that were implemented",
-      "suggestedScore": 30
+      "items": [
+        {
+          "taskItem": "basic_p1",
+          "comment": "i belive you're wrong",
+          "suggestedScore": 20
+        },
+        {
+          "taskItem": "extra_p1",
+          "comment": "so wrong",
+          "suggestedScore": 30
+        }
+      ],
+      "reviewerComments": []
     }
   ]
 }
