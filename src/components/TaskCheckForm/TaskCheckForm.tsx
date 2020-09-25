@@ -4,6 +4,13 @@ import { Task, TaskItem } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
 
+const fastScoreButtons = [
+  'Not completed',
+  'Partially completed',
+  'Fully completed',
+  'Clear',
+];
+
 interface SingleTaskProps {
   singleTask: Task;
 }
@@ -16,14 +23,9 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
   const [checkedTaskItems, setCheckedTaskItems] = useState<number>(0);
   const [form] = Form.useForm();
   const [displayForm, setDisplayForm] = useState<boolean>(true);
-  const [selected, setSelected] = useState<boolean>(false);
-
-  const scoreCategory = [
-    'Not completed',
-    'Partially completed',
-    'Fully completed',
-    'Clear',
-  ];
+  const [checkedTasks, setCheckedTasks] = useState<boolean[]>(
+    new Array(singleTask.items.length).fill(false)
+  );
 
   const showForm = (): void => {
     setDisplayForm(!displayForm);
@@ -46,21 +48,25 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
     const obj: any = {};
     const value = event.currentTarget.textContent;
     singleTask.items.forEach((elem: TaskItem): void => {
-      const { category } = elem;
+      const { title, category } = elem;
       if (category === 'Fines') {
-        obj[category] = 'No';
+        obj[title] = 'No';
       } else {
-        obj[category] = value;
+        obj[title] = value;
       }
 
       switch (value) {
-        case scoreCategory[0]:
+        case fastScoreButtons[0]:
           setTotalScore(0);
           setCheckedTaskItems(singleTask.items.length);
-          setSelected(true);
+          setCheckedTasks(
+            checkedTasks.map(() => {
+              return true;
+            })
+          );
           form.setFieldsValue(obj);
           break;
-        case scoreCategory[1]: {
+        case fastScoreButtons[1]: {
           const scores = singleTask.items.map((item: TaskItem) => {
             return item.maxScore / 2;
           });
@@ -70,12 +76,16 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
               return a + b;
             }, 0)
           );
+          setCheckedTasks(
+            checkedTasks.map(() => {
+              return true;
+            })
+          );
           setCheckedTaskItems(singleTask.items.length);
-          setSelected(true);
           form.setFieldsValue(obj);
           break;
         }
-        case scoreCategory[2]: {
+        case fastScoreButtons[2]: {
           const scores = singleTask.items.map((item: TaskItem) => {
             return item.maxScore;
           });
@@ -85,16 +95,24 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
               return a + b;
             }, 0)
           );
+          setCheckedTasks(
+            checkedTasks.map(() => {
+              return true;
+            })
+          );
           setCheckedTaskItems(singleTask.items.length);
-          setSelected(true);
           form.setFieldsValue(obj);
           break;
         }
-        case scoreCategory[3]:
+        case fastScoreButtons[3]:
+          setCheckedTasks(
+            checkedTasks.map(() => {
+              return false;
+            })
+          );
           setCheckedTaskItems(0);
           setTotalScore(0);
           setTaskScores(new Array(singleTask.items.length).fill(0));
-          setSelected(false);
           form.resetFields();
           break;
         default:
@@ -116,7 +134,7 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
           <div className="form-header">
             <h2 className="title">{singleTask.id}</h2>
             <div className="fast-score-buttons">
-              {scoreCategory.map((elem) => {
+              {fastScoreButtons.map((elem) => {
                 return (
                   <Button
                     className="button"
@@ -149,8 +167,8 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
               setTotalScore={setTotalScore}
               checkedTaskItems={checkedTaskItems}
               setCheckedTaskItems={setCheckedTaskItems}
-              selected={selected}
-              setSelected={setSelected}
+              checkedTasks={checkedTasks}
+              setCheckedTasks={setCheckedTasks}
               itemId={id}
             />
           );
@@ -168,25 +186,5 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
     </div>
   );
 };
-/*
-<div className="fast-score-buttons">
-<Button
-  className="button"
-  htmlType="button"
-  type="default"
-  onClick={(event): void => fillForm(event)}
->
-  0
-</Button>
-<Button className="button" htmlType="button" type="default">
-  50%
-</Button>
-<Button className="button" htmlType="button" type="default">
-  100%
-</Button>
-<Button className="button" htmlType="button" type="default">
-  Clear
-</Button>
-</div>
-*/
+
 export default TaskCheckForm;

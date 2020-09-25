@@ -1,5 +1,6 @@
-import React from 'react';
-import { Form, Select } from 'antd';
+import React, { ReactElement, useState } from 'react';
+import { Form, Select, InputNumber, Divider, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { TaskItem } from '../../../models/data-models';
 import './CheckTask.scss';
 
@@ -12,8 +13,8 @@ interface CheckTaskProps {
   itemId: number;
   taskScores: number[];
   setTaskScores: Function;
-  selected: boolean;
-  setSelected: Function;
+  checkedTasks: boolean[];
+  setCheckedTasks: Function;
 }
 
 const CheckTask = ({
@@ -24,9 +25,22 @@ const CheckTask = ({
   itemId,
   taskScores,
   setTaskScores,
-  selected,
-  setSelected,
+  checkedTasks,
+  setCheckedTasks,
 }: CheckTaskProps): JSX.Element => {
+  const [otherScore, setOtherScore] = useState<number>(0);
+  const [baseScores, setBaseScores] = useState<number[]>([
+    0,
+    taskItem.maxScore / 2,
+    taskItem.maxScore,
+  ]);
+
+  const [scoreCategory, setScoreCategory] = useState<string[]>([
+    'Not completed',
+    'Partially completed',
+    'Fully completed',
+  ]);
+
   const checkScore = (value: number): void => {
     const copy = taskScores;
     copy[itemId] = value;
@@ -42,17 +56,40 @@ const CheckTask = ({
   };
 
   const selectHandler = (value: number): void => {
-    if (!selected) {
-      setSelected(true);
+    if (!checkedTasks[itemId]) {
+      const copy = checkedTasks;
+      copy[itemId] = true;
+      setCheckedTasks(copy);
       setCheckedTaskItems(checkedTaskItems + 1);
     }
     checkScore(value);
   };
 
   const onClear = (): void => {
-    setSelected(false);
+    const copy = checkedTasks;
+    copy[itemId] = false;
+    setCheckedTasks(copy);
     setCheckedTaskItems(checkedTaskItems - 1);
     checkScore(0);
+  };
+
+  const addItem = (): void => {
+    const score = otherScore.toString();
+    if (scoreCategory.length >= 4) {
+      scoreCategory.pop();
+      baseScores.pop();
+    }
+    setScoreCategory([...scoreCategory, score]);
+    setBaseScores([...baseScores, otherScore]);
+    setOtherScore(0);
+  };
+
+  const onOtherScoreChange = (value: number | string | undefined): void => {
+    if (value === undefined) {
+      return;
+    }
+    const score = +value;
+    setOtherScore(score);
   };
 
   return (
@@ -78,7 +115,7 @@ const CheckTask = ({
           </a>
         </div>
         <Form.Item
-          name={taskItem.category}
+          name={taskItem.title}
           label={taskItem.category}
           rules={[{ required: true }]}
         >
@@ -98,10 +135,33 @@ const CheckTask = ({
               allowClear
               onSelect={(value: number): void => selectHandler(value)}
               onClear={(): void => onClear()}
+              dropdownRender={(menu): ReactElement => (
+                <div>
+                  {menu}
+                  <Divider style={{ margin: '4px 0' }} />
+                  <div
+                    style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}
+                  >
+                    <InputNumber
+                      min={taskItem.minScore}
+                      max={taskItem.maxScore}
+                      style={{ flex: 'auto' }}
+                      onChange={onOtherScoreChange}
+                    />
+                    <Button type="link" onClick={addItem}>
+                      <PlusOutlined /> Other
+                    </Button>
+                  </div>
+                </div>
+              )}
             >
-              <Option value={0}>Not completed</Option>
-              <Option value={taskItem.maxScore / 2}>Partially completed</Option>
-              <Option value={taskItem.maxScore}>Fully completed</Option>
+              {scoreCategory.map((elem, i) => {
+                return (
+                  <Option value={baseScores[i]} key={elem}>
+                    {elem}
+                  </Option>
+                );
+              })}
             </Select>
           )}
         </Form.Item>
