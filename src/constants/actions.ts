@@ -21,3 +21,5 @@ export const ADD_DISPUTE = 'ADD_DISPUTE';
 export const ACCEPT_DISPUTE = 'ACCEPT_DISPUTE';
 export const REJECT_DISPUTE = 'REJECT_DISPUTE';
 export const CHANGE_REVIEW = 'CHANGE_REVIEW';
+
+export const DELETE_TASK = 'DELETE_TASK';

@@ -69,6 +69,14 @@ class DataService {
     return body;
   }
 
+  async deleteResource<T>(url: string, id: string): Promise<T> {
+    const res = await fetch(this.baseURL + url + '/' + id, {
+      method: 'delete',
+    });
+    const body = await res.json();
+    return body;
+  }
+
   getAllUsers(): Promise<User[]> {
     return this.getResource<User[]>('/users');
   }
@@ -101,6 +109,10 @@ class DataService {
 
   async addTask(task: Task): Promise<Task> {
     return this.setResource<Task>('/tasks', task);
+  }
+
+  async deleteTask(taskId: string): Promise<Task> {
+    return this, this.deleteResource<Task>('/tasks', taskId);
   }
 
   getAllTaskScores(): Promise<TaskScore[]> {

@@ -33,7 +33,7 @@ const SingleTask = ({ singleTask }: SingleTaskProps): JSX.Element => {
       {basic.length > 0 && <TaskItemCategoryList items={basic} />}
       {extra.length > 0 && <TaskItemCategoryList items={extra} />}
       {fines.length > 0 && <TaskItemCategoryList items={fines} />}
-      <TaskActions taskState={singleTask.state} />
+      <TaskActions task={singleTask} />
     </>
   );
 };

@@ -3,10 +3,14 @@ import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import Logout from '../Logout/Logout';
 import './Navbar.scss';
+import logo from '../../images/logo.png';
 
 const Navbar = (): JSX.Element => {
   return (
     <>
+      <Link to="/" className="logo">
+        <img src={logo} alt="XCheck" />
+      </Link>
       <Menu mode="horizontal" theme="dark">
         <Menu.Item>
           <Link to="/">Home</Link>

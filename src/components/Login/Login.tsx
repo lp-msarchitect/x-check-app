@@ -5,7 +5,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Spin, Button, Select } from 'antd';
 import { GithubOutlined } from '@ant-design/icons';
 import { Redirect } from 'react-router-dom';
-import { githubUserFetch, loginUser } from '../../actions';
+import { githubUserFetch, loginUser } from '../../actions/actions';
 import { AppReduxState } from '../../models/redux-models';
 import { Auth, UserRole } from '../../models/data-models';
 import './Login.scss';

@@ -5,7 +5,7 @@ import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { Auth, Review } from '../../models/data-models';
 import FeedbackForm from '../FeedbackForm/FeedbackForm';
-import { addFeedbackToReview } from '../../actions';
+import { addFeedbackToReview } from '../../actions/actions';
 import { AppReduxState } from '../../models/redux-models';
 
 const FeedbackToReviewer = ({ review }: { review: Review }): JSX.Element => {

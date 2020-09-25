@@ -9,7 +9,7 @@ import SingleTask from '../SingleTask/SingleTask';
 import { AppReduxState, TasksState } from '../../models/redux-models';
 import { Auth, Task } from '../../models/data-models';
 import './Tasks.scss';
-import { getTasks } from '../../actions';
+import { getTasks } from '../../actions/actions';
 import StateBadge from '../StateBadge/StateBadge';
 
 type AppDispatch = ThunkDispatch<TasksState, void, AnyAction>;
@@ -66,7 +66,7 @@ const Tasks = (): JSX.Element => {
           return (
             <Panel
               header={item.title}
-              key={item.id}
+              key={item.id!}
               extra={<StateBadge state={item.state} />}
             >
               <SingleTask singleTask={item} />

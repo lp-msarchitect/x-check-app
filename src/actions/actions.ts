@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
+import { v4 as uuidv4 } from 'uuid';
 import { Dispute, Review, Task, TaskScore, User } from '../models/data-models';
 
 const dataService = new DataService();
@@ -93,7 +94,7 @@ export const postUserFetch = () => async (
 export const getTasks = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
+  return dataService
     .getAllTasks()
     .then((body) => {
       dispatch({
@@ -116,7 +117,7 @@ export const getTasks = () => async (
 export const getSignleTask = (taskId: string) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
+  return dataService
     .getSingleTask(taskId)
     .then((body) => {
       dispatch({
@@ -134,6 +135,51 @@ export const getSignleTask = (taskId: string) => async (
         },
       });
     });
+};
+
+export const createTask = (task: Task) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  const taskItemsWithIds = task.items.map((item) => {
+    return { ...item, id: item.id || uuidv4() };
+  });
+  return dataService
+    .addTask({ ...task, items: taskItemsWithIds, id: task.id || uuidv4() })
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.CREATE_TASK,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while adding task.',
+        },
+      });
+    });
+};
+
+export const deleteTask = (taskId: string) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  try {
+    await dataService.deleteTask(taskId);
+    return dispatch({
+      type: ACTIONS.DELETE_TASK,
+      payload: taskId,
+    });
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while deleting task.',
+      },
+    });
+  }
 };
 
 export const getUsers = () => async (
@@ -200,29 +246,6 @@ export const getSignleReview = (reviewId: string) => async (
         type: ACTIONS.ADD_ERROR,
         error: {
           message: 'There was an error while loading review.',
-        },
-      });
-    });
-};
-
-export const createTask = (task: Task) => async (
-  dispatch: (action: AnyAction) => void
-): Promise<void> => {
-  dataService
-    .addTask(task)
-    .then((body) => {
-      dispatch({
-        type: ACTIONS.CREATE_TASK,
-        payload: {
-          res: body,
-        },
-      });
-    })
-    .catch(() => {
-      dispatch({
-        type: ACTIONS.ADD_ERROR,
-        error: {
-          message: 'There was an error while adding task.',
         },
       });
     });
