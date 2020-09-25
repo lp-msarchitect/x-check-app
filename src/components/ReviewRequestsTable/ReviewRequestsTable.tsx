@@ -1,10 +1,11 @@
 import React from 'react';
 import { Table } from 'antd';
 import { Link } from 'react-router-dom';
+import { ColumnFilterItem } from 'antd/lib/table/interface';
 import { ReviewRequestsAppState, TasksState } from '../../models/redux-models';
 import StateTag from '../StateTag/StateTag';
 import { compareStrings } from '../../utils/helpers';
-import { ReviewRequest } from '../../models/data-models';
+import { ReviewRequest, ReviewRequestState } from '../../models/data-models';
 
 export interface ReviewRequestsTableProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,6 +18,88 @@ export interface ReviewRequestsTableProps
 const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
   const { reviewRequests, tasks } = props;
   const reviewRequestsArr = Object.values(reviewRequests);
+
+  const getTaskTitle = (taskId: string): string | undefined => {
+    const task = tasks[taskId];
+    return task ? task.title : undefined;
+  };
+
+  const filters = {
+    createTaskFilters: (): ColumnFilterItem[] => {
+      const tasksInTable: string[] = [];
+
+      reviewRequestsArr.forEach((reviewRequest) => {
+        if (!tasksInTable.includes(reviewRequest.task)) {
+          tasksInTable.push(reviewRequest.task);
+        }
+      });
+
+      const taskTitles = tasksInTable.map((taskId) => {
+        const thisTaskTitle = getTaskTitle(taskId);
+        if (thisTaskTitle) {
+          return {
+            text: thisTaskTitle,
+            value: thisTaskTitle,
+          } as ColumnFilterItem;
+        }
+        return {
+          text: taskId,
+          value: taskId,
+        } as ColumnFilterItem;
+      });
+      return taskTitles;
+    },
+    createAuthorFilter: (): ColumnFilterItem[] => {
+      const names: string[] = [];
+      reviewRequestsArr.forEach((reviewRequest) => {
+        if (!names.includes(reviewRequest.author)) {
+          names.push(reviewRequest.author);
+        }
+      });
+      return names.map((name: string) => {
+        return { text: name, value: name } as ColumnFilterItem;
+      });
+    },
+    createStateFilters: (): ColumnFilterItem[] => {
+      const states: ReviewRequestState[] = [];
+      reviewRequestsArr.forEach((reviewRequest) => {
+        if (!states.includes(reviewRequest.state)) {
+          states.push(reviewRequest.state);
+        }
+      });
+      return states.map((state: ReviewRequestState) => {
+        return {
+          text: state,
+          value: state,
+        } as ColumnFilterItem;
+      });
+    },
+  };
+
+  const filtering = {
+    tasks: (
+      value: string | number | boolean,
+      reviewRequest: ReviewRequest
+    ): boolean => {
+      const taskTitle = getTaskTitle(reviewRequest.task);
+      if (taskTitle) {
+        return taskTitle.indexOf(value.toString()) !== -1;
+      }
+      return false;
+    },
+    authors: (
+      value: string | number | boolean,
+      reviewRequest: ReviewRequest
+    ): boolean => {
+      return reviewRequest.author.indexOf(value.toString()) !== -1;
+    },
+    states: (
+      value: string | number | boolean,
+      reviewRequest: ReviewRequest
+    ): boolean => {
+      return reviewRequest.state.indexOf(value.toString()) !== -1;
+    },
+  };
 
   const sorting = {
     strings: (a: ReviewRequest, b: ReviewRequest): number => {
@@ -65,8 +148,8 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
         dataIndex="task"
         render={rendering.taskTitle}
         sorter={sorting.titles}
-        // onFilter={filtering.tasks}
-        // filters={filters.createTaskFilters()}
+        onFilter={filtering.tasks}
+        filters={filters.createTaskFilters()}
       />
       <Table.Column
         key="author"
@@ -74,8 +157,8 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
         dataIndex="author"
         render={rendering.author}
         sorter={sorting.strings}
-        // onFilter={filtering.authors}
-        // filters={filters.createAuthorFilters()}
+        onFilter={filtering.authors}
+        filters={filters.createAuthorFilter()}
       />
       <Table.Column
         key="state"
@@ -83,8 +166,8 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
         dataIndex="state"
         render={rendering.tag}
         sorter={sorting.strings}
-        // onFilter={filtering.reviewers}
-        // filters={filters.createReviewerFilters()}
+        onFilter={filtering.states}
+        filters={filters.createStateFilters()}
       />
       <Table.Column
         key="prUrl"
