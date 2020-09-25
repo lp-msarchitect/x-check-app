@@ -186,6 +186,10 @@ class DataService {
       dispute
     )) as Dispute;
   }
+
+  async deleteDispute(disputeId: string): Promise<Dispute> {
+    return this.deleteResource<Dispute>('/disputes', disputeId);
+  }
 }
 
 export default DataService;

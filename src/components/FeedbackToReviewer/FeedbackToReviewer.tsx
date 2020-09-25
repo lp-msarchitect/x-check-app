@@ -32,6 +32,8 @@ const FeedbackToReviewer = ({ review }: { review: Review }): JSX.Element => {
             />
           );
         })}
+      {!review.authorFeedback ||
+        (review.authorFeedback.length === 0 && <p>No feedback yet.</p>)}
       {review.author.toLowerCase() === auth.githubId.toLowerCase() && (
         <FeedbackForm onSubmit={handleAddFeedback} />
       )}

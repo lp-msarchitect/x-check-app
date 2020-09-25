@@ -12,7 +12,7 @@ import {
   TaskState,
 } from '../../models/data-models';
 import './TaskForm.scss';
-import { createTask, getSignleTask } from '../../actions/actions';
+import { createTask, getSignleTask, updateTask } from '../../actions/actions';
 import { AppReduxState, TasksState } from '../../models/redux-models';
 import CreateTaskAddedItems from '../CreateTaskAddedItems/CreateTaskAddedItems';
 import CreateTaskAddOneItem from '../CreateTaskAddOneItem/CreateTaskAddOneItem';
@@ -57,7 +57,11 @@ const TaskForm = ({ taskId }: CreateTaskProps): JSX.Element => {
 
   const handleTaskSubmit = (state: TaskState): void => {
     if (task) {
-      dispatch(createTask({ ...task, state }));
+      if (taskId) {
+        dispatch(updateTask({ ...task, state }));
+      } else {
+        dispatch(createTask({ ...task, state }));
+      }
       history.push('/tasks');
     }
   };
@@ -91,6 +95,7 @@ const TaskForm = ({ taskId }: CreateTaskProps): JSX.Element => {
           <CreateTaskActions
             onTaskSubmit={handleTaskSubmit}
             onTaskCancel={handleTaskCancel}
+            state={task.state}
           />
         </Form>
       )}

@@ -185,6 +185,13 @@ const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
         return addOneDisputeToStore(action.payload.res, state);
       }
       return state;
+    case ACTIONS.DELETE_DISPUTE:
+      if (action.payload) {
+        const reviewId: string = action.payload;
+        let { [reviewId]: omit, ...rest } = state as DisputesState;
+        return keyBy(rest, 'reviewId');
+      }
+      return state;
     default:
       return state;
   }

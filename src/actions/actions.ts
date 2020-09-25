@@ -211,7 +211,7 @@ export const deleteTask = (taskId: string) => async (
 export const getUsers = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
+  return dataService
     .getAllUsers()
     .then((body) => {
       dispatch({
@@ -234,7 +234,7 @@ export const getUsers = () => async (
 export const getReviews = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
+  return dataService
     .getAllReviews()
     .then((body) => {
       dispatch({
@@ -257,7 +257,7 @@ export const getReviews = () => async (
 export const getSignleReview = (reviewId: string) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
+  return dataService
     .getSingleReview(reviewId)
     .then((body) => {
       dispatch({
@@ -280,7 +280,7 @@ export const getSignleReview = (reviewId: string) => async (
 export const getDisputes = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
+  return dataService
     .getAllDisputes()
     .then((body) => {
       dispatch({
@@ -303,7 +303,7 @@ export const getDisputes = () => async (
 export const getSingleDispute = (reviewId: string) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService
+  return dataService
     .getSingleDispute(reviewId)
     .then((body) => {
       dispatch({
@@ -341,7 +341,7 @@ export const addDispute = (dispute: Dispute, review: Review) => async (
         res: receivedReview,
       },
     });
-  } catch {
+  } catch (error) {
     dispatch({
       type: ACTIONS.ADD_ERROR,
       error: {
@@ -408,6 +408,26 @@ export const rejectDispute = (dispute: Dispute, review: Review) => async (
       type: ACTIONS.ADD_ERROR,
       error: {
         message: 'There was an error while editing dispute.',
+      },
+    });
+  }
+};
+
+export const deleteDispute = (dispute: Dispute) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  try {
+    const deleted = await dataService.deleteDispute(dispute.id);
+    dispatch({
+      type: ACTIONS.DELETE_DISPUTE,
+      payload: dispute.reviewId,
+    });
+    return;
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while deleting dispute.',
       },
     });
   }
