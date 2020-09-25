@@ -6,7 +6,7 @@ import './TaskActions.scss';
 import { AppReduxState, TasksState } from '../../models/redux-models';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { deleteTask } from '../../actions/actions';
+import { deleteTask, updateTask } from '../../actions/actions';
 import { useHistory } from 'react-router-dom';
 
 interface TaskActionsProps {
@@ -29,6 +29,10 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
     history.push(`/edit-task/${task.id!}`);
   };
 
+  const handleUpdateTaskState = (state: TaskState) => {
+    dispatch(updateTask({ ...task, state }));
+  };
+
   return (
     <div className="task-actions">
       {auth.roles.includes('student') && (
@@ -44,12 +48,23 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
               <Button type="primary" size="small" onClick={handleEditTask}>
                 Edit
               </Button>
-              <Button type="primary" size="small">
+              <Button
+                type="primary"
+                size="small"
+                onClick={() => handleUpdateTaskState('PUBLISHED')}
+              >
                 Publish
               </Button>
             </>
           )}
-          <Button size="small">Archive</Button>
+          {task.state !== 'ARCHIVED' && (
+            <Button
+              size="small"
+              onClick={() => handleUpdateTaskState('ARCHIVED')}
+            >
+              Archive
+            </Button>
+          )}
           <Button size="small" danger onClick={handleDeleteTask}>
             Delete
           </Button>

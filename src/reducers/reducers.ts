@@ -71,6 +71,11 @@ const tasksReducer = (state = {}, action: AnyAction): TasksState => {
         return addOneTaskToStore(action.payload.res, state);
       }
       return state;
+    case ACTIONS.UPDATE_TASK:
+      if (action.payload) {
+        return addOneTaskToStore(action.payload.res, state);
+      }
+      return state;
     case ACTIONS.DELETE_TASK:
       if (action.payload) {
         const taskId: string = action.payload;

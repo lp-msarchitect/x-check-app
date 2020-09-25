@@ -163,6 +163,32 @@ export const createTask = (task: Task) => async (
     });
 };
 
+export const updateTask = (task: Task) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  const taskItemsWithIds = task.items.map((item) => {
+    return { ...item, id: item.id || uuidv4() };
+  });
+  return dataService
+    .updateTask({ ...task, items: taskItemsWithIds, id: task.id || uuidv4() })
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.UPDATE_TASK,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while editing task.',
+        },
+      });
+    });
+};
+
 export const deleteTask = (taskId: string) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {

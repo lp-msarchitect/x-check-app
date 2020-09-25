@@ -23,3 +23,4 @@ export const REJECT_DISPUTE = 'REJECT_DISPUTE';
 export const CHANGE_REVIEW = 'CHANGE_REVIEW';
 
 export const DELETE_TASK = 'DELETE_TASK';
+export const UPDATE_TASK = 'UPDATE_TASK';

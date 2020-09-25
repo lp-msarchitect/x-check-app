@@ -115,6 +115,10 @@ class DataService {
     return this, this.deleteResource<Task>('/tasks', taskId);
   }
 
+  async updateTask(task: Task): Promise<Task> {
+    return (await this.putResource(`/tasks/${task.id}`, task)) as Task;
+  }
+
   getAllTaskScores(): Promise<TaskScore[]> {
     return this.getResource<TaskScore[]>('/taskScores');
   }
