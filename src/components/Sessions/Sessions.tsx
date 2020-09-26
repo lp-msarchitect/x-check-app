@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import { Collapse } from 'antd';
+import { Collapse,Button } from 'antd';
 import { AnyAction } from 'redux';
 import {
   AppReduxState,
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { getSession} from '../../actions';
 import StateTag from '../StateTag/StateTag';
+import { pbkdf2 } from 'crypto';
 
 const { Panel } = Collapse;
 
@@ -63,6 +64,7 @@ const Sessions = (): JSX.Element => {
 
   return (
     <div className='sessions'>
+      <Button type="primary">Primary Button</Button>
       <Collapse  onChange={callback}>
         {panels}
       </Collapse>
