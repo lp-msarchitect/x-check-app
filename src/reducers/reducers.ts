@@ -48,7 +48,7 @@ const addOneTaskToStore = (task: Task, state: TasksState): TasksState => {
   return keyBy(
     {
       ...state,
-      [task.id]: task,
+      [task.id!]: task,
     },
     'id'
   ) as TasksState;
@@ -69,6 +69,18 @@ const tasksReducer = (state = {}, action: AnyAction): TasksState => {
     case ACTIONS.GET_SINGLE_TASK:
       if (action.payload) {
         return addOneTaskToStore(action.payload.res, state);
+      }
+      return state;
+    case ACTIONS.UPDATE_TASK:
+      if (action.payload) {
+        return addOneTaskToStore(action.payload.res, state);
+      }
+      return state;
+    case ACTIONS.DELETE_TASK:
+      if (action.payload) {
+        const taskId: string = action.payload;
+        let { [taskId]: omit, ...rest } = state as TasksState;
+        return keyBy(rest, 'id');
       }
       return state;
     default:
@@ -171,6 +183,13 @@ const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
     case ACTIONS.REJECT_DISPUTE:
       if (action.payload) {
         return addOneDisputeToStore(action.payload.res, state);
+      }
+      return state;
+    case ACTIONS.DELETE_DISPUTE:
+      if (action.payload) {
+        const reviewId: string = action.payload;
+        let { [reviewId]: omit, ...rest } = state as DisputesState;
+        return keyBy(rest, 'reviewId');
       }
       return state;
     default:

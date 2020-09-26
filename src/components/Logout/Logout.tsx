@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { Redirect } from 'react-router-dom';
-import { logoutUser } from '../../actions';
+import { logoutUser } from '../../actions/actions';
 import { Auth, User } from '../../models/data-models';
 import { AppReduxState } from '../../models/redux-models';
 

@@ -7,7 +7,7 @@ import { Button, Descriptions } from 'antd';
 import './SingleReview.scss';
 import { AppReduxState, TasksState } from '../../models/redux-models';
 import { Auth, Review, Task } from '../../models/data-models';
-import { getSignleReview, getTasks } from '../../actions';
+import { getSignleReview, getTasks } from '../../actions/actions';
 import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
 import ReviewScoreDetailed from '../ReviewScoreDetailed/ReviewScoreDetailed';

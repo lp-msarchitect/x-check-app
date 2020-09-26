@@ -1,6 +1,5 @@
 {
-  "users": [
-    {
+  "users": [{
       "githubId": "lp-msarchitect1",
       "roles": [
         "student"
@@ -29,8 +28,7 @@
       "id": 4
     }
   ],
-  "tasks": [
-    {
+  "tasks": [{
       "id": "simple-task-v1",
       "title": "Simple task v1",
       "author": "cardamo",
@@ -40,8 +38,7 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [
-        {
+      "items": [{
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -77,8 +74,7 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [
-        {
+      "items": [{
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -121,8 +117,7 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [
-        {
+      "items": [{
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -148,111 +143,66 @@
         }
       ],
       "id": "ppusd-v"
-    },
-    {
-      "id": "44fc9323-8e0b-4818-8d38-e3eb989fac02",
-      "title": "Create a task",
-      "author": "ellankz",
-      "state": "PUBLISHED",
-      "categoriesOrder": [
-        "Basic Scope",
-        "Extra Scope",
-        "Fines"
-      ],
-      "items": [
-        {
-          "id": "68ed25d7-7ab1-4f71-8556-698ed66dd30b",
-          "minScore": 0,
-          "maxScore": 20,
-          "category": "Basic Scope",
-          "title": "Initialize",
-          "description": ""
-        },
-        {
-          "id": "8523b108-bb20-4317-bedb-f5c5fbd82933",
-          "minScore": 0,
-          "maxScore": 30,
-          "category": "Basic Scope",
-          "title": "Add features",
-          "description": "some random features"
-        },
-        {
-          "id": "f629a773-a237-4479-a18f-e57834bf00cc",
-          "minScore": -10,
-          "maxScore": 0,
-          "category": "Fines",
-          "title": "Don't forget anything",
-          "description": ""
-        }
-      ]
     }
   ],
-  "taskScores": [
-    {
-      "task": "simple-task-v1",
-      "items": {
-        "basic_p1": {
-          "score": 20,
-          "comment": "Well done!"
-        },
-        "extra_p1": {
-          "score": 15,
-          "comment": "Some things are done, some are not"
-        },
-        "fines_p1": {
-          "score": 0,
-          "comment": "No ticket today"
-        }
+  "taskScores": [{
+    "task": "simple-task-v1",
+    "items": {
+      "basic_p1": {
+        "score": 20,
+        "comment": "Well done!"
+      },
+      "extra_p1": {
+        "score": 15,
+        "comment": "Some things are done, some are not"
+      },
+      "fines_p1": {
+        "score": 0,
+        "comment": "No ticket today"
       }
     }
-  ],
-  "crossCheckSessions": [
-    {
-      "id": "rss2020Q3react-xcheck",
-      "state": "DRAFT",
-      "taskId": "simple-task-v1",
-      "coefficient": 0.7,
-      "startDate": "2020-07-07",
-      "endDate": "2020-07-14",
-      "discardMinScore": true,
-      "discardMaxScore": false,
-      "minReiewsAmount": 1,
-      "desiredReviewersAmount": 2,
-      "attendees": [
-        {
-          "githubId": "ButterBrot777",
-          "reviewerOf": [
-            "torvalds",
-            "cardamo"
-          ]
-        },
-        {
-          "githubId": "torvalds",
-          "reviewerOf": [
-            "cardamo"
-          ]
-        },
-        {
-          "githubId": "cardamo",
-          "reviewerOf": [
-            "ButterBrot777"
-          ]
-        }
-      ]
-    }
-  ],
-  "reviewRequests": [
-    {
-      "id": "rev-req-1",
-      "crossCheckSessionId": "rss2020Q3react-xcheck",
-      "author": "cardamo",
-      "task": "simple-task-v1",
-      "state": "PUBLISHED",
-      "selfGrade": {}
-    }
-  ],
-  "reviews": [
-    {
+  }],
+  "crossCheckSessions": [{
+    "id": "rss2020Q3react-xcheck",
+    "state": "DRAFT",
+    "taskId": "simple-task-v1",
+    "coefficient": 0.7,
+    "startDate": "2020-07-07",
+    "endDate": "2020-07-14",
+    "discardMinScore": true,
+    "discardMaxScore": false,
+    "minReiewsAmount": 1,
+    "desiredReviewersAmount": 2,
+    "attendees": [{
+        "githubId": "ButterBrot777",
+        "reviewerOf": [
+          "torvalds",
+          "cardamo"
+        ]
+      },
+      {
+        "githubId": "torvalds",
+        "reviewerOf": [
+          "cardamo"
+        ]
+      },
+      {
+        "githubId": "cardamo",
+        "reviewerOf": [
+          "ButterBrot777"
+        ]
+      }
+    ]
+  }],
+  "reviewRequests": [{
+    "id": "rev-req-1",
+    "crossCheckSessionId": "rss2020Q3react-xcheck",
+    "author": "cardamo",
+    "task": "simple-task-v1",
+    "state": "PUBLISHED",
+    "selfGrade": {}
+  }],
+  "reviews": [{
       "id": "rev-id-1",
       "requestId": "rev-req-1",
       "author": "ButterBrot777",
@@ -337,28 +287,50 @@
       "authorFeedback": [
         "Try me!"
       ]
+    },
+    {
+      "id": "rev-id-4",
+      "requestId": "rev-req-4",
+      "author": "bunny",
+      "reviewer": "ellankz",
+      "state": "PUBLISHED",
+      "task": "simple-task-v1",
+      "grade": {
+        "task": "simple-task-v1",
+        "items": {
+          "basic_p1": {
+            "score": 80,
+            "comment": "Well done!"
+          },
+          "extra_p1": {
+            "score": 10,
+            "comment": "Some things are done, some are not"
+          },
+          "fines_p1": {
+            "score": 0,
+            "comment": "No ticket today"
+          }
+        }
+      },
+      "authorFeedback": []
     }
   ],
-  "disputes": [
-    {
+  "disputes": [{
       "id": "randomid",
       "reviewId": "rev-id-1",
       "state": "ACCEPTED",
-      "items": [
-        {
-          "taskItem": "extra_p1",
-          "comment": "Check out the 'All things' page to see all things that were implemented",
-          "suggestedScore": 30
-        }
-      ],
+      "items": [{
+        "taskItem": "extra_p1",
+        "comment": "Check out the 'All things' page to see all things that were implemented",
+        "suggestedScore": 30
+      }],
       "reviewerComments": []
     },
     {
       "id": "4923ea37-4ea4-4a58-8825-47c743bef0f2",
       "reviewId": "rev-id-3",
       "state": "ONGOING",
-      "items": [
-        {
+      "items": [{
           "taskItem": "basic_p1",
           "comment": "i belive you're wrong",
           "suggestedScore": 20

@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { Button, Comment } from 'antd';
-import { acceptDispute, getSingleDispute, rejectDispute } from '../../actions';
+import {
+  acceptDispute,
+  getSingleDispute,
+  rejectDispute,
+} from '../../actions/actions';
 import {
   Auth,
   Dispute,

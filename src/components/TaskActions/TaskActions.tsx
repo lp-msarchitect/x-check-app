@@ -1,16 +1,37 @@
 import React from 'react';
 import { Button } from 'antd';
-import { useSelector } from 'react-redux';
-import { Auth, TaskState } from '../../models/data-models';
+import { useDispatch, useSelector } from 'react-redux';
+import { Auth, Task, TaskState } from '../../models/data-models';
 import './TaskActions.scss';
-import { AppReduxState } from '../../models/redux-models';
+import { AppReduxState, TasksState } from '../../models/redux-models';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { deleteTask, updateTask } from '../../actions/actions';
+import { useHistory } from 'react-router-dom';
 
 interface TaskActionsProps {
-  taskState: TaskState;
+  task: Task;
 }
 
-const TaskActions = ({ taskState }: TaskActionsProps): JSX.Element => {
+type AppDispatch = ThunkDispatch<TasksState, void, AnyAction>;
+
+const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
   const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
+
+  const dispatch: AppDispatch = useDispatch();
+  const handleDeleteTask = () => {
+    dispatch(deleteTask(task.id!));
+  };
+
+  const history = useHistory();
+  const handleEditTask = () => {
+    console.log(task.id);
+    history.push(`/edit-task/${task.id!}`);
+  };
+
+  const handleUpdateTaskState = (state: TaskState) => {
+    dispatch(updateTask({ ...task, state }));
+  };
 
   return (
     <div className="task-actions">
@@ -22,18 +43,29 @@ const TaskActions = ({ taskState }: TaskActionsProps): JSX.Element => {
       {(auth.roles.includes('author') ||
         auth.roles.includes('coursemanager')) && (
         <>
-          {taskState === 'DRAFT' && (
+          {task.state === 'DRAFT' && (
             <>
-              <Button type="primary" size="small">
+              <Button type="primary" size="small" onClick={handleEditTask}>
                 Edit
               </Button>
-              <Button type="primary" size="small">
+              <Button
+                type="primary"
+                size="small"
+                onClick={() => handleUpdateTaskState('PUBLISHED')}
+              >
                 Publish
               </Button>
             </>
           )}
-          <Button size="small">Archive</Button>
-          <Button size="small" danger>
+          {task.state !== 'ARCHIVED' && (
+            <Button
+              size="small"
+              onClick={() => handleUpdateTaskState('ARCHIVED')}
+            >
+              Archive
+            </Button>
+          )}
+          <Button size="small" danger onClick={handleDeleteTask}>
             Delete
           </Button>
         </>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { Table, Tag } from 'antd';
-import { getUsers } from '../../actions';
+import { getUsers } from '../../actions/actions';
 import { AppReduxState, UsersState } from '../../models/redux-models';
 import { User, UserRole } from '../../models/data-models';
 

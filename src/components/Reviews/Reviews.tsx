@@ -5,7 +5,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { Link } from 'react-router-dom';
 import { Table } from 'antd';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
-import { getReviews, getTasks } from '../../actions';
+import { getReviews, getTasks } from '../../actions/actions';
 import { Review, TaskScore, ReviewState } from '../../models/data-models';
 import {
   AppReduxState,
