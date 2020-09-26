@@ -181,3 +181,27 @@ export const createTask = (task: Task) => async (
       });
     });
 };
+
+
+export const getSession = () => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .getAllCrossCheckSessions()
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.GET_SESSIONS,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading sessions.',
+        },
+      });
+    });
+};

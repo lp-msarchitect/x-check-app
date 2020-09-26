@@ -90,6 +90,18 @@ const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
   }
 };
 
+const sessionsReducer = (state = {}, action: AnyAction): any =>{
+  switch (action.type) {
+    case ACTIONS.GET_SESSIONS:
+      if (action.payload) {
+        return keyBy(action.payload.res, 'id') as AnyAction;
+      }
+      return state;
+    default:
+      return state;
+  }
+};
+
 const errorReducer = (state = null, action: AnyAction): ErrorState => {
   if (action.type === ACTIONS.ADD_ERROR) {
     return action.error.message;
@@ -106,4 +118,5 @@ export default combineReducers({
   auth: userAuthReducer,
   reviews: reviewsReducer,
   error: errorReducer,
+  sessions: sessionsReducer,
 });
