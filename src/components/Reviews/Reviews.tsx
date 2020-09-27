@@ -14,7 +14,6 @@ import {
 } from '../../models/redux-models';
 import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
-import TaskCheckForm from '../TaskCheckForm/TaskCheckForm';
 
 type AppDispatch = ThunkDispatch<ReviewsState, void, AnyAction>;
 
@@ -164,10 +163,6 @@ const Reviews = (): JSX.Element => {
     },
   };
 
-  const onSubmitForm = (value: string): void => {
-    console.log(value);
-  };
-
   return (
     <div className="reviews">
       <Table dataSource={reviewsArr} rowKey={(review): string => review.id}>
@@ -212,15 +207,6 @@ const Reviews = (): JSX.Element => {
           sorter={sorting.scores}
         />
       </Table>
-      {Object.values(tasks).map((elem) => {
-        return (
-          <TaskCheckForm
-            singleTask={elem}
-            key={elem.id}
-            onSubmitForm={onSubmitForm}
-          />
-        );
-      })}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { MouseEvent, useState } from 'react';
-import { Affix, Button, Form } from 'antd';
+import { Affix, Button, Form, message } from 'antd';
 import { Task, TaskItem } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
@@ -31,12 +31,21 @@ const TaskCheckForm = ({
     new Array(singleTask.items.length).fill(false)
   );
 
+  const success = (): void => {
+    message.success('The result submitted');
+  };
+
+  const error = (): void => {
+    message.error('Fill in all fields');
+  };
+
   const showForm = (): void => {
     setDisplayForm(!displayForm);
   };
 
   const submitHandler = (): void => {
     onSubmitForm(totalScore);
+    success();
     showForm();
   };
 
@@ -127,7 +136,12 @@ const TaskCheckForm = ({
 
   return (
     <div className={displayForm ? 'form-container' : 'form-container disabled'}>
-      <Form className="task-check-form" onFinish={submitHandler} form={form}>
+      <Form
+        className="task-check-form"
+        onFinish={submitHandler}
+        onFinishFailed={error}
+        form={form}
+      >
         <Affix offsetTop={0}>
           <button
             className="close-form"
