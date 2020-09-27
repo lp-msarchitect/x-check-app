@@ -12,6 +12,7 @@ import {
 import RequestReview from '../RequestReview/RequestReview';
 import ReviewRequestsTable from '../ReviewRequestsTable/ReviewRequestsTable';
 import TaskCheckForm from '../TaskCheckForm/TaskCheckForm';
+import './ReviewRequest.scss';
 
 const ReviewRequests = (): JSX.Element => {
   const [showSubmit, setShowSubmit] = useState(false);
@@ -67,7 +68,7 @@ const ReviewRequests = (): JSX.Element => {
 
   return (
     <>
-      <Button type="primary" onClick={onSubmitRequestBtnClick}>
+      <Button className="create-btn" type="primary" onClick={onSubmitRequestBtnClick}>
         Submit request
       </Button>
       <Modal visible={showSubmit} footer={null} onCancel={onCancel}>
