@@ -8,10 +8,9 @@ import {
   Dispute,
 } from '../models/data-models';
 
-
+import { CLIENT_ID, PROXY_URL } from '../constants/urls';
 import { Session } from 'inspector';
 import * as URLS from '../constants/urls';
-
 
 class DataService {
   baseURL: string;

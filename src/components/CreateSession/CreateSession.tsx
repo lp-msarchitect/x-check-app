@@ -7,8 +7,7 @@ import {
     Task,
   } from '../../models/data-models';
 import {Modal,Button,Input,Form,InputNumber} from 'antd'
-import { Session } from 'inspector';
-import { createSession } from '../../actions';
+import { createSession } from '../../actions/actions';
 
 const CreateSession= ():JSX.Element =>{
 
@@ -28,7 +27,7 @@ const CreateSession= ():JSX.Element =>{
     const handleOk = () => {
         const newSession:any ={
             id:nameSession,
-            state: 'Draft',
+            state: 'DRAFT',
             taskId:nameTask,
             startDate:startSession,
             endDate:endSession,

@@ -520,3 +520,50 @@ export const deleteReviewRequest = (reviewRequest: ReviewRequest) => async (
     });
   }
 };
+
+export const createSession = (session: any) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .addSession(session)
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.CREATE_SESSION,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while adding session.',
+        },
+      });
+    });
+};
+
+
+export const getSession = () => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .getAllCrossCheckSessions()
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.GET_SESSIONS,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading sessions.',
+        },
+      });
+    });
+};
