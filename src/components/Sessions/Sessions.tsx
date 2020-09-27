@@ -100,11 +100,7 @@ const Sessions = (): JSX.Element => {
             
           >
             {reviwers}
-          </Modal>
-          
-         
-          <Button type="primary">End Session</Button>
-          
+          </Modal >  
           <Pagination className='' defaultCurrent={1} total={1} />
         </Panel>
     )
