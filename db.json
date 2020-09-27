@@ -1,5 +1,6 @@
 {
-  "users": [{
+  "users": [
+    {
       "githubId": "lp-msarchitect1",
       "roles": [
         "student"
@@ -23,7 +24,7 @@
     {
       "githubId": "Tsyman",
       "roles": [
-        "student"
+        "coursemanager"
       ],
       "id": 4
     },
@@ -35,7 +36,8 @@
       "id": 5
     }
   ],
-  "tasks": [{
+  "tasks": [
+    {
       "id": "simple-task-v1",
       "title": "Simple task v1",
       "author": "cardamo",
@@ -45,7 +47,8 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [{
+      "items": [
+        {
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -81,7 +84,8 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [{
+      "items": [
+        {
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -124,7 +128,8 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [{
+      "items": [
+        {
           "id": "basic_p1",
           "minScore": 0,
           "maxScore": 20,
@@ -161,7 +166,8 @@
         "Extra Scope",
         "Fines"
       ],
-      "items": [{
+      "items": [
+        {
           "minScore": 0,
           "maxScore": 10,
           "category": "Basic Scope",
@@ -495,56 +501,62 @@
       ]
     }
   ],
-  "taskScores": [{
-    "task": "simple-task-v1",
-    "items": {
-      "basic_p1": {
-        "score": 20,
-        "comment": "Well done!"
-      },
-      "extra_p1": {
-        "score": 15,
-        "comment": "Some things are done, some are not"
-      },
-      "fines_p1": {
-        "score": 0,
-        "comment": "No ticket today"
+  "taskScores": [
+    {
+      "task": "simple-task-v1",
+      "items": {
+        "basic_p1": {
+          "score": 20,
+          "comment": "Well done!"
+        },
+        "extra_p1": {
+          "score": 15,
+          "comment": "Some things are done, some are not"
+        },
+        "fines_p1": {
+          "score": 0,
+          "comment": "No ticket today"
+        }
       }
     }
-  }],
-  "crossCheckSessions": [{
-    "id": "rss2020Q3react-xcheck",
-    "state": "DRAFT",
-    "taskId": "simple-task-v1",
-    "coefficient": 0.7,
-    "startDate": "2020-07-07",
-    "endDate": "2020-07-14",
-    "discardMinScore": true,
-    "discardMaxScore": false,
-    "minReiewsAmount": 1,
-    "desiredReviewersAmount": 2,
-    "attendees": [{
-        "githubId": "ButterBrot777",
-        "reviewerOf": [
-          "torvalds",
-          "cardamo"
-        ]
-      },
-      {
-        "githubId": "torvalds",
-        "reviewerOf": [
-          "cardamo"
-        ]
-      },
-      {
-        "githubId": "cardamo",
-        "reviewerOf": [
-          "ButterBrot777"
-        ]
-      }
-    ]
-  }],
-  "reviewRequests": [{
+  ],
+  "crossCheckSessions": [
+    {
+      "id": "rss2020Q3react-xcheck",
+      "state": "DRAFT",
+      "taskId": "simple-task-v1",
+      "coefficient": 0.7,
+      "startDate": "2020-07-07",
+      "endDate": "2020-07-14",
+      "discardMinScore": true,
+      "discardMaxScore": false,
+      "minReiewsAmount": 1,
+      "desiredReviewersAmount": 2,
+      "attendees": [
+        {
+          "githubId": "ButterBrot777",
+          "reviewerOf": [
+            "torvalds",
+            "cardamo"
+          ]
+        },
+        {
+          "githubId": "torvalds",
+          "reviewerOf": [
+            "cardamo"
+          ]
+        },
+        {
+          "githubId": "cardamo",
+          "reviewerOf": [
+            "ButterBrot777"
+          ]
+        }
+      ]
+    }
+  ],
+  "reviewRequests": [
+    {
       "id": "rev-req-1",
       "crossCheckSessionId": "rss2020Q3react-xcheck",
       "author": "cardamo",
@@ -553,17 +565,18 @@
       "selfGrade": {}
     },
     {
-      "id": "jjL6CuA",
+      "id": "YRPFlaN",
       "crossCheckSessionId": null,
-      "author": "ellankz",
-      "task": "f2e1a2f7-dc29-4e8f-8252-d73372c609e7",
-      "prUrl": "https://github.com/goplomax11/x-check-app/pull/30",
-      "demoUrl": "https://x-check-app-team-group30-lp-msarchitect.netlify.app/",
-      "state": "PUBLISHED",
+      "author": "Tsyman",
+      "task": "simple-task-v2",
+      "prUrl": "https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md",
+      "demoUrl": "https://github.com/rolling-scopes-school/tasks/blob/master/tasks/xcheck/xcheck.md",
+      "state": "DRAFT",
       "selfGrade": null
     }
   ],
-  "reviews": [{
+  "reviews": [
+    {
       "id": "rev-id-1",
       "requestId": "rev-req-1",
       "author": "ButterBrot777",
@@ -591,6 +604,39 @@
         "Thank you very much!",
         "You're welcome.",
         "Now I'm talking to myself.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
+        "This is test generated message.",
         "This is test generated message.",
         "This is test generated message.",
         "This is test generated message."
@@ -679,22 +725,26 @@
       "authorFeedback": []
     }
   ],
-  "disputes": [{
+  "disputes": [
+    {
       "id": "randomid",
       "reviewId": "rev-id-1",
       "state": "ACCEPTED",
-      "items": [{
-        "taskItem": "extra_p1",
-        "comment": "Check out the 'All things' page to see all things that were implemented",
-        "suggestedScore": 30
-      }],
+      "items": [
+        {
+          "taskItem": "extra_p1",
+          "comment": "Check out the 'All things' page to see all things that were implemented",
+          "suggestedScore": 30
+        }
+      ],
       "reviewerComments": []
     },
     {
       "id": "4923ea37-4ea4-4a58-8825-47c743bef0f2",
       "reviewId": "rev-id-3",
       "state": "ONGOING",
-      "items": [{
+      "items": [
+        {
           "taskItem": "basic_p1",
           "comment": "i belive you're wrong",
           "suggestedScore": 20

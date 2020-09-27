@@ -8,8 +8,10 @@ import {
   Dispute,
 } from '../models/data-models';
 
-import { CLIENT_ID, PROXY_URL } from '../constants/urls';
+
 import { Session } from 'inspector';
+import * as URLS from '../constants/urls';
+
 
 class DataService {
   baseURL: string;
@@ -17,8 +19,8 @@ class DataService {
   proxyUrl: string;
 
   constructor() {
-    this.baseURL = 'http://localhost:3001';
-    this.proxyUrl = 'https://x-check-app.herokuapp.com/authenticate/';
+    this.baseURL = URLS.JSON_API_URL;
+    this.proxyUrl = URLS.PROXY_URL;
   }
 
   async getGitHubLogin<T>(code: string): Promise<T> {
@@ -173,6 +175,10 @@ class DataService {
   putReviewRequest(request: ReviewRequest): Promise<ReviewRequest> {
     const url = `/reviewRequests/${request.id}/`;
     return this.putResource(url, request);
+  }
+
+  async deleteReviewRequest(id: string): Promise<ReviewRequest> {
+    return this.deleteResource<ReviewRequest>('/reviewRequests', id);
   }
 
   getAllReviews(): Promise<Review[]> {
