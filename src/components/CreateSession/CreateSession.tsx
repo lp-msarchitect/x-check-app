@@ -1,22 +1,74 @@
-import React,{useState} from 'react'
-import {Modal,Button,Input,Form,DatePicker,InputNumber,Select} from 'antd'
+import React,{useState} from 'react';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import {
+    Task,
+  } from '../../models/data-models';
+import {Modal,Button,Input,Form,InputNumber} from 'antd'
+import { Session } from 'inspector';
+import { createSession } from '../../actions';
 
 const CreateSession= ():JSX.Element =>{
 
+    type AppDispatch = ThunkDispatch<Task, void, AnyAction>;
+
     const [visible, setVisible] = useState(false)
+    const [nameSession,setNameSession] =useState('')
+
+    const history = useHistory();
+     const dispatch: AppDispatch = useDispatch();
+
 
     const showModal = () => {
         setVisible(true)
      };
 
     const handleOk = () => {
-      setVisible(false)
+        const newSession:any ={
+            id:nameSession,
+            state: 'Draft',
+            taskId:nameTask,
+            startDate:startSession,
+            endDate:endSession,
+            discardMinScore:false,
+            discardMaxScore:false,
+            minReiewsAmount:minReviewsAmount,
+            desiredReviewersAmount:desireReviewAmount,
+            attendees:[
+                {
+                githubId: "ButterBrot777",
+                reviewerOf: [
+                    'cardamo'
+                ]
+            }
+        ]
+    }
+
+    dispatch(createSession(newSession));
+    history.push('/sessions');
+
+    setVisible(false)
+
+      
+      
     };   
 
     const handleCancel = () => {
         setVisible(false)
     };
      
+
+    const [nameTask,setTaskName] =useState('')
+    const [startSession,setstartSession] =useState('')
+    const [endSession, setEndSession] = useState('')
+    const [coefficient,setCoefficient] = useState(0)
+    const [minReviewsAmount,setMinReviewsAmount] = useState(0)
+    const [desireReviewAmount, setDesireReviewAmount] = useState(0)
+    
+
+
     return (
     
         <div>
@@ -27,46 +79,33 @@ const CreateSession= ():JSX.Element =>{
             onOk={handleOk}
             onCancel={handleCancel}
             >
-                <Form.Item label="Name of session">
-                    <Input />
+                <Form.Item  label="Name of session">
+                    <Input value={nameSession} onChange={(e) => setNameSession(e.target.value)} />
                 </Form.Item>
 
                 <Form.Item label="Name of task">
-                    <Input />
+                    <Input value={nameTask} onChange={(e) => setTaskName(e.target.value)} />
                 </Form.Item>
 
                 <Form.Item label="Start date">
-                <   DatePicker />
+                    <Input value={startSession} onChange={(e) => setstartSession(e.target.value)} />
                 </Form.Item>
 
                 <Form.Item label="End date ">
-                    <DatePicker />
+                    <Input value={endSession} onChange={(e) => setEndSession(e.target.value)} />
                 </Form.Item>
 
                 <Form.Item label="Coefficient">
-                    <InputNumber />
+                    <InputNumber value={coefficient} onChange={(e:any) => setCoefficient(e)} />
                 </Form.Item>
 
-                <Form.Item label="Discard min score">
-                    <Select>
-                        <Select.Option value="">true</Select.Option>
-                        <Select.Option value="">false</Select.Option>
-                    </Select>
-                </Form.Item>
-
-                <Form.Item label="Discard max score">
-                    <Select>
-                        <Select.Option value="">true</Select.Option>
-                        <Select.Option value="">false</Select.Option>
-                    </Select>
-                </Form.Item>
-
+                
                 <Form.Item label="Min reviews amount">
-                    <InputNumber />
+                    <InputNumber value={minReviewsAmount} onChange={(e:any) => setMinReviewsAmount(e)} />
                 </Form.Item>
 
                 <Form.Item label="Desire reviewers Amount">
-                    <InputNumber />
+                    <InputNumber value={desireReviewAmount} onChange={(e:any) => setDesireReviewAmount(e)}/>
                 </Form.Item>
 
           </Modal>

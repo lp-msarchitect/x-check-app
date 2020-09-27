@@ -9,6 +9,7 @@ import {
 } from '../models/data-models';
 
 import { CLIENT_ID, PROXY_URL } from '../constants/urls';
+import { Session } from 'inspector';
 
 class DataService {
   baseURL: string;
@@ -101,6 +102,10 @@ class DataService {
 
   async addTask(task: Task): Promise<Task> {
     return this.setResource<Task>('/tasks', task);
+  }
+
+  async addSession(session: Session): Promise<Session> {
+    return this.setResource<Session>('/crossCheckSessions', session);
   }
 
   getAllTaskScores(): Promise<TaskScore[]> {

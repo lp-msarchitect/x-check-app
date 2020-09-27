@@ -81,6 +81,7 @@ const Sessions = (): JSX.Element => {
     
     
     return (
+      
         <Panel
         header={session.id}
         key={session.id}
@@ -101,9 +102,9 @@ const Sessions = (): JSX.Element => {
             {reviwers}
           </Modal>
           
-          <Button type="primary">Edit</Button>
+         
           <Button type="primary">End Session</Button>
-          <Button type="primary">Edit</Button>
+          
           <Pagination className='' defaultCurrent={1} total={1} />
         </Panel>
     )
@@ -113,6 +114,7 @@ const Sessions = (): JSX.Element => {
 
   return (
     <div className='sessions'>
+      <h2>Cross-Check Sessions</h2>
       <CreateSession />
       <Collapse  onChange={callback}>
         {panels}

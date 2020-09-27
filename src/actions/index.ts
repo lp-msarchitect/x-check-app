@@ -2,6 +2,7 @@ import { AnyAction } from 'redux';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
 import { Task, User } from '../models/data-models';
+import { Session } from 'inspector';
 
 const dataService = new DataService();
 
@@ -177,6 +178,29 @@ export const createTask = (task: Task) => async (
         type: ACTIONS.ADD_ERROR,
         error: {
           message: 'There was an error while adding task.',
+        },
+      });
+    });
+};
+
+export const createSession = (session: Session) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService
+    .addSession(session)
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.CREATE_SESSION,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while adding session.',
         },
       });
     });

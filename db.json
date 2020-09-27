@@ -27,6 +27,13 @@
         "student"
       ],
       "id": 4
+    },
+    {
+      "githubId": "goplomax11",
+      "roles": [
+        "student"
+      ],
+      "id": 5
     }
   ],
   "tasks": [
@@ -199,6 +206,25 @@
           "githubId": "cardamo",
           "reviewerOf": [
             "ButterBrot777"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dsa",
+      "state": "Draft",
+      "taskId": "das",
+      "startDate": "das",
+      "endDate": "das",
+      "discardMinScore": false,
+      "discardMaxScore": false,
+      "minReiewsAmount": 1,
+      "desiredReviewersAmount": 1,
+      "attendees": [
+        {
+          "githubId": "ButterBrot777",
+          "reviewerOf": [
+            "cardamo"
           ]
         }
       ]

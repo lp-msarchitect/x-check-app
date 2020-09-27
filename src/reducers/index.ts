@@ -7,7 +7,9 @@ import {
   ReviewsState,
   TasksState,
   UsersState,
+  SessionsState
 } from '../models/redux-models';
+import { Session } from 'inspector';
 
 const userAuthReducer = (
   state = {
@@ -97,10 +99,24 @@ const sessionsReducer = (state = {}, action: AnyAction): any =>{
         return keyBy(action.payload.res, 'id') as AnyAction;
       }
       return state;
+    
+      case ACTIONS.CREATE_SESSION:
+      
+      if (action.payload) {
+        return keyBy(
+          {
+            ...state,
+            [action.payload.res.id]: action.payload.res as Session,
+          },
+          'id'
+        ) as SessionsState;
+      }
+      return state;
     default:
       return state;
   }
 };
+
 
 const errorReducer = (state = null, action: AnyAction): ErrorState => {
   if (action.type === ACTIONS.ADD_ERROR) {
