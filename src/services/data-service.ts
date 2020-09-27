@@ -70,6 +70,14 @@ class DataService {
     return body;
   }
 
+  async deleteResource<T>(url: string, id: string): Promise<T> {
+    const res = await fetch(this.baseURL + url + '/' + id, {
+      method: 'delete',
+    });
+    const body = await res.json();
+    return body;
+  }
+
   getAllUsers(): Promise<User[]> {
     return this.getResource<User[]>('/users');
   }
@@ -104,8 +112,17 @@ class DataService {
     return this.setResource<Task>('/tasks', task);
   }
 
+<<<<<<< HEAD
   async addSession(session: Session): Promise<Session> {
     return this.setResource<Session>('/crossCheckSessions', session);
+=======
+  async deleteTask(taskId: string): Promise<Task> {
+    return this, this.deleteResource<Task>('/tasks', taskId);
+  }
+
+  async updateTask(task: Task): Promise<Task> {
+    return (await this.putResource(`/tasks/${task.id}`, task)) as Task;
+>>>>>>> develop
   }
 
   getAllTaskScores(): Promise<TaskScore[]> {
@@ -141,6 +158,25 @@ class DataService {
     return result[0];
   }
 
+  async getReviewRequestByUserTask(
+    githubId: string,
+    task: string
+  ): Promise<ReviewRequest> {
+    const result = await this.getResource<ReviewRequest[]>(
+      `/reviewRequests?author=${githubId}&task=${task}`
+    );
+    return result[0];
+  }
+
+  addSingleReviewRequest(request: ReviewRequest): Promise<ReviewRequest> {
+    return this.setResource<ReviewRequest>(`/reviewRequests`, request);
+  }
+
+  putReviewRequest(request: ReviewRequest): Promise<ReviewRequest> {
+    const url = `/reviewRequests/${request.id}/`;
+    return this.putResource(url, request);
+  }
+
   getAllReviews(): Promise<Review[]> {
     return this.getResource<Review[]>('/reviews');
   }
@@ -148,6 +184,10 @@ class DataService {
   async getSingleReview(id: string): Promise<Review> {
     const result = await this.getResource<Review[]>(`/reviews?id=${id}`);
     return result[0];
+  }
+
+  async updateReview(review: Review): Promise<Review> {
+    return (await this.putResource(`/reviews/${review.id}`, review)) as Review;
   }
 
   getAllDisputes(): Promise<Dispute[]> {
@@ -159,6 +199,21 @@ class DataService {
       `/disputes?reviewId=${reviewId}`
     );
     return result[0];
+  }
+
+  async addDispute(dispute: Dispute): Promise<Dispute> {
+    return this.setResource<Dispute>('/disputes', dispute);
+  }
+
+  async updateDispute(dispute: Dispute): Promise<Dispute> {
+    return (await this.putResource(
+      `/disputes/${dispute.id}`,
+      dispute
+    )) as Dispute;
+  }
+
+  async deleteDispute(disputeId: string): Promise<Dispute> {
+    return this.deleteResource<Dispute>('/disputes', disputeId);
   }
 }
 

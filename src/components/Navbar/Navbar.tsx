@@ -2,10 +2,15 @@ import React from 'react';
 import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import Logout from '../Logout/Logout';
+import './Navbar.scss';
+import logo from '../../images/logo.png';
 
 const Navbar = (): JSX.Element => {
   return (
     <>
+      <Link to="/" className="logo">
+        <img src={logo} alt="XCheck" />
+      </Link>
       <Menu mode="horizontal" theme="dark">
         <Menu.Item>
           <Link to="/">Home</Link>
@@ -25,7 +30,9 @@ const Navbar = (): JSX.Element => {
         <Menu.Item>
           <Link to="/sessions">Cross-Check Sessions</Link>
         </Menu.Item>
-        <Logout />
+        <Menu.Item className="logout-btn">
+          <Logout />
+        </Menu.Item>
       </Menu>
     </>
   );

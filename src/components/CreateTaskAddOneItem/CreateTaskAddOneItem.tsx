@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { Button, Form, Input, Select } from 'antd';
 import { TaskItem, TaskItemCategory } from '../../models/data-models';
 
@@ -28,7 +27,6 @@ const CreateTaskAddOneItem = ({
   const resetItemInfo = (): void => {
     setTitleItem('');
     setDescriptionItem('');
-    setCategoryItem('Basic Scope');
     setMinItem('');
     setMaxItem('');
   };
@@ -37,7 +35,6 @@ const CreateTaskAddOneItem = ({
     const minNum = parseInt(minItem, 10);
     const maxNum = parseInt(maxItem, 10);
     const item = {
-      id: uuidv4(),
       minScore: !Number.isNaN(minNum) ? minNum : 0,
       maxScore: !Number.isNaN(maxNum) ? maxNum : 0,
       category: categoryItem,
