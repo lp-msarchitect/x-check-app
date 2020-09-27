@@ -2,6 +2,7 @@ import { combineReducers, AnyAction } from 'redux';
 import keyBy from 'lodash.keyby';
 import { Auth, Dispute, Review, Task } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
+
 import {
   DisputesState,
   ErrorState,
@@ -9,6 +10,7 @@ import {
   ReviewsState,
   TasksState,
   UsersState,
+  SessionsState
 } from '../models/redux-models';
 
 const userAuthReducer = (
@@ -218,6 +220,31 @@ const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
   }
 };
 
+const sessionsReducer = (state = {}, action: AnyAction): any =>{
+  switch (action.type) {
+    case ACTIONS.GET_SESSIONS:
+      if (action.payload) {
+        return keyBy(action.payload.res, 'id') as AnyAction;
+      }
+      return state;
+    
+      case ACTIONS.CREATE_SESSION:
+      
+      if (action.payload) {
+        return keyBy(
+          {
+            ...state,
+            [action.payload.res.id]: action.payload.res as any,
+          },
+          'id'
+        ) as SessionsState;
+      }
+      return state;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   tasks: tasksReducer,
   users: usersReducer,
@@ -226,4 +253,5 @@ export default combineReducers({
   reviewRequests: requestsReducer,
   disputes: disputesReducer,
   error: errorReducer,
+  sessions: sessionsReducer,
 });

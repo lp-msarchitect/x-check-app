@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react';
-import { Collapse,Button, Pagination,Modal  } from 'antd';
+import { Collapse,Button, Pagination,Modal } from 'antd';
 import { AnyAction } from 'redux';
 import {
   AppReduxState,
@@ -12,6 +12,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import {getSession} from '../../actions/actions';
 import StateTag from '../StateTag/StateTag';
 import CreateSession from '../CreateSession/CreateSession';
+import './Session.scss';
 
 
 const { Panel } = Collapse;
@@ -22,14 +23,13 @@ const Sessions = (): JSX.Element => {
 
   const sessions = useSelector<AppReduxState, SessionsState>((state) => state.sessions);
 
-
+  console.log(sessions)
   const dispatch: AppDispatch = useDispatch();
 
   
 
   useEffect(() => {
     dispatch(getSession());
-    
   }, [dispatch]);
 
   const [sessionsArr, setSessionsArr] = useState<CrossCheckSession[]>([]);

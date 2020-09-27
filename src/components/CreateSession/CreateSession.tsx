@@ -27,7 +27,7 @@ const CreateSession= ():JSX.Element =>{
     const handleOk = () => {
         const newSession:any ={
             id:nameSession,
-            state: 'Draft',
+            state: 'DRAFT',
             taskId:nameTask,
             startDate:startSession,
             endDate:endSession,
