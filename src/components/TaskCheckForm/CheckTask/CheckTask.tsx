@@ -1,7 +1,9 @@
 import React, { ReactElement, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { AppReduxState } from '../../../models/redux-models';
 import { Form, Select, InputNumber, Divider, Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { TaskItem } from '../../../models/data-models';
+import { TaskItem, Auth } from '../../../models/data-models';
 import './CheckTask.scss';
 
 const { Option } = Select;
@@ -40,6 +42,8 @@ const CheckTask = ({
     'Partially completed',
     'Fully completed',
   ]);
+
+  const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
 
   const checkScore = (value: number): void => {
     const copy = taskScores;
