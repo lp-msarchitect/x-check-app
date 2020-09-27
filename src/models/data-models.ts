@@ -80,8 +80,10 @@ export interface ReviewRequest {
   crossCheckSessionId: string | null;
   author: string;
   task: string;
+  prUrl: string;
+  demoUrl: string;
   state: ReviewRequestState;
-  selfGrade: TaskScore;
+  selfGrade: TaskScore | null;
 }
 
 /// Review
@@ -100,15 +102,27 @@ export interface Review {
   state: ReviewState;
   task: string;
   grade: TaskScore;
+  authorFeedback?: string[];
 }
 
 /// Dispute
 export type DisputeState = 'ONGOING' | 'ACCEPTED' | 'REJECTED';
 
 export interface Dispute {
+  id: string;
   reviewId: string;
   state: DisputeState;
-  item: string;
+  items: DisputeItem[];
+  reviewerComments: DisputeComment[];
+}
+
+interface DisputeComment {
+  githubId: string;
+  comment: string;
+}
+
+export interface DisputeItem {
+  taskItem: string;
   comment: string;
   suggestedScore: number;
 }

@@ -54,7 +54,6 @@ const TaskCheckForm = ({
     setTotalScore(0);
     setCheckedTaskItems(0);
     form.resetFields();
-    showForm();
   };
 
   const fastFillForm = (event: MouseEvent<HTMLElement>): void => {
