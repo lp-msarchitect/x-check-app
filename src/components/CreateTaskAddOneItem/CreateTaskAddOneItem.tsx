@@ -27,7 +27,6 @@ const CreateTaskAddOneItem = ({
   const resetItemInfo = (): void => {
     setTitleItem('');
     setDescriptionItem('');
-    setCategoryItem('Basic Scope');
     setMinItem('');
     setMaxItem('');
   };
