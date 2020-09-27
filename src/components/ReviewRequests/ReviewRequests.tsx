@@ -66,6 +66,11 @@ const ReviewRequests = (): JSX.Element => {
     console.log(values);
   };
 
+  const onReviewRequestClick = (record: ReviewRequest) =>{
+    //Дописать тут логику открытия чекформ
+    console.log(record);
+  }
+
   return (
     <>
       <Button className="create-btn" type="primary" onClick={onSubmitRequestBtnClick}>
@@ -86,7 +91,7 @@ const ReviewRequests = (): JSX.Element => {
           onCancel={onCancel}
         />
       ) : null}
-      <ReviewRequestsTable reviewRequests={reviewRequests} tasks={tasks} />
+      <ReviewRequestsTable reviewRequests={reviewRequests} tasks={tasks} onReviewRequestClick={onReviewRequestClick}/>
     </>
   );
 };
