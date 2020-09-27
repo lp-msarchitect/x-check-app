@@ -19,7 +19,7 @@ export type TaskState = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
 export type TaskItemCategory = 'Basic Scope' | 'Extra Scope' | 'Fines';
 
 export interface TaskItem {
-  id?: string;
+  id: string;
   minScore: number;
   maxScore: number;
   category: TaskItemCategory;
@@ -28,7 +28,7 @@ export interface TaskItem {
 }
 
 export interface Task {
-  id?: string;
+  id: string;
   title: string;
   author: string;
   state: TaskState;

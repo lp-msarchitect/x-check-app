@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
 import React, { useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addReviewRequest } from '../../actions';
+import { addReviewRequest } from '../../actions/actions';
 import { Auth, ReviewRequest, Task } from '../../models/data-models';
 import {
   AppReduxState,

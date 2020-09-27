@@ -2,7 +2,7 @@ import { AnyAction } from 'redux';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
 import { v4 as uuidv4 } from 'uuid';
-import { Dispute, Review, Task, TaskScore, User } from '../models/data-models';
+import { Dispute, Review, ReviewRequest, Task, TaskScore, User } from '../models/data-models';
 
 const dataService = new DataService();
 

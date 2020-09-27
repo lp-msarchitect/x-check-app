@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { AppReduxState, TasksState } from '../../models/redux-models';
-import { Dispute, DisputeItem, Review, Task } from '../../models/data-models';
+import { Dispute, DisputeItem, Review, Task, TaskItem } from '../../models/data-models';
 import { addDispute, getSignleReview, getTasks } from '../../actions/actions';
 import DisputeForm from '../DisputeForm/DisputeForm';
 import './CreateDispute.scss';
@@ -77,7 +77,7 @@ const CreateDispute = (): JSX.Element => {
       <div className="create-dispute">
         Task items, where you didn&apos;t get max score:
         <ol>
-          {task?.items.map((taskItem) => {
+          {task?.items.map((taskItem: TaskItem) => {
             if (
               review.grade.items[taskItem.id] &&
               taskItem.maxScore > review.grade.items[taskItem.id].score

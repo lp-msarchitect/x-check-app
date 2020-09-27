@@ -29,6 +29,7 @@ const TaskForm = ({ taskId }: CreateTaskProps): JSX.Element => {
   const [task, setTask] = useState<Task | null>(null);
   const { githubId } = useSelector<AppReduxState, Auth>((state) => state.auth);
   const dummyTask: Task = {
+    id: '',
     title: '',
     author: githubId,
     state: 'DRAFT',
