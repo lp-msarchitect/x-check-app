@@ -1,16 +1,13 @@
 export const GET_TASKS = 'GET_TASKS';
 export const GET_USERS = 'GET_USERS';
 export const GET_REVIEWS = 'GET_REVIEWS';
-<<<<<<< HEAD
 export const GET_SESSIONS = 'GET_SESSIONS';
 
-=======
 export const GET_DISPUTES = 'GET_DISPUTES';
 
 export const GET_SINGLE_REVIEW = 'GET_SINGLE_REVIEW';
 export const GET_SINGLE_TASK = 'GET_SINGLE_TASK';
 export const GET_SINGLE_DISPUTE = 'GET_SINGLE_DISPUTE';
->>>>>>> develop
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
