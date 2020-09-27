@@ -1,6 +1,9 @@
 export const GET_TASKS = 'GET_TASKS';
 export const GET_USERS = 'GET_USERS';
 export const GET_REVIEWS = 'GET_REVIEWS';
+
+export const GET_SESSIONS = 'GET_SESSIONS';
+
 export const GET_DISPUTES = 'GET_DISPUTES';
 
 export const GET_SINGLE_REVIEW = 'GET_SINGLE_REVIEW';
@@ -13,9 +16,11 @@ export const LOGIN_STARTED = 'LOGIN_STARTED';
 export const LOGIN_CHOSE_ROLE = 'LOGIN_CHOSE_ROLE';
 
 export const CREATE_TASK = 'CREATE_TASK';
+export const CREATE_SESSION = 'CREATE_SESSION';
 
 export const GET_REVIEW_REQUESTS = 'GET_REVIEW_REQUESTS';
 export const ADD_REVIEW_REQUEST = 'ADD_REVIEW_REQUEST';
+export const DELETE_REVIEW_REQUEST = 'DELETE_REVIEW_REQUEST';
 
 export const ADD_ERROR = 'ADD_ERROR';
 export const HIDE_ERROR = 'HIDE_ERROR';

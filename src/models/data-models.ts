@@ -25,7 +25,7 @@ export interface TaskItem {
   category: TaskItemCategory;
   title: string;
   description: string;
-  isForMentor?: boolean;
+  isForMentor?: boolean
 }
 
 export interface Task {

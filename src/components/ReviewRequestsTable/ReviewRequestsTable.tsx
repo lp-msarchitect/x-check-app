@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import { Link } from 'react-router-dom';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
 import { ReviewRequestsAppState, TasksState } from '../../models/redux-models';
@@ -13,10 +13,11 @@ export interface ReviewRequestsTableProps
   //   tasks: TasksState;
   reviewRequests: ReviewRequestsAppState;
   tasks: TasksState;
+  onReviewRequestClick: Function;
 }
 
 const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
-  const { reviewRequests, tasks } = props;
+  const { reviewRequests, tasks, onReviewRequestClick } = props;
   const reviewRequestsArr = Object.values(reviewRequests);
 
   const getTaskTitle = (taskId: string): string | undefined => {
@@ -121,9 +122,11 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
     tag: (state: string): JSX.Element => {
       return <StateTag state={state} />;
     },
-    taskTitle: (task: string): string => {
-      const currentTask = tasks[task];
-      return currentTask.title;
+    taskTitle: (task: string, record: ReviewRequest): JSX.Element => {
+      const currentTask = tasks[record.task];
+      return (<Button type="link" onClick={()=>{
+        onReviewRequestClick(record);
+      }}>{currentTask.title}</Button>);
     },
     author: (author: string): string => {
       return author;
