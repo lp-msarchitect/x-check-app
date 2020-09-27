@@ -1,6 +1,6 @@
-import { User, Task, Auth, Review, ReviewRequest, Dispute } from './data-models';
+import { User, Task, Auth, Review, ReviewRequest, Dispute, CrossCheckSession as Session  } from './data-models';
 
-export type actions = 'GET_TASKS' | 'GET_USERS' | 'GET_REVIEWS';
+export type actions = 'GET_TASKS' | 'GET_USERS' | 'GET_REVIEWS' | 'GET_SESSIONS'
 
 export type ReviewsState = {
   [dynamic: string]: Review;
@@ -14,6 +14,9 @@ export type UsersState = {
   [dynamic: string]: User;
 };
 
+export type SessionsState = {
+  [dinamic:string]: Session
+}
 export type ReviewRequestsAppState = {
   [dynamic: string]: ReviewRequest;
 };
@@ -32,4 +35,5 @@ export interface AppReduxState {
   auth: Auth;
   reviewRequests: ReviewRequestsAppState;
   error: ErrorState;
+  sessions: SessionsState;
 }

@@ -8,7 +8,10 @@ import {
   Dispute,
 } from '../models/data-models';
 
+
+import { Session } from 'inspector';
 import * as URLS from '../constants/urls';
+
 
 class DataService {
   baseURL: string;
@@ -111,6 +114,9 @@ class DataService {
     return this.setResource<Task>('/tasks', task);
   }
 
+  async addSession(session: Session): Promise<Session> {
+    return this.setResource<Session>('/crossCheckSessions', session);
+  }
   async deleteTask(taskId: string): Promise<Task> {
     return this, this.deleteResource<Task>('/tasks', taskId);
   }

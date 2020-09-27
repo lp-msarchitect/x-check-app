@@ -27,6 +27,13 @@
         "coursemanager"
       ],
       "id": 4
+    },
+    {
+      "githubId": "goplomax11",
+      "roles": [
+        "student"
+      ],
+      "id": 5
     }
   ],
   "tasks": [
@@ -471,6 +478,25 @@
           "title": "В репозитории есть \"следы\" активной командной работы - комментарии в пулл реквестах.",
           "description": "",
           "id": "43dc84b5-634a-4e3f-a5a6-721ed1db2b5a"
+        }
+      ]
+    },
+    {
+      "id": "dsa",
+      "state": "Draft",
+      "taskId": "das",
+      "startDate": "das",
+      "endDate": "das",
+      "discardMinScore": false,
+      "discardMaxScore": false,
+      "minReiewsAmount": 1,
+      "desiredReviewersAmount": 1,
+      "attendees": [
+        {
+          "githubId": "ButterBrot777",
+          "reviewerOf": [
+            "cardamo"
+          ]
         }
       ]
     }
