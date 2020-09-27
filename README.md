@@ -56,3 +56,7 @@ npm test -- --coverage
 
 This will show you coverage report, that will look something like this:
 ![test coverage report demo](https://i.imgur.com/5bFhnTS.png 'test coverage report demo')
+
+## Roles
+
+All actions allowed and disallowed for different roles [are described here](https://docs.google.com/spreadsheets/d/1Uke8tvGoI-RN2K_Zv8Ji3oZMaPVTSco1SWWc0Uad92M/edit?usp=sharing).
