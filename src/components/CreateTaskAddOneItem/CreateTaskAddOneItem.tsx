@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, Checkbox } from 'antd';
 import { TaskItem, TaskItemCategory } from '../../models/data-models';
 
 const { TextArea } = Input;
@@ -23,6 +23,7 @@ const CreateTaskAddOneItem = ({
   );
   const [minItem, setMinItem] = useState('');
   const [maxItem, setMaxItem] = useState('');
+  const [isForMentor, setIsForMentor] = useState(false);
 
   const resetItemInfo = (): void => {
     setTitleItem('');
@@ -30,6 +31,7 @@ const CreateTaskAddOneItem = ({
     setCategoryItem('Basic Scope');
     setMinItem('');
     setMaxItem('');
+    setIsForMentor(false);
   };
 
   const handleAddItem = (): void => {
@@ -41,6 +43,7 @@ const CreateTaskAddOneItem = ({
       category: categoryItem,
       title: titleItem,
       description: descriptionItem,
+      isForMentor: isForMentor
     } as TaskItem;
     const newArray = [...items, item];
     onChangeItems(
@@ -81,6 +84,9 @@ const CreateTaskAddOneItem = ({
             );
           })}
         </Select>
+      </Form.Item>
+      <Form.Item>
+            <Checkbox checked={isForMentor} onChange={(e): void => setIsForMentor(e.target.checked)}>Only For Mentor</Checkbox>
       </Form.Item>
       <Form.Item label="Score Range">
         <Input

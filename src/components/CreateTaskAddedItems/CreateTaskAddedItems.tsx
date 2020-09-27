@@ -32,6 +32,9 @@ const CreateTaskAddedItems = ({
                     <strong>{item.category}</strong>
                   </li>
                 )}
+                <li key={item.isForMentor ? 'for mentor' : 'for all'}>
+                  <em>{item.isForMentor && 'Only for mentor'}</em>
+                </li>
                 <li key={item.id}>
                   {index + 1}. {item.title}.{' '}
                   <em>

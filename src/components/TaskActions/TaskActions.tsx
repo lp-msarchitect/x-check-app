@@ -57,6 +57,13 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
               </Button>
             </>
           )}
+          <Button type='primary'
+                  target='blanck'
+                  href={`http://localhost:3001/tasks/${task.id}`}
+                  size='small'
+          >
+            Export As JSON
+          </Button>
           {task.state !== 'ARCHIVED' && (
             <Button
               size="small"
