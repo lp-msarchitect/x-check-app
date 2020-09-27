@@ -89,6 +89,7 @@ const ReviewRequests = (): JSX.Element => {
           open={showSelfCheck}
           onSubmit={onSubmitSelfCheck}
           onCancel={onCancel}
+          setShowSelfCheck={setShowSelfCheck}
         />
       ) : null}
       <ReviewRequestsTable reviewRequests={reviewRequests} tasks={tasks} onReviewRequestClick={onReviewRequestClick}/>

@@ -123,7 +123,7 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
       return <StateTag state={state} />;
     },
     taskTitle: (task: string, record: ReviewRequest): JSX.Element => {
-      const currentTask = tasks[task];
+      const currentTask = tasks[record.task];
       return (<Button type="link" onClick={()=>{
         onReviewRequestClick(record);
       }}>{currentTask.title}</Button>);
