@@ -2,22 +2,30 @@
   "users": [
     {
       "githubId": "lp-msarchitect1",
-      "roles": ["student"],
+      "roles": [
+        "student"
+      ],
       "id": 1
     },
     {
       "githubId": "lp-msarchitect",
-      "roles": ["coursemanager"],
+      "roles": [
+        "coursemanager"
+      ],
       "id": 2
     },
     {
       "githubId": "ellankz",
-      "roles": ["coursemanager"],
+      "roles": [
+        "coursemanager"
+      ],
       "id": 3
     },
     {
       "githubId": "Tsyman",
-      "roles": ["student"],
+      "roles": [
+        "student"
+      ],
       "id": 4
     }
   ],
@@ -27,7 +35,11 @@
       "title": "Simple task v1",
       "author": "cardamo",
       "state": "DRAFT",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "id": "basic_p1",
@@ -60,7 +72,11 @@
       "title": "Simple task v2",
       "author": "test",
       "state": "PUBLISHED",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "id": "basic_p1",
@@ -100,7 +116,11 @@
       "title": "Simple task v1",
       "author": "cardamo",
       "state": "DRAFT",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "id": "basic_p1",
@@ -134,7 +154,11 @@
       "title": "X Check App / RS Assessment Tool",
       "author": "ellankz",
       "state": "PUBLISHED",
-      "categoriesOrder": ["Basic Scope", "Extra Scope", "Fines"],
+      "categoriesOrder": [
+        "Basic Scope",
+        "Extra Scope",
+        "Fines"
+      ],
       "items": [
         {
           "minScore": 0,
@@ -485,15 +509,22 @@
       "attendees": [
         {
           "githubId": "ButterBrot777",
-          "reviewerOf": ["torvalds", "cardamo"]
+          "reviewerOf": [
+            "torvalds",
+            "cardamo"
+          ]
         },
         {
           "githubId": "torvalds",
-          "reviewerOf": ["cardamo"]
+          "reviewerOf": [
+            "cardamo"
+          ]
         },
         {
           "githubId": "cardamo",
-          "reviewerOf": ["ButterBrot777"]
+          "reviewerOf": [
+            "ButterBrot777"
+          ]
         }
       ]
     }
@@ -516,6 +547,46 @@
       "demoUrl": "https://x-check-app-team-group30-lp-msarchitect.netlify.app/",
       "state": "DRAFT",
       "selfGrade": null
+    },
+    {
+      "id": "XU3ZIMt",
+      "crossCheckSessionId": null,
+      "author": "lp-msarchitect",
+      "task": "f2e1a2f7-dc29-4e8f-8252-d73372c609e7",
+      "prUrl": "http://test.com",
+      "demoUrl": "http://test.com",
+      "state": "DRAFT",
+      "selfGrade": null
+    },
+    {
+      "id": "wzCcIrs",
+      "crossCheckSessionId": null,
+      "author": "lp-msarchitect",
+      "task": "simple-task-v2",
+      "prUrl": "http://test.com",
+      "demoUrl": "http://test.com",
+      "state": "DRAFT",
+      "selfGrade": {
+        "task": "simple-task-v2",
+        "items": {
+          "basic_p1": {
+            "comment": "WEWEQVQWEV",
+            "score": 10
+          },
+          "extra_p1": {
+            "comment": "WQEWEQC",
+            "score": 15
+          },
+          "extra_p2": {
+            "comment": "QWEFWEF",
+            "score": 25
+          },
+          "fines_p1": {
+            "comment": "QWEFWQEF",
+            "score": -10
+          }
+        }
+      }
     }
   ],
   "reviews": [
@@ -573,7 +644,9 @@
           }
         }
       },
-      "authorFeedback": ["Please review faster."]
+      "authorFeedback": [
+        "Please review faster."
+      ]
     },
     {
       "id": "rev-id-3",
@@ -599,7 +672,9 @@
           }
         }
       },
-      "authorFeedback": ["Try me!"]
+      "authorFeedback": [
+        "Try me!"
+      ]
     },
     {
       "id": "rev-id-4",

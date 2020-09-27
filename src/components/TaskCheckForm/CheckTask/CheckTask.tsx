@@ -1,9 +1,17 @@
 import React, { ReactElement, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AppReduxState } from '../../../models/redux-models';
-import { Form, Select, InputNumber, Divider, Button, Input } from 'antd';
+import {
+  Form,
+  Select,
+  InputNumber,
+  Divider,
+  Button,
+  Input,
+  Typography,
+} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { TaskItem, Auth } from '../../../models/data-models';
+import { TaskItem, Auth, TaskScore } from '../../../models/data-models';
 import './CheckTask.scss';
 
 const { Option } = Select;
@@ -17,6 +25,7 @@ interface CheckTaskProps {
   setTaskScores: Function;
   checkedTasks: boolean[];
   setCheckedTasks: Function;
+  selfGradeItem?: any;
 }
 
 const CheckTask = ({
@@ -29,6 +38,7 @@ const CheckTask = ({
   setTaskScores,
   checkedTasks,
   setCheckedTasks,
+  selfGradeItem,
 }: CheckTaskProps): JSX.Element => {
   const [otherScore, setOtherScore] = useState<number>(0);
   const [baseScores, setBaseScores] = useState<number[]>([
@@ -118,11 +128,15 @@ const CheckTask = ({
         <div className="task-description">
           <p className="task-title">{taskItem.description}</p>
           <Form.Item name={[taskItem.id, 'comment']}>
-            <Input.TextArea allowClear/>
+            <Input.TextArea allowClear />
           </Form.Item>
+          <Typography.Text>
+            Self Grade:{' '}
+            {`${selfGradeItem.score || ''} ${selfGradeItem.comment || ''}`}
+          </Typography.Text>
         </div>
         <Form.Item
-          className='select'
+          className="select"
           name={[taskItem.id, 'score']}
           label={taskItem.category}
           rules={[

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Affix, Button, Form, message } from 'antd';
-import { Task } from '../../models/data-models';
+import { ReviewRequest, Task } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
 
@@ -16,13 +16,15 @@ interface SingleTaskProps {
   onSubmit: Function;
   open: boolean;
   onCancel: Function;
-  setShowCheck: Function;
+  checkedRequest?: ReviewRequest | null;
 }
 
 const TaskCheckForm = ({
   singleTask,
   onSubmit,
-  setShowCheck
+  checkedRequest,
+  open,
+  onCancel,
 }: SingleTaskProps): JSX.Element => {
   const [taskScores, setTaskScores] = useState<number[]>(
     new Array(singleTask.items.length).fill(0)
@@ -30,7 +32,6 @@ const TaskCheckForm = ({
   const [totalScore, setTotalScore] = useState<number>(0);
   const [checkedTaskItems, setCheckedTaskItems] = useState<number>(0);
   const [form] = Form.useForm();
-  const [displayForm, setDisplayForm] = useState<boolean>(true);
   const [checkedTasks, setCheckedTasks] = useState<boolean[]>(
     new Array(singleTask.items.length).fill(false)
   );
@@ -43,22 +44,17 @@ const TaskCheckForm = ({
     message.error('Fill in all fields');
   };
 
-  const showForm = (): void => {
-    setDisplayForm(!displayForm);
-  };
-
   const submitHandler = (value: any): void => {
-    onSubmit(value);
     success();
-    showForm();
+    onSubmit(value);
   };
 
   const closeForm = (): void => {
     setTaskScores(new Array(singleTask.items.length).fill(0));
     setTotalScore(0);
     setCheckedTaskItems(0);
-    setShowCheck(false);
     form.resetFields();
+    onCancel();
   };
 
   const clearForm = (): void => {
@@ -73,8 +69,10 @@ const TaskCheckForm = ({
     form.resetFields();
   };
 
+  const selfGrade = checkedRequest ? checkedRequest.selfGrade : null;
+
   return (
-    <div className={displayForm ? 'form-container' : 'form-container disabled'}>
+    <div className={open ? 'form-container' : 'form-container disabled'}>
       <Form
         className="task-check-form"
         onFinish={submitHandler}
@@ -89,16 +87,16 @@ const TaskCheckForm = ({
             aria-label="Close form button"
           />
           <div className="form-header">
-            <h2 className="title">{singleTask.id}</h2>
+            <h2 className="title">{singleTask.title}</h2>
             <div className="fast-score-buttons">
-                <Button
-                  className={`button Clear`}
-                  htmlType="button"
-                  type="default"
-                  onClick={clearForm}
-                >
-                  Clear
-                </Button>
+              <Button
+                className={`button Clear`}
+                htmlType="button"
+                type="default"
+                onClick={clearForm}
+              >
+                Clear
+              </Button>
             </div>
             <div className="score-container">
               <p className="progress">
@@ -121,6 +119,7 @@ const TaskCheckForm = ({
               checkedTasks={checkedTasks}
               setCheckedTasks={setCheckedTasks}
               itemId={id}
+              selfGradeItem={selfGrade ? selfGrade.items[elem.id] : null}
             />
           );
         })}

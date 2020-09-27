@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
+import { request } from 'http';
 import React, { useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addReviewRequest } from '../../actions/actions';
@@ -16,8 +17,11 @@ import './ReviewRequest.scss';
 
 const ReviewRequests = (): JSX.Element => {
   const [showSubmit, setShowSubmit] = useState(false);
-  const [showSelfCheck, setShowSelfCheck] = useState(false);
+  const [showCheck, setShowCheck] = useState(false);
   const [selectedTask, setSelectedTask] = useState({} as Task);
+  const [checkedRequest, setCheckedRequest] = useState<ReviewRequest | null>(
+    null
+  );
 
   const auth = useSelector<AppReduxState, Auth>(
     (state) => state.auth,
@@ -42,7 +46,7 @@ const ReviewRequests = (): JSX.Element => {
 
   const onCancel = (): void => {
     setShowSubmit(false);
-    setShowSelfCheck(false);
+    setShowCheck(false);
   };
 
   const onSubmitReviewRequest = (values: Record<string, any>): void => {
@@ -56,24 +60,40 @@ const ReviewRequests = (): JSX.Element => {
       state: 'DRAFT',
       selfGrade: null,
     };
+    
     dispatch(addReviewRequest(request));
+    setCheckedRequest(request);
     setSelectedTask(tasks[values.task]);
-    setShowSelfCheck(true);
+    setShowCheck(true);
   };
 
-  const onSubmitSelfCheck = (values: string): void => {
-    setShowSelfCheck(false);
-    console.log(values);
+  const onSubmitCheck = (values: any): void => {
+    setShowCheck(false);
+    const request = checkedRequest as ReviewRequest;
+    dispatch(
+      addReviewRequest({
+        ...request,
+        selfGrade: {
+          task: request.task || '',
+          items: values,
+        }
+      })
+    );
   };
 
-  const onReviewRequestClick = (record: ReviewRequest) =>{
-    //Дописать тут логику открытия чекформ
-    console.log(record);
-  }
+  const onReviewRequestClick = (record: ReviewRequest) => {
+    setCheckedRequest(record);
+    setSelectedTask(tasks[record.task]);
+    setShowCheck(true);
+  };
 
   return (
     <>
-      <Button className="create-btn" type="primary" onClick={onSubmitRequestBtnClick}>
+      <Button
+        className="create-btn"
+        type="primary"
+        onClick={onSubmitRequestBtnClick}
+      >
         Submit request
       </Button>
       <Modal visible={showSubmit} footer={null} onCancel={onCancel}>
@@ -83,16 +103,20 @@ const ReviewRequests = (): JSX.Element => {
           onSubmitClick={onSubmitReviewRequest}
         />
       </Modal>
-      {showSelfCheck ? (
+      {showCheck ? (
         <TaskCheckForm
           singleTask={selectedTask}
-          open={showSelfCheck}
-          onSubmit={onSubmitSelfCheck}
+          open={showCheck}
+          onSubmit={onSubmitCheck}
           onCancel={onCancel}
-          setShowSelfCheck={setShowSelfCheck}
+          checkedRequest={checkedRequest}
         />
       ) : null}
-      <ReviewRequestsTable reviewRequests={reviewRequests} tasks={tasks} onReviewRequestClick={onReviewRequestClick}/>
+      <ReviewRequestsTable
+        reviewRequests={reviewRequests}
+        tasks={tasks}
+        onReviewRequestClick={onReviewRequestClick}
+      />
     </>
   );
 };
