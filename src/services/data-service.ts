@@ -69,6 +69,14 @@ class DataService {
     return body;
   }
 
+  async deleteResource<T>(url: string, id: string): Promise<T> {
+    const res = await fetch(this.baseURL + url + '/' + id, {
+      method: 'delete',
+    });
+    const body = await res.json();
+    return body;
+  }
+
   getAllUsers(): Promise<User[]> {
     return this.getResource<User[]>('/users');
   }
@@ -101,6 +109,14 @@ class DataService {
 
   async addTask(task: Task): Promise<Task> {
     return this.setResource<Task>('/tasks', task);
+  }
+
+  async deleteTask(taskId: string): Promise<Task> {
+    return this, this.deleteResource<Task>('/tasks', taskId);
+  }
+
+  async updateTask(task: Task): Promise<Task> {
+    return (await this.putResource(`/tasks/${task.id}`, task)) as Task;
   }
 
   getAllTaskScores(): Promise<TaskScore[]> {
@@ -164,6 +180,10 @@ class DataService {
     return result[0];
   }
 
+  async updateReview(review: Review): Promise<Review> {
+    return (await this.putResource(`/reviews/${review.id}`, review)) as Review;
+  }
+
   getAllDisputes(): Promise<Dispute[]> {
     return this.getResource<Dispute[]>('/disputes');
   }
@@ -173,6 +193,21 @@ class DataService {
       `/disputes?reviewId=${reviewId}`
     );
     return result[0];
+  }
+
+  async addDispute(dispute: Dispute): Promise<Dispute> {
+    return this.setResource<Dispute>('/disputes', dispute);
+  }
+
+  async updateDispute(dispute: Dispute): Promise<Dispute> {
+    return (await this.putResource(
+      `/disputes/${dispute.id}`,
+      dispute
+    )) as Dispute;
+  }
+
+  async deleteDispute(disputeId: string): Promise<Dispute> {
+    return this.deleteResource<Dispute>('/disputes', disputeId);
   }
 }
 

@@ -18,12 +18,14 @@ import './App.scss';
 import { User } from '../../models/data-models';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { getReviewRequests, getTasks, postUserFetch } from '../../actions';
+import { getReviewRequests, getTasks, postUserFetch } from '../../actions/';
 import {
   AppReduxState,
   ReviewRequestsAppState,
   TasksState,
 } from '../../models/redux-models';
+import CreateDispute from '../CreateDispute/CreateDispute';
+import EditTask from '../EditTask/EditTask';
 
 type AppDispatch = ThunkDispatch<User, void, AnyAction>;
 
@@ -42,7 +44,6 @@ const App = (): JSX.Element => {
     <Router>
       <Layout className="layout">
         <Header>
-          <div className="logo" />
           <Navbar />
         </Header>
         <ErrorNotification />
@@ -61,6 +62,9 @@ const App = (): JSX.Element => {
               <ProtectedRoute path="/create-task" redirectPath="/login">
                 <CreateTask />
               </ProtectedRoute>
+              <ProtectedRoute path="/edit-task/:taskId" redirectPath="/login">
+                <EditTask />
+              </ProtectedRoute>
               <ProtectedRoute path="/review-requests" redirectPath="/login">
                 <ReviewRequests />
               </ProtectedRoute>
@@ -72,6 +76,12 @@ const App = (): JSX.Element => {
               </ProtectedRoute>
               <ProtectedRoute path="/sessions" redirectPath="/login">
                 <Sessions />
+              </ProtectedRoute>
+              <ProtectedRoute
+                path="/create-dispute/:reviewId"
+                redirectPath="/login"
+              >
+                <CreateDispute />
               </ProtectedRoute>
               <Route path="/">
                 <Home />

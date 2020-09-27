@@ -26,7 +26,7 @@ const CreateTaskAddedItems = ({
               index === 0 ||
               (index > 0 && item.category !== items[index - 1].category);
             return (
-              <React.Fragment key={item.id}>
+              <React.Fragment key={item.id || item.title}>
                 {addCategory && (
                   <li key={item.category}>
                     <strong>{item.category}</strong>

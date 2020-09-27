@@ -19,7 +19,7 @@ export type TaskState = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
 export type TaskItemCategory = 'Basic Scope' | 'Extra Scope' | 'Fines';
 
 export interface TaskItem {
-  id: string;
+  id?: string;
   minScore: number;
   maxScore: number;
   category: TaskItemCategory;
@@ -28,7 +28,7 @@ export interface TaskItem {
 }
 
 export interface Task {
-  id: string;
+  id?: string;
   title: string;
   author: string;
   state: TaskState;
@@ -102,15 +102,27 @@ export interface Review {
   state: ReviewState;
   task: string;
   grade: TaskScore;
+  authorFeedback?: string[];
 }
 
 /// Dispute
 export type DisputeState = 'ONGOING' | 'ACCEPTED' | 'REJECTED';
 
 export interface Dispute {
+  id: string;
   reviewId: string;
   state: DisputeState;
-  item: string;
+  items: DisputeItem[];
+  reviewerComments: DisputeComment[];
+}
+
+interface DisputeComment {
+  githubId: string;
+  comment: string;
+}
+
+export interface DisputeItem {
+  taskItem: string;
   comment: string;
   suggestedScore: number;
 }
