@@ -1,6 +1,6 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { Affix, Button, Form, message } from 'antd';
-import { Task, TaskItem } from '../../models/data-models';
+import { Task } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
 
@@ -13,12 +13,16 @@ const fastScoreButtons = [
 
 interface SingleTaskProps {
   singleTask: Task;
-  onSubmitForm: Function;
+  onSubmit: Function;
+  open: boolean;
+  onCancel: Function;
+  setShowSelfCheck: Function;
 }
 
 const TaskCheckForm = ({
   singleTask,
-  onSubmitForm,
+  onSubmit,
+  setShowSelfCheck
 }: SingleTaskProps): JSX.Element => {
   const [taskScores, setTaskScores] = useState<number[]>(
     new Array(singleTask.items.length).fill(0)
@@ -43,8 +47,8 @@ const TaskCheckForm = ({
     setDisplayForm(!displayForm);
   };
 
-  const submitHandler = (): void => {
-    onSubmitForm(totalScore);
+  const submitHandler = (value: any): void => {
+    onSubmit(value);
     success();
     showForm();
   };
@@ -53,84 +57,20 @@ const TaskCheckForm = ({
     setTaskScores(new Array(singleTask.items.length).fill(0));
     setTotalScore(0);
     setCheckedTaskItems(0);
+    setShowSelfCheck(false);
     form.resetFields();
   };
 
-  const fastFillForm = (event: MouseEvent<HTMLElement>): void => {
-    const obj: any = {};
-    const value = event.currentTarget.textContent;
-    singleTask.items.forEach((elem: TaskItem): void => {
-      const { title, category } = elem;
-      if (category === 'Fines') {
-        obj[title] = 'No';
-      } else {
-        obj[title] = value;
-      }
-
-      switch (value) {
-        case fastScoreButtons[0]:
-          setTotalScore(0);
-          setCheckedTaskItems(singleTask.items.length);
-          setCheckedTasks(
-            checkedTasks.map(() => {
-              return true;
-            })
-          );
-          form.setFieldsValue(obj);
-          break;
-        case fastScoreButtons[1]: {
-          const scores = singleTask.items.map((item: TaskItem) => {
-            return item.maxScore / 2;
-          });
-          setTaskScores(scores);
-          setTotalScore(
-            scores.reduce((a, b) => {
-              return a + b;
-            }, 0)
-          );
-          setCheckedTasks(
-            checkedTasks.map(() => {
-              return true;
-            })
-          );
-          setCheckedTaskItems(singleTask.items.length);
-          form.setFieldsValue(obj);
-          break;
-        }
-        case fastScoreButtons[2]: {
-          const scores = singleTask.items.map((item: TaskItem) => {
-            return item.maxScore;
-          });
-          setTaskScores(scores);
-          setTotalScore(
-            scores.reduce((a, b) => {
-              return a + b;
-            }, 0)
-          );
-          setCheckedTasks(
-            checkedTasks.map(() => {
-              return true;
-            })
-          );
-          setCheckedTaskItems(singleTask.items.length);
-          form.setFieldsValue(obj);
-          break;
-        }
-        case fastScoreButtons[3]:
-          setCheckedTasks(
-            checkedTasks.map(() => {
-              return false;
-            })
-          );
-          setCheckedTaskItems(0);
-          setTotalScore(0);
-          setTaskScores(new Array(singleTask.items.length).fill(0));
-          form.resetFields();
-          break;
-        default:
-          break;
-      }
-    });
+  const clearForm = (): void => {
+    setCheckedTasks(
+      checkedTasks.map(() => {
+        return false;
+      })
+    );
+    setCheckedTaskItems(0);
+    setTotalScore(0);
+    setTaskScores(new Array(singleTask.items.length).fill(0));
+    form.resetFields();
   };
 
   return (
@@ -151,19 +91,14 @@ const TaskCheckForm = ({
           <div className="form-header">
             <h2 className="title">{singleTask.id}</h2>
             <div className="fast-score-buttons">
-              {fastScoreButtons.map((elem) => {
-                return (
-                  <Button
-                    className={`button ${elem}`}
-                    htmlType="button"
-                    type="default"
-                    key={elem}
-                    onClick={(event): void => fastFillForm(event)}
-                  >
-                    {elem}
-                  </Button>
-                );
-              })}
+                <Button
+                  className={`button Clear`}
+                  htmlType="button"
+                  type="default"
+                  onClick={clearForm}
+                >
+                  Clear
+                </Button>
             </div>
             <div className="score-container">
               <p className="progress">
@@ -173,7 +108,6 @@ const TaskCheckForm = ({
             </div>
           </div>
         </Affix>
-        <p className="criteria">Task criteria or description</p>
         {singleTask.items.map((elem, id) => {
           return (
             <CheckTask

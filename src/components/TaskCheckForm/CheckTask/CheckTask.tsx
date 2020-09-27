@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Form, Select, InputNumber, Divider, Button } from 'antd';
+import { Form, Select, InputNumber, Divider, Button, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { TaskItem } from '../../../models/data-models';
 import './CheckTask.scss';
@@ -113,12 +113,13 @@ const CheckTask = ({
         </div>
         <div className="task-description">
           <p className="task-title">{taskItem.description}</p>
-          <a href="##" className="add-feedback">
-            add a comment
-          </a>
+          <Form.Item name={[taskItem.id, 'comment']}>
+            <Input.TextArea allowClear/>
+          </Form.Item>
         </div>
         <Form.Item
-          name={taskItem.title}
+          className='select'
+          name={[taskItem.id, 'score']}
           label={taskItem.category}
           rules={[
             { required: true, message: `'${taskItem.category}' is required` },
