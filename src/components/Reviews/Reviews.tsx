@@ -164,6 +164,10 @@ const Reviews = (): JSX.Element => {
     },
   };
 
+  const onSubmitForm = (value: string): void => {
+    console.log(value);
+  };
+
   return (
     <div className="reviews">
       <Table dataSource={reviewsArr} rowKey={(review): string => review.id}>
@@ -209,7 +213,13 @@ const Reviews = (): JSX.Element => {
         />
       </Table>
       {Object.values(tasks).map((elem) => {
-        return <TaskCheckForm singleTask={elem} key={elem.id} />;
+        return (
+          <TaskCheckForm
+            singleTask={elem}
+            key={elem.id}
+            onSubmitForm={onSubmitForm}
+          />
+        );
       })}
     </div>
   );

@@ -13,9 +13,13 @@ const fastScoreButtons = [
 
 interface SingleTaskProps {
   singleTask: Task;
+  onSubmitForm: Function;
 }
 
-const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
+const TaskCheckForm = ({
+  singleTask,
+  onSubmitForm,
+}: SingleTaskProps): JSX.Element => {
   const [taskScores, setTaskScores] = useState<number[]>(
     new Array(singleTask.items.length).fill(0)
   );
@@ -31,8 +35,8 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
     setDisplayForm(!displayForm);
   };
 
-  const submitHandler = (values: string): void => {
-    console.log(values, totalScore);
+  const submitHandler = (): void => {
+    onSubmitForm(totalScore);
     showForm();
   };
 
@@ -137,7 +141,7 @@ const TaskCheckForm = ({ singleTask }: SingleTaskProps): JSX.Element => {
               {fastScoreButtons.map((elem) => {
                 return (
                   <Button
-                    className="button"
+                    className={`button ${elem}`}
                     htmlType="button"
                     type="default"
                     key={elem}

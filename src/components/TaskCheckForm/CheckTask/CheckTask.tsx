@@ -101,7 +101,10 @@ const CheckTask = ({
       <hr />
       <div className="task-container">
         <div className="task-max-score">
-          <p>Max score</p>
+          <p>
+            Max <br />
+            score
+          </p>
           <p>
             {taskItem.category === 'Fines'
               ? taskItem.minScore
@@ -117,7 +120,9 @@ const CheckTask = ({
         <Form.Item
           name={taskItem.title}
           label={taskItem.category}
-          rules={[{ required: true }]}
+          rules={[
+            { required: true, message: `'${taskItem.category}' is required` },
+          ]}
         >
           {taskItem.category === 'Fines' ? (
             <Select
