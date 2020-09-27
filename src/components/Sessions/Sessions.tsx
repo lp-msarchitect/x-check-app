@@ -4,15 +4,14 @@ import { AnyAction } from 'redux';
 import {
   AppReduxState,
   ReviewsState,
-  TasksState,
   SessionsState
 } from '../../models/redux-models';
-import { Review, CrossCheckSession } from '../../models/data-models';
+import { CrossCheckSession } from '../../models/data-models';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { getSession} from '../../actions';
 import StateTag from '../StateTag/StateTag';
-import { pbkdf2 } from 'crypto';
+import CreateSession from '../CreateSession/CreateSession';
 
 
 const { Panel } = Collapse;
@@ -43,26 +42,17 @@ const Sessions = (): JSX.Element => {
   function callback(key:any) {
     console.log('click')
   }
-
   
   const [visible, setVisible] = useState(false)
-  
 
   const showModal = (idUser:number,numberSession:number) => {
-    
-    console.log(idUser);  
-   let a = sessionsArr[numberSession]
-   let b = a.attendees;
-   let c = b[idUser]
-   let d = c.reviewerOf
-       
+  let a = sessionsArr[numberSession]
+  let b = a.attendees;
+  let c = b[idUser]
+  let d = c.reviewerOf  
   const g = d.join('\n')
   setReviwers([g])
-     
- 
-    
-    
-    setVisible(true)
+  setVisible(true)
   };
 
   const handleOk = () => {
@@ -110,6 +100,9 @@ const Sessions = (): JSX.Element => {
           >
             {reviwers}
           </Modal>
+          
+          <Button type="primary">Edit</Button>
+          <Button type="primary">End Session</Button>
           <Button type="primary">Edit</Button>
           <Pagination className='' defaultCurrent={1} total={1} />
         </Panel>
@@ -120,7 +113,7 @@ const Sessions = (): JSX.Element => {
 
   return (
     <div className='sessions'>
-      <Button type="primary">Add session</Button>
+      <CreateSession />
       <Collapse  onChange={callback}>
         {panels}
         
