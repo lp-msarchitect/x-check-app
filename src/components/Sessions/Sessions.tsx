@@ -34,6 +34,7 @@ const Sessions = (): JSX.Element => {
   }, [dispatch]);
 
   const [sessionsArr, setSessionsArr] = useState<CrossCheckSession[]>([]);
+  const [reviwers, setReviwers] = useState<any[]>([])
 
   useEffect(() => {
     setSessionsArr(Object.values(sessions));
@@ -43,33 +44,45 @@ const Sessions = (): JSX.Element => {
     console.log('click')
   }
 
-  const userAndReviewers = () =>{
-
-  }
+  
   const [visible, setVisible] = useState(false)
   
 
-  const showModal = (e:Event) => {
-    console.log(e.target)
+  const showModal = (idUser:number,numberSession:number) => {
+    
+    console.log(idUser);  
+   let a = sessionsArr[numberSession]
+   let b = a.attendees;
+   let c = b[idUser]
+   let d = c.reviewerOf
+       
+  const g = d.join('\n')
+  setReviwers([g])
+     
+ 
+    
+    
     setVisible(true)
   };
 
   const handleOk = () => {
     setVisible(false)
+    setReviwers([])
   };
 
   const handleCancel = () => {
     setVisible(false)
+    setReviwers([])
   };
 
-  const panels = sessionsArr.map((session) =>{
+  const panels = sessionsArr.map((session,numberSession) =>{
     console.log(sessions)
     console.log(session)
     const userAndReviewers = session.attendees;
     const users = userAndReviewers.map((user,idUser) =>{
       
       return (
-        <div key={idUser} onClick = {showModal}>
+        <div key={idUser} onClick={() => showModal(idUser,numberSession)}>
           {user.githubId} 
         </div>
       )
@@ -95,7 +108,7 @@ const Sessions = (): JSX.Element => {
             onCancel={handleCancel}
             
           >
-            
+            {reviwers}
           </Modal>
           <Button type="primary">Edit</Button>
           <Pagination className='' defaultCurrent={1} total={1} />
