@@ -152,6 +152,25 @@ class DataService {
     return result[0];
   }
 
+  async getReviewRequestByUserTask(
+    githubId: string,
+    task: string
+  ): Promise<ReviewRequest> {
+    const result = await this.getResource<ReviewRequest[]>(
+      `/reviewRequests?author=${githubId}&task=${task}`
+    );
+    return result[0];
+  }
+
+  addSingleReviewRequest(request: ReviewRequest): Promise<ReviewRequest> {
+    return this.setResource<ReviewRequest>(`/reviewRequests`, request);
+  }
+
+  putReviewRequest(request: ReviewRequest): Promise<ReviewRequest> {
+    const url = `/reviewRequests/${request.id}/`;
+    return this.putResource(url, request);
+  }
+
   getAllReviews(): Promise<Review[]> {
     return this.getResource<Review[]>('/reviews');
   }
