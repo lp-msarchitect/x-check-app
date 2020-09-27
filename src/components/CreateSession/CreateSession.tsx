@@ -7,8 +7,7 @@ import {
     Task,
   } from '../../models/data-models';
 import {Modal,Button,Input,Form,InputNumber} from 'antd'
-import { Session } from 'inspector';
-import { createSession } from '../../actions';
+import { createSession } from '../../actions/actions';
 
 const CreateSession= ():JSX.Element =>{
 

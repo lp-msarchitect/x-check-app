@@ -9,7 +9,7 @@ import {
 import { CrossCheckSession } from '../../models/data-models';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { getSession} from '../../actions';
+import {getSession} from '../../actions/actions';
 import StateTag from '../StateTag/StateTag';
 import CreateSession from '../CreateSession/CreateSession';
 
