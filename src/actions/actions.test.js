@@ -375,7 +375,6 @@ describe('reviews and disputes test suite', () => {
     expect(storeActions[2]).toEqual(expectedDisputeAction);
     await store.dispatch(actions.deleteDispute(dispute));
   });
-  // TODO: finish disputes test, and login test
 
   it('should add feedback to review and dispatch corresponding action', async () => {
     const review = data.reviews[0];
@@ -399,6 +398,13 @@ describe('reviews and disputes test suite', () => {
   });
 });
 
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn(),
+};
+global.localStorage = localStorageMock;
+
 describe('auth action creators tests', () => {
   it('logs in user, dispatches an action', async () => {
     const user = data.users[0];
@@ -411,5 +417,67 @@ describe('auth action creators tests', () => {
     });
     await store.dispatch(actions.loginUser(user));
     expect(store.getActions()).toEqual([expectedAction]);
+  });
+  it('fetches user github login info and dispatches actions', async () => {
+    const githubId = 'ellankz';
+    localStorage.setItem('githubId', 'ellankz');
+    const user = data.users.find((user) => user.githubId === githubId);
+    const expectedAction = {
+      type: ACTIONS.LOGIN,
+      payload: { githubId: user.githubId, roles: user.roles },
+    };
+    const store = mockStore({
+      auth: {},
+    });
+    await store.dispatch(actions.postUserFetch());
+    expect(store.getActions()).toEqual([expectedAction]);
+  });
+});
+
+describe('review request actions', () => {
+  it('should get all review requests and dispatch action', async () => {
+    const expectedAction = {
+      type: ACTIONS.GET_REVIEW_REQUESTS,
+      payload: {
+        res: data.reviewRequests,
+      },
+    };
+    const store = mockStore({
+      reviewRequests: {},
+    });
+    await store.dispatch(actions.getReviewRequests());
+    expect(store.getActions()).toEqual([expectedAction]);
+  });
+
+  const createMockReviewRequest = () => {
+    return {
+      id: uuidv4(),
+      crossCheckSessionId: '',
+      author: 'cardamo',
+      task: 'f2e1a2f7-dc29-4e8f-8252-d73372c609e7',
+      state: 'PUBLISHED',
+      selfGrade: {},
+    };
+  };
+
+  it('should add and delete review request and dispatch actions', async () => {
+    const request = createMockReviewRequest();
+    const expectedActionCreate = {
+      type: ACTIONS.ADD_REVIEW_REQUEST,
+      payload: { ...request },
+    };
+    const expectedActionDelete = {
+      type: ACTIONS.DELETE_REVIEW_REQUEST,
+      payload: request.id,
+    };
+    const store = mockStore({
+      reviewRequests: {},
+    });
+    await store.dispatch(actions.addReviewRequest(request));
+    await store.dispatch(actions.deleteReviewRequest(request));
+    expect(store.getActions()).toEqual([
+      expectedActionCreate,
+      expectedActionDelete,
+    ]);
   });
 });

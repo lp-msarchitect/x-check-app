@@ -2,7 +2,14 @@ import { AnyAction } from 'redux';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
 import { v4 as uuidv4 } from 'uuid';
-import { Dispute, Review, ReviewRequest, Task, TaskScore, User } from '../models/data-models';
+import {
+  Dispute,
+  Review,
+  ReviewRequest,
+  Task,
+  TaskScore,
+  User,
+} from '../models/data-models';
 
 const dataService = new DataService();
 
@@ -461,7 +468,7 @@ export const addFeedbackToReview = (message: string, review: Review) => async (
 export const getReviewRequests = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
-  dataService.getAllReviewRequests().then((body) => {
+  return dataService.getAllReviewRequests().then((body) => {
     dispatch({
       type: ACTIONS.GET_REVIEW_REQUESTS,
       payload: {
@@ -492,4 +499,24 @@ export const addReviewRequest = (reviewRequest: ReviewRequest) => async (
     type: ACTIONS.ADD_REVIEW_REQUEST,
     payload: { ...request },
   });
+};
+
+export const deleteReviewRequest = (reviewRequest: ReviewRequest) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  try {
+    const deleted = await dataService.deleteReviewRequest(reviewRequest.id);
+    dispatch({
+      type: ACTIONS.DELETE_REVIEW_REQUEST,
+      payload: reviewRequest.id,
+    });
+    return;
+  } catch {
+    dispatch({
+      type: ACTIONS.ADD_ERROR,
+      error: {
+        message: 'There was an error while deleting review request.',
+      },
+    });
+  }
 };

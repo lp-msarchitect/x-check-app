@@ -171,6 +171,10 @@ class DataService {
     return this.putResource(url, request);
   }
 
+  async deleteReviewRequest(id: string): Promise<ReviewRequest> {
+    return this.deleteResource<ReviewRequest>('/reviewRequests', id);
+  }
+
   getAllReviews(): Promise<Review[]> {
     return this.getResource<Review[]>('/reviews');
   }
