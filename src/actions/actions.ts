@@ -457,3 +457,39 @@ export const addFeedbackToReview = (message: string, review: Review) => async (
     });
   }
 };
+
+export const getReviewRequests = () => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  dataService.getAllReviewRequests().then((body) => {
+    dispatch({
+      type: ACTIONS.GET_REVIEW_REQUESTS,
+      payload: {
+        res: body,
+      },
+    });
+  });
+};
+
+export const addReviewRequest = (reviewRequest: ReviewRequest) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  let request = await dataService.getReviewRequestByUserTask(
+    reviewRequest.author,
+    reviewRequest.task
+  );
+
+  if (!request) {
+    request = await dataService.addSingleReviewRequest(reviewRequest);
+  } else {
+    request = await dataService.putReviewRequest({
+      ...reviewRequest,
+      id: request.id,
+    });
+  }
+
+  dispatch({
+    type: ACTIONS.ADD_REVIEW_REQUEST,
+    payload: { ...request },
+  });
+};

@@ -5,6 +5,7 @@ import * as ACTIONS from '../constants/actions';
 import {
   DisputesState,
   ErrorState,
+  ReviewRequestsAppState,
   ReviewsState,
   TasksState,
   UsersState,
@@ -135,6 +136,26 @@ const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
   }
 };
 
+const requestsReducer = (
+  state = {},
+  action: AnyAction
+): ReviewRequestsAppState => {
+  switch (action.type) {
+    case ACTIONS.GET_REVIEW_REQUESTS:
+      if (action.payload) {
+        return keyBy(action.payload.res, 'id') as ReviewRequestsAppState;
+      }
+      return state;
+    case ACTIONS.ADD_REVIEW_REQUEST:
+      return {
+        ...state,
+        [action.payload.id]: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 const errorReducer = (state = null, action: AnyAction): ErrorState => {
   if (action.type === ACTIONS.ADD_ERROR) {
     return action.error.message;
@@ -202,6 +223,7 @@ export default combineReducers({
   users: usersReducer,
   auth: userAuthReducer,
   reviews: reviewsReducer,
+  reviewRequests: requestsReducer,
   disputes: disputesReducer,
   error: errorReducer,
 });

@@ -18,7 +18,7 @@ import './App.scss';
 import { User } from '../../models/data-models';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { getReviewRequests, getTasks, postUserFetch } from '../../actions/';
+import { getReviewRequests, getTasks, postUserFetch } from '../../actions/actions';
 import {
   AppReduxState,
   ReviewRequestsAppState,
