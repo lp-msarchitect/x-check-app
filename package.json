@@ -18,6 +18,7 @@
     "antd": "^4.6.2",
     "concurrently": "^5.3.0",
     "lodash.keyby": "^4.6.0",
+    "netlify-auth-providers": "^1.0.0-alpha5",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
