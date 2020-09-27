@@ -16,13 +16,13 @@ interface SingleTaskProps {
   onSubmit: Function;
   open: boolean;
   onCancel: Function;
-  setShowSelfCheck: Function;
+  setShowCheck: Function;
 }
 
 const TaskCheckForm = ({
   singleTask,
   onSubmit,
-  setShowSelfCheck
+  setShowCheck
 }: SingleTaskProps): JSX.Element => {
   const [taskScores, setTaskScores] = useState<number[]>(
     new Array(singleTask.items.length).fill(0)
@@ -57,7 +57,7 @@ const TaskCheckForm = ({
     setTaskScores(new Array(singleTask.items.length).fill(0));
     setTotalScore(0);
     setCheckedTaskItems(0);
-    setShowSelfCheck(false);
+    setShowCheck(false);
     form.resetFields();
   };
 
