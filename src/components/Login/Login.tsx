@@ -72,7 +72,7 @@ const Login = (): JSX.Element => {
     <Button
       type="primary"
       icon={<GithubOutlined />}
-      href={`https://github.com/login/oauth/authorize?client_id=${URLS.CLIENT_ID}&redirect_uri=${URLS.REDIRECT_URI}`}
+      href={`https://github.com/login/oauth/authorize?client_id=${URLS.CLIENT_ID}`}
     >
       SignUp via GitHub
     </Button>

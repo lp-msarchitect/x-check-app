@@ -8,7 +8,7 @@ import {
   Dispute,
 } from '../models/data-models';
 
-import { JSON_API_URL } from '../constants/urls';
+import * as URLS from '../constants/urls';
 
 class DataService {
   baseURL: string;
@@ -16,8 +16,8 @@ class DataService {
   proxyUrl: string;
 
   constructor() {
-    this.baseURL = JSON_API_URL;
-    this.proxyUrl = 'https://x-check-app.herokuapp.com/authenticate/';
+    this.baseURL = URLS.JSON_API_URL;
+    this.proxyUrl = URLS.PROXY_URL;
   }
 
   async getGitHubLogin<T>(code: string): Promise<T> {
