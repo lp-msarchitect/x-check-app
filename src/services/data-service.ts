@@ -112,17 +112,15 @@ class DataService {
     return this.setResource<Task>('/tasks', task);
   }
 
-<<<<<<< HEAD
   async addSession(session: Session): Promise<Session> {
     return this.setResource<Session>('/crossCheckSessions', session);
-=======
+  }
   async deleteTask(taskId: string): Promise<Task> {
     return this, this.deleteResource<Task>('/tasks', taskId);
   }
 
   async updateTask(task: Task): Promise<Task> {
     return (await this.putResource(`/tasks/${task.id}`, task)) as Task;
->>>>>>> develop
   }
 
   getAllTaskScores(): Promise<TaskScore[]> {
