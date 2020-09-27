@@ -8,7 +8,7 @@ import {
   Dispute,
 } from '../models/data-models';
 
-import { CLIENT_ID, PROXY_URL } from '../constants/urls';
+import { JSON_API_URL } from '../constants/urls';
 
 class DataService {
   baseURL: string;
@@ -16,7 +16,7 @@ class DataService {
   proxyUrl: string;
 
   constructor() {
-    this.baseURL = 'http://localhost:3001';
+    this.baseURL = JSON_API_URL;
     this.proxyUrl = 'https://x-check-app.herokuapp.com/authenticate/';
   }
 
