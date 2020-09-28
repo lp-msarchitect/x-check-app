@@ -500,7 +500,19 @@
       "author": "cardamo",
       "task": "simple-task-v1",
       "state": "PUBLISHED",
-      "selfGrade": null
+      "selfGrade": {
+        "task": "simple-task-v1",
+        "items": {
+          "basic_p1": {
+            "comment": "234r23r",
+            "score": 0
+          },
+          "extra_p1": {
+            "comment": "234r2344r",
+            "score": 0
+          }
+        }
+      }
     },
     {
       "id": "cnp45LD",
@@ -675,6 +687,27 @@
         }
       },
       "authorFeedback": []
+    },
+    {
+      "id": "usjrq80",
+      "requestId": "rev-req-1",
+      "author": "cardamo",
+      "reviewer": "lp-msarchitect",
+      "state": "PUBLISHED",
+      "task": "simple-task-v1",
+      "grade": {
+        "task": "simple-task-v1",
+        "items": {
+          "basic_p1": {
+            "comment": "qewrgewrg",
+            "score": 20
+          },
+          "extra_p1": {
+            "comment": "wergwergerge",
+            "score": 30
+          }
+        }
+      }
     }
   ],
   "disputes": [
