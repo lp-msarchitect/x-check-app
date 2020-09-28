@@ -6,7 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
 import { AppReduxState, TasksState } from '../../models/redux-models';
-import { Dispute, DisputeItem, Review, Task, TaskItem } from '../../models/data-models';
+import {
+  Dispute,
+  DisputeItem,
+  Review,
+  Task,
+  TaskItem,
+} from '../../models/data-models';
 import { addDispute, getSignleReview, getTasks } from '../../actions/actions';
 import DisputeForm from '../DisputeForm/DisputeForm';
 import './CreateDispute.scss';

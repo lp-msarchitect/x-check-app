@@ -44,13 +44,13 @@ const TaskForm = ({ taskId }: CreateTaskProps): JSX.Element => {
     if (taskId) {
       dispatch(getSignleTask(taskId));
     }
-  }, [taskId]);
+  }, [dispatch, taskId]);
 
   const tasks = useSelector<AppReduxState, TasksState>((state) => state.tasks);
 
   useEffect(() => {
     setTask(taskId ? tasks[taskId] : dummyTask);
-  }, [taskId]);
+  }, [dummyTask, taskId, tasks]);
 
   const handleChangeItems = (newItems: TaskItem[]): void => {
     if (task) setTask({ ...task, items: newItems });

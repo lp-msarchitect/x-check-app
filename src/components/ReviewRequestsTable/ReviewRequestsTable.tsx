@@ -1,24 +1,35 @@
 import React from 'react';
 import { Button, Table } from 'antd';
-import { Link } from 'react-router-dom';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
-import { ReviewRequestsAppState, TasksState } from '../../models/redux-models';
+import { useSelector, shallowEqual } from 'react-redux';
+import {
+  AppReduxState,
+  ReviewRequestsAppState,
+  TasksState,
+} from '../../models/redux-models';
 import StateTag from '../StateTag/StateTag';
-import { compareStrings } from '../../utils/helpers';
-import { ReviewRequest, ReviewRequestState } from '../../models/data-models';
+import compareStrings from '../../utils/helpers';
+import {
+  Auth,
+  ReviewRequest,
+  ReviewRequestState,
+} from '../../models/data-models';
 
 export interface ReviewRequestsTableProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  //   auth: Auth;
-  //   tasks: TasksState;
   reviewRequests: ReviewRequestsAppState;
   tasks: TasksState;
-  onReviewRequestClick: Function;
+  onReviewRequestClick: (record: ReviewRequest) => void;
 }
 
 const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
   const { reviewRequests, tasks, onReviewRequestClick } = props;
   const reviewRequestsArr = Object.values(reviewRequests);
+
+  const auth = useSelector<AppReduxState, Auth>(
+    (state) => state.auth,
+    shallowEqual
+  );
 
   const getTaskTitle = (taskId: string): string | undefined => {
     const task = tasks[taskId];
@@ -123,9 +134,22 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
       return <StateTag state={state} />;
     },
     taskTitle: (task: string, record: ReviewRequest): JSX.Element => {
-      return (<Button type="link" onClick={()=>{
-        onReviewRequestClick(record);
-      }}>{getTaskTitle(task)}</Button>);
+      return (
+        <Button
+          type="link"
+          disabled={
+            !(
+              auth.roles.includes('student') ||
+              auth.roles.includes('coursemanager')
+            )
+          }
+          onClick={(): void => {
+            onReviewRequestClick(record);
+          }}
+        >
+          {getTaskTitle(task)}
+        </Button>
+      );
     },
     author: (author: string): string => {
       return author;

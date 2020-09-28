@@ -5,8 +5,8 @@ import { TasksState } from '../../models/redux-models';
 export interface RequestReviewProps
   extends React.HTMLAttributes<HTMLDivElement> {
   tasks: TasksState;
-  onHide?: Function;
-  onSubmitClick: Function;
+  onHide?: () => void;
+  onSubmitClick: (values: Record<string, unknown>) => void;
 }
 
 const RequestReview = (props: RequestReviewProps): JSX.Element => {
@@ -30,7 +30,7 @@ const RequestReview = (props: RequestReviewProps): JSX.Element => {
     );
   });
 
-  const onFinish = (values: object): void => {
+  const onFinish = (values: Record<string, unknown>): void => {
     if (onHide) {
       onHide();
     }

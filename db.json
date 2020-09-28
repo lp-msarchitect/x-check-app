@@ -10,7 +10,7 @@
     {
       "githubId": "lp-msarchitect",
       "roles": [
-        "coursemanager"
+        "student"
       ],
       "id": 2
     },
@@ -539,30 +539,10 @@
       "crossCheckSessionId": null,
       "author": "lp-msarchitect",
       "task": "simple-task-v2",
-      "prUrl": "http://test.com",
+      "prUrl": "http://test.comdvasvadv",
       "demoUrl": "http://test.com",
       "state": "DRAFT",
-      "selfGrade": {
-        "task": "simple-task-v2",
-        "items": {
-          "basic_p1": {
-            "comment": "WEWEQVQWEV",
-            "score": 10
-          },
-          "extra_p1": {
-            "comment": "WQEWEQC",
-            "score": 15
-          },
-          "extra_p2": {
-            "comment": "QWEFWEF",
-            "score": 25
-          },
-          "fines_p1": {
-            "comment": "QWEFWQEF",
-            "score": -10
-          }
-        }
-      }
+      "selfGrade": null
     },
     {
       "id": "1gW4mKp",
@@ -704,6 +684,25 @@
           },
           "extra_p1": {
             "comment": "wergwergerge",
+            "score": 30
+          }
+        }
+      }
+    },
+    {
+      "id": "JrUG8mw",
+      "requestId": "rev-req-1",
+      "author": "cardamo",
+      "reviewer": "lp-msarchitect",
+      "state": "PUBLISHED",
+      "task": "simple-task-v1",
+      "grade": {
+        "task": "simple-task-v1",
+        "items": {
+          "basic_p1": {
+            "score": 20
+          },
+          "extra_p1": {
             "score": 30
           }
         }

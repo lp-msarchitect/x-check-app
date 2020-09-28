@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 export interface PrivateRouteProps extends RouteProps {
-  // isAuth: boolean; // is authenticate route
-  redirectPath: string; // redirect path if don't authenticate route
+  redirectPath: string;
+  component: FC;
 }
 
 const ProtectedRoute: React.FC<PrivateRouteProps> = ({
-  redirectPath,
+  redirectPath = '' as string,
   component,
   ...rest
-}) => {
+}: PrivateRouteProps) => {
   const isAuth = localStorage.getItem('githubId') || null;
 
   return isAuth ? (
     <Route {...rest} component={component} render={undefined} />
   ) : (
-    <Redirect to={{ pathname: redirectPath }} />
+    <Redirect to={{ pathname: redirectPath as string }} />
   );
 };
 

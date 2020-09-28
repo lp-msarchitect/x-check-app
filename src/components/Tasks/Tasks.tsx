@@ -43,13 +43,13 @@ const Tasks = (): JSX.Element => {
     history.push('/create-task');
   };
 
-  const beforeUpload = (file: any): boolean => {
+  const beforeUpload = (file: File): boolean => {
     file
       .text()
-      .then((txt: any) => JSON.parse(txt))
-      .then((json: any) => {
+      .then((txt: string) => JSON.parse(txt))
+      .then((json: Task) => {
         console.log(json);
-        dispatch(createTask(json))
+        dispatch(createTask(json));
       })
       .catch(() => message.error(`${file.name} file parse failed.`));
     return false;
@@ -61,10 +61,7 @@ const Tasks = (): JSX.Element => {
       {(auth.roles.includes('author') ||
         auth.roles.includes('coursemanager')) && (
         <Space align="center" className="create-task-btn">
-          <Button
-            type="primary"
-            onClick={handleAddTask}
-          >
+          <Button type="primary" onClick={handleAddTask}>
             Add Task
           </Button>
           <Upload
@@ -88,7 +85,7 @@ const Tasks = (): JSX.Element => {
           return (
             <Panel
               header={item.title}
-              key={item.id!}
+              key={item.id}
               extra={<StateBadge state={item.state} />}
             >
               <SingleTask singleTask={item} />

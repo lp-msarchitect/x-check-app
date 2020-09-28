@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Collapse } from 'antd';
+import { Collapse, Pagination, Modal } from 'antd';
 import { AnyAction } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
 import {
   AppReduxState,
   ReviewsState,
   SessionsState,
-  TasksState,
 } from '../../models/redux-models';
 import { CrossCheckSession } from '../../models/data-models';
-import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { getSession } from '../../actions/actions';
 import StateTag from '../StateTag/StateTag';
 import CreateSession from '../CreateSession/CreateSession';
@@ -34,6 +33,7 @@ const Sessions = (): JSX.Element => {
   }, [dispatch]);
 
   const [sessionsArr, setSessionsArr] = useState<CrossCheckSession[]>([]);
+  const [reviwers, setReviwers] = useState<string[]>([]);
 
   useEffect(() => {
     setSessionsArr(Object.values(sessions));
