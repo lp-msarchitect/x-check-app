@@ -8,6 +8,7 @@ import { AppReduxState, TasksState } from '../../models/redux-models';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { deleteTask, updateTask } from '../../actions/actions';
+import { JSON_API_URL } from '../../constants/urls';
 
 interface TaskActionsProps {
   task: Task;
@@ -55,7 +56,7 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
           <Button
             type="primary"
             target="_blank"
-            href={`http://localhost:3001/tasks/${task.id}`}
+            href={`${JSON_API_URL}/tasks/${task.id}`}
             size="small"
             download
           >

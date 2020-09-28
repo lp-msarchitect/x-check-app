@@ -7,7 +7,7 @@ module.exports = {
     "plugin:prettier/recommended"
   ],
   plugins: ["react", "@typescript-eslint", "prettier"],
-  env:{
+  env: {
     "browser": true,
     "jasmine": true,
     "jest": true
@@ -24,4 +24,5 @@ module.exports = {
     }
   },
   "parser": "@typescript-eslint/parser",
+  'extends': ['airbnb-typescript-prettier'],
 };
