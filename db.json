@@ -10,7 +10,9 @@
     {
       "githubId": "lp-msarchitect",
       "roles": [
-        "student"
+        "student",
+        "supervisor",
+        "author"
       ],
       "id": 2
     },
