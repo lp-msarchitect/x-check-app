@@ -82,7 +82,8 @@ const tasksReducer = (state = {}, action: AnyAction): TasksState => {
     case ACTIONS.DELETE_TASK:
       if (action.payload) {
         const taskId: string = action.payload;
-        const { [taskId]: omit, ...rest } = state as TasksState;
+        const rest = { ...state } as TasksState;
+        delete rest[taskId];
         return keyBy(rest, 'id');
       }
       return state;
@@ -216,7 +217,8 @@ const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
     case ACTIONS.DELETE_DISPUTE:
       if (action.payload) {
         const reviewId: string = action.payload;
-        const { [reviewId]: omit, ...rest } = state as DisputesState;
+        const rest = { ...state } as DisputesState;
+        delete rest[reviewId];
         return keyBy(rest, 'reviewId');
       }
       return state;

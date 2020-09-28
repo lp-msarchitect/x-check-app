@@ -65,7 +65,7 @@ describe('tasks action creators', () => {
     });
   });
 
-  const createMockTask = () => {
+  const createMockTask = (): Task => {
     return {
       id: uuidv4(),
       title: 'This task is created by test',
@@ -139,7 +139,8 @@ describe('tasks action creators', () => {
     await store.dispatch(actions.createTask(task));
     await store.dispatch(actions.updateTask(updatedTask));
     expect(store.getActions()[1]).toEqual(expectedAction);
-    return await store.dispatch(actions.deleteTask(updatedTask.id));
+    const result = await store.dispatch(actions.deleteTask(updatedTask.id));
+    return result;
   });
 });
 

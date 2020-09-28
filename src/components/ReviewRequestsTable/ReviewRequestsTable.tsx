@@ -1,10 +1,9 @@
 import React from 'react';
 import { Button, Table } from 'antd';
-import { Link } from 'react-router-dom';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
 import { ReviewRequestsAppState, TasksState } from '../../models/redux-models';
 import StateTag from '../StateTag/StateTag';
-import { compareStrings } from '../../utils/helpers';
+import compareStrings from '../../utils/helpers';
 import { ReviewRequest, ReviewRequestState } from '../../models/data-models';
 
 export interface ReviewRequestsTableProps

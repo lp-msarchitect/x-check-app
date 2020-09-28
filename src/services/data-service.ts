@@ -9,7 +9,6 @@ import {
   Dispute,
 } from '../models/data-models';
 
-import { CLIENT_ID, PROXY_URL } from '../constants/urls';
 import * as URLS from '../constants/urls';
 
 class DataService {
@@ -118,7 +117,7 @@ class DataService {
   }
 
   async deleteTask(taskId: string): Promise<Task> {
-    return this, this.deleteResource<Task>('/tasks', taskId);
+    return this.deleteResource<Task>('/tasks', taskId);
   }
 
   async updateTask(task: Task): Promise<Task> {

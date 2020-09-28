@@ -14,7 +14,7 @@ import {
 } from '../../models/redux-models';
 import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
-import { compareStrings } from '../../utils/helpers';
+import compareStrings from '../../utils/helpers';
 import './Reviews.scss';
 
 type AppDispatch = ThunkDispatch<ReviewsState, void, AnyAction>;
