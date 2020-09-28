@@ -1,5 +1,5 @@
 /// User
-export type UserRole = 'author' | 'student' | 'supervisor' | 'coursemanager' | 'mentor';
+export type UserRole = 'author' | 'student' | 'supervisor' | 'coursemanager';
 
 export interface User {
   id?: number;
@@ -25,7 +25,7 @@ export interface TaskItem {
   category: TaskItemCategory;
   title: string;
   description: string;
-  isForMentor?: boolean
+  isForMentor?: boolean;
 }
 
 export interface Task {
