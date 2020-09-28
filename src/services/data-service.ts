@@ -8,8 +8,6 @@ import {
   Dispute,
 } from '../models/data-models';
 
-import { CLIENT_ID, PROXY_URL } from '../constants/urls';
-import { Session } from 'inspector';
 import * as URLS from '../constants/urls';
 
 class DataService {
@@ -32,7 +30,7 @@ class DataService {
     return login;
   }
 
-  async setResource<T>(url: string, resource: object): Promise<T> {
+  async setResource<T>(url: string, resource: T): Promise<T> {
     const res = await fetch(this.baseURL + url, {
       method: 'POST',
       headers: {
@@ -47,7 +45,7 @@ class DataService {
     return body;
   }
 
-  async putResource<T>(url: string, resource: object): Promise<T> {
+  async putResource<T>(url: string, resource: T): Promise<T> {
     const res = await fetch(this.baseURL + url, {
       method: 'PUT',
       headers: {
@@ -72,7 +70,7 @@ class DataService {
   }
 
   async deleteResource<T>(url: string, id: string): Promise<T> {
-    const res = await fetch(this.baseURL + url + '/' + id, {
+    const res = await fetch(`${this.baseURL + url}/${id}`, {
       method: 'delete',
     });
     const body = await res.json();
@@ -113,11 +111,12 @@ class DataService {
     return this.setResource<Task>('/tasks', task);
   }
 
-  async addSession(session: Session): Promise<Session> {
-    return this.setResource<Session>('/crossCheckSessions', session);
+  async addSession(session: CrossCheckSession): Promise<CrossCheckSession> {
+    return this.setResource<CrossCheckSession>('/crossCheckSessions', session);
   }
+
   async deleteTask(taskId: string): Promise<Task> {
-    return this, this.deleteResource<Task>('/tasks', taskId);
+    return this.deleteResource<Task>('/tasks', taskId);
   }
 
   async updateTask(task: Task): Promise<Task> {

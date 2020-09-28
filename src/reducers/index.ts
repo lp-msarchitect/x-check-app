@@ -1,5 +1,6 @@
 import { combineReducers, AnyAction } from 'redux';
 import keyBy from 'lodash.keyby';
+import { Session } from 'inspector';
 import { Auth, Task } from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
 import {
@@ -7,9 +8,8 @@ import {
   ReviewsState,
   TasksState,
   UsersState,
-  SessionsState
+  SessionsState,
 } from '../models/redux-models';
-import { Session } from 'inspector';
 
 const userAuthReducer = (
   state = {
@@ -92,16 +92,15 @@ const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
   }
 };
 
-const sessionsReducer = (state = {}, action: AnyAction): any =>{
+const sessionsReducer = (state = {}, action: AnyAction): SessionsState => {
   switch (action.type) {
     case ACTIONS.GET_SESSIONS:
       if (action.payload) {
         return keyBy(action.payload.res, 'id') as AnyAction;
       }
       return state;
-    
-      case ACTIONS.CREATE_SESSION:
-      
+
+    case ACTIONS.CREATE_SESSION:
       if (action.payload) {
         return keyBy(
           {
@@ -116,7 +115,6 @@ const sessionsReducer = (state = {}, action: AnyAction): any =>{
       return state;
   }
 };
-
 
 const errorReducer = (state = null, action: AnyAction): ErrorState => {
   if (action.type === ACTIONS.ADD_ERROR) {

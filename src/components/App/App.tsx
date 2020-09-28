@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import Users from '../Users/Users';
@@ -18,12 +18,11 @@ import './App.scss';
 import { User } from '../../models/data-models';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { getReviewRequests, getTasks, postUserFetch } from '../../actions/actions';
 import {
-  AppReduxState,
-  ReviewRequestsAppState,
-  TasksState,
-} from '../../models/redux-models';
+  getReviewRequests,
+  getTasks,
+  postUserFetch,
+} from '../../actions/actions';
 import CreateDispute from '../CreateDispute/CreateDispute';
 import EditTask from '../EditTask/EditTask';
 

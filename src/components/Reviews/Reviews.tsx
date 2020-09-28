@@ -14,7 +14,7 @@ import {
 } from '../../models/redux-models';
 import calcTotalScore from '../../utils/calcTotalScore';
 import StateTag from '../StateTag/StateTag';
-import { compareStrings } from '../../utils/helpers';
+import compareStrings from '../../utils/helpers';
 import './Reviews.scss';
 
 type AppDispatch = ThunkDispatch<ReviewsState, void, AnyAction>;
@@ -44,12 +44,6 @@ const Reviews = (): JSX.Element => {
     dispatch(getReviews());
     dispatch(getTasks());
   }, [dispatch]);
-
-  // const [reviewsArr, setReviewsArr] = useState<Review[]>([]);
-
-  // useEffect(() => {
-  //   setReviewsArr(Object.values(reviews));
-  // }, [reviews]);
 
   const getTaskTitle = (taskId: string): string | undefined => {
     const task = tasks[taskId];
@@ -91,9 +85,11 @@ const Reviews = (): JSX.Element => {
   };
 
   const rendering = {
+    // eslint-disable-next-line react/display-name
     tag: (state: string): JSX.Element => {
       return <StateTag state={state} />;
     },
+    // eslint-disable-next-line react/display-name
     taskTitle: (taskId: string, review: Review): JSX.Element | null => {
       const currentTask = tasks[taskId];
       if (currentTask) {

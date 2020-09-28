@@ -1,5 +1,5 @@
 /// helper functions
-export const compareStrings = (A: string, B: string): number => {
+const compareStrings = (A: string, B: string): number => {
   if (A < B) {
     return -1;
   }
@@ -8,3 +8,5 @@ export const compareStrings = (A: string, B: string): number => {
   }
   return 1;
 };
+
+export default { compareStrings };

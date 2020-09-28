@@ -33,6 +33,7 @@ const Students = (): JSX.Element => {
       title: 'Roles',
       key: 'roles',
       dataIndex: 'roles',
+      // eslint-disable-next-line react/display-name
       render: (roles: UserRole[]): JSX.Element => (
         <>
           {roles.map((role) => {

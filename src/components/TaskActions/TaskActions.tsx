@@ -1,14 +1,13 @@
 import React from 'react';
-import { Upload, message, Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Auth, Task, TaskState } from '../../models/data-models';
 import './TaskActions.scss';
 import { AppReduxState, TasksState } from '../../models/redux-models';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { deleteTask, updateTask } from '../../actions/actions';
-import { useHistory } from 'react-router-dom';
 import { JSON_API_URL } from '../../constants/urls';
 
 interface TaskActionsProps {
@@ -22,13 +21,13 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
 
   const dispatch: AppDispatch = useDispatch();
   const handleDeleteTask = () => {
-    dispatch(deleteTask(task.id!));
+    dispatch(deleteTask(task.id));
   };
 
   const history = useHistory();
   const handleEditTask = () => {
     console.log(task.id);
-    history.push(`/edit-task/${task.id!}`);
+    history.push(`/edit-task/${task.id}`);
   };
 
   const handleUpdateTaskState = (state: TaskState) => {

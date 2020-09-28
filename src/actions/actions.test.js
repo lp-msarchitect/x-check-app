@@ -1,8 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as actions from '../actions/actions';
-import * as ACTIONS from '../constants/actions';
 import { v4 as uuidv4 } from 'uuid';
+import * as actions from './actions';
+import * as ACTIONS from '../constants/actions';
 import data from '../../db.json';
 
 const middlewares = [thunk];
@@ -65,7 +65,7 @@ describe('tasks action creators', () => {
     });
   });
 
-  const createMockTask = () => {
+  const createMockTask = (): Task => {
     return {
       id: uuidv4(),
       title: 'This task is created by test',
@@ -139,7 +139,8 @@ describe('tasks action creators', () => {
     await store.dispatch(actions.createTask(task));
     await store.dispatch(actions.updateTask(updatedTask));
     expect(store.getActions()[1]).toEqual(expectedAction);
-    return await store.dispatch(actions.deleteTask(updatedTask.id));
+    const result = await store.dispatch(actions.deleteTask(updatedTask.id));
+    return result;
   });
 });
 
@@ -216,7 +217,7 @@ describe('reviews and disputes test suite', () => {
   const createMockDispute = (reviewId) => {
     return {
       id: uuidv4(),
-      reviewId: reviewId,
+      reviewId,
       state: 'ONGOING',
       items: [
         {
@@ -258,7 +259,7 @@ describe('reviews and disputes test suite', () => {
     };
   };
 
-  it('should create a dispute, change review state and delete the dispute and dispatch actions with results ', async () => {
+  it('should create a dispute, change review state and delete the dispute and dispatch actions with results', async () => {
     const reviewId = 'rev-id-4';
     const review = data.reviews.find((review) => review.id === reviewId);
     const dispute = createMockDispute(reviewId);

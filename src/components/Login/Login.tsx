@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FormEvent } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -19,7 +19,7 @@ const Login = (): JSX.Element => {
     Auth
   >((state) => state.auth);
   const dispatch: AppDispatch = useDispatch();
-  const [role, setRole] = useState('student');
+  const [roles, setRoles] = useState<UserRole[]>(['student']);
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
@@ -36,14 +36,11 @@ const Login = (): JSX.Element => {
     }
   }, [dispatch]);
 
-  const handleRoleChange = (value: string): void => {
-    setRole(value as UserRole);
+  const handleRoleChange = (value: UserRole[]): void => {
+    setRoles(value);
   };
 
   const handlerLoginClick = (): void => {
-    const roles: UserRole[] = [];
-    roles.push(role as UserRole);
-
     dispatch(
       loginUser({
         githubId,
@@ -57,9 +54,11 @@ const Login = (): JSX.Element => {
     <div className="login__roles">
       <div>Choose your role, {githubId}</div>
       <Select
-        value={role}
+        value={roles}
         onChange={handleRoleChange}
         className="login__select"
+        mode="multiple"
+        defaultValue={['student']}
       >
         <Select.Option value="author">Author</Select.Option>
         <Select.Option value="student">Student</Select.Option>

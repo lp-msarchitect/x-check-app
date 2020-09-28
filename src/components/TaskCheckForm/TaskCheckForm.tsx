@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-import { Affix, Button, Form, message } from 'antd';
-import { ReviewRequest, Task, Auth } from '../../models/data-models';
+import { Affix, Button, Form, message, Space } from 'antd';
+import { useSelector } from 'react-redux';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
-import { useSelector } from 'react-redux';
+import {
+  ReviewRequest,
+  Task,
+  Auth,
+  ReviewRequestState,
+} from '../../models/data-models';
 import { AppReduxState } from '../../models/redux-models';
-
-const fastScoreButtons = [
-  'Not completed',
-  'Partially completed',
-  'Fully completed',
-  'Clear',
-];
 
 interface SingleTaskProps {
   singleTask: Task;
-  onSubmit: Function;
+  onSubmit: (value: string, state: ReviewRequestState) => void;
   open: boolean;
-  onCancel: Function;
+  onCancel: () => void;
   checkedRequest?: ReviewRequest | null;
 }
 
@@ -39,6 +37,7 @@ const TaskCheckForm = ({
   );
 
   const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
+  const [status, setStatus] = useState<ReviewRequestState>('DRAFT');
 
   const success = (): void => {
     message.success('The result submitted');
@@ -48,9 +47,9 @@ const TaskCheckForm = ({
     message.error('Fill in all fields');
   };
 
-  const submitHandler = (value: any): void => {
+  const submitHandler = (value: string): void => {
     success();
-    onSubmit(value);
+    onSubmit(value, status);
   };
 
   const closeForm = (): void => {
@@ -113,7 +112,7 @@ const TaskCheckForm = ({
             <h2 className="title">{singleTask.title}</h2>
             <div className="fast-score-buttons">
               <Button
-                className={`button Clear`}
+                className="button Clear"
                 htmlType="button"
                 type="default"
                 onClick={clearForm}
@@ -131,14 +130,29 @@ const TaskCheckForm = ({
         </Affix>
         {renderChecksTask}
         <hr />
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="submit-button"
-          size="large"
-        >
-          Submit
-        </Button>
+        <Space>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="submit-button"
+            size="large"
+            onClick={(): void => setStatus('PUBLISHED')}
+          >
+            Submit
+          </Button>
+          <Button
+            type="primary"
+            htmlType="button"
+            className="submit-button"
+            size="large"
+            onClick={(): void => {
+              setStatus('DRAFT');
+              closeForm();
+            }}
+          >
+            Save a draft
+          </Button>
+        </Space>
       </Form>
     </div>
   );
