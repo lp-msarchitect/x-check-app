@@ -1,6 +1,12 @@
 import { combineReducers, AnyAction } from 'redux';
 import keyBy from 'lodash.keyby';
-import { Auth, Dispute, Review, Task } from '../models/data-models';
+import {
+  Auth,
+  CrossCheckSession,
+  Dispute,
+  Review,
+  Task,
+} from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
 
 import {
@@ -51,7 +57,7 @@ const addOneTaskToStore = (task: Task, state: TasksState): TasksState => {
   return keyBy(
     {
       ...state,
-      [task.id!]: task,
+      [task.id]: task,
     },
     'id'
   ) as TasksState;
@@ -65,24 +71,25 @@ const tasksReducer = (state = {}, action: AnyAction): TasksState => {
       }
       return state;
     case ACTIONS.CREATE_TASK:
-      if (action.payload) {
+      if (action.payload && action.payload.res.id) {
         return addOneTaskToStore(action.payload.res, state);
       }
       return state;
     case ACTIONS.GET_SINGLE_TASK:
-      if (action.payload) {
+      if (action.payload && action.payload.res.id) {
         return addOneTaskToStore(action.payload.res, state);
       }
       return state;
     case ACTIONS.UPDATE_TASK:
-      if (action.payload) {
+      if (action.payload && action.payload.res.id) {
         return addOneTaskToStore(action.payload.res, state);
       }
       return state;
     case ACTIONS.DELETE_TASK:
       if (action.payload) {
         const taskId: string = action.payload;
-        let { [taskId]: omit, ...rest } = state as TasksState;
+        const rest = { ...state } as TasksState;
+        delete rest[taskId];
         return keyBy(rest, 'id');
       }
       return state;
@@ -216,7 +223,8 @@ const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
     case ACTIONS.DELETE_DISPUTE:
       if (action.payload) {
         const reviewId: string = action.payload;
-        let { [reviewId]: omit, ...rest } = state as DisputesState;
+        const rest = { ...state } as DisputesState;
+        delete rest[reviewId];
         return keyBy(rest, 'reviewId');
       }
       return state;
@@ -225,7 +233,7 @@ const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
   }
 };
 
-const sessionsReducer = (state = {}, action: AnyAction): any => {
+const sessionsReducer = (state = {}, action: AnyAction): SessionsState => {
   switch (action.type) {
     case ACTIONS.GET_SESSIONS:
       if (action.payload) {
@@ -238,7 +246,7 @@ const sessionsReducer = (state = {}, action: AnyAction): any => {
         return keyBy(
           {
             ...state,
-            [action.payload.res.id]: action.payload.res as any,
+            [action.payload.res.id]: action.payload.res as CrossCheckSession,
           },
           'id'
         ) as SessionsState;
