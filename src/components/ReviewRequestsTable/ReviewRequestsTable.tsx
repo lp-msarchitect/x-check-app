@@ -1,10 +1,19 @@
 import React from 'react';
 import { Button, Table } from 'antd';
 import { ColumnFilterItem } from 'antd/lib/table/interface';
-import { ReviewRequestsAppState, TasksState } from '../../models/redux-models';
+import { useSelector, shallowEqual } from 'react-redux';
+import {
+  AppReduxState,
+  ReviewRequestsAppState,
+  TasksState,
+} from '../../models/redux-models';
 import StateTag from '../StateTag/StateTag';
 import compareStrings from '../../utils/helpers';
-import { ReviewRequest, ReviewRequestState } from '../../models/data-models';
+import {
+  Auth,
+  ReviewRequest,
+  ReviewRequestState,
+} from '../../models/data-models';
 
 export interface ReviewRequestsTableProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,6 +25,11 @@ export interface ReviewRequestsTableProps
 const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
   const { reviewRequests, tasks, onReviewRequestClick } = props;
   const reviewRequestsArr = Object.values(reviewRequests);
+
+  const auth = useSelector<AppReduxState, Auth>(
+    (state) => state.auth,
+    shallowEqual
+  );
 
   const getTaskTitle = (taskId: string): string | undefined => {
     const task = tasks[taskId];
@@ -123,7 +137,13 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
       return (
         <Button
           type="link"
-          onClick={() => {
+          disabled={
+            !(
+              auth.roles.includes('student') ||
+              auth.roles.includes('coursemanager')
+            )
+          }
+          onClick={(): void => {
             onReviewRequestClick(record);
           }}
         >

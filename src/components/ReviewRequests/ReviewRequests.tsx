@@ -114,13 +114,15 @@ const ReviewRequests = (): JSX.Element => {
 
   return (
     <>
-      <Button
-        className="create-btn"
-        type="primary"
-        onClick={onSubmitRequestBtnClick}
-      >
-        Submit request
-      </Button>
+      {auth.roles.includes('student') ? (
+        <Button
+          className="create-btn"
+          type="primary"
+          onClick={onSubmitRequestBtnClick}
+        >
+          Submit request
+        </Button>
+      ) : null}
       <Modal visible={showSubmit} footer={null} onCancel={onCancel}>
         <RequestReview
           tasks={tasks}

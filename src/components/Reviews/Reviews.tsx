@@ -45,12 +45,6 @@ const Reviews = (): JSX.Element => {
     dispatch(getTasks());
   }, [dispatch]);
 
-  // const [reviewsArr, setReviewsArr] = useState<Review[]>([]);
-
-  // useEffect(() => {
-  //   setReviewsArr(Object.values(reviews));
-  // }, [reviews]);
-
   const getTaskTitle = (taskId: string): string | undefined => {
     const task = tasks[taskId];
     return task ? task.title : undefined;
