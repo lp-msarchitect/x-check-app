@@ -38,7 +38,7 @@ const CheckTask = ({
   setTaskScores,
   checkedTasks,
   setCheckedTasks,
-  selfGradeItem,
+  selfGradeItem = { comment: '', score: '' },
 }: CheckTaskProps): JSX.Element => {
   const [otherScore, setOtherScore] = useState<number>(0);
   const [baseScores, setBaseScores] = useState<number[]>([
@@ -47,6 +47,7 @@ const CheckTask = ({
     taskItem.maxScore,
   ]);
 
+  const [commentRequired, setCommentRequired] = useState<boolean>(false);
   const [scoreCategory, setScoreCategory] = useState<string[]>([
     'Not completed',
     'Partially completed',
@@ -73,6 +74,7 @@ const CheckTask = ({
       copy[itemId] = true;
       setCheckedTasks(copy);
       setCheckedTaskItems(checkedTaskItems + 1);
+      setCommentRequired(Number(selfGradeItem.score) !== value);
     }
     checkScore(value);
   };
@@ -104,7 +106,7 @@ const CheckTask = ({
     setOtherScore(score);
   };
 
-  selfGradeItem = selfGradeItem || {comment: '', score: ''};
+  selfGradeItem = selfGradeItem || { comment: '', score: '' };
 
   return (
     <div className="task-item">
@@ -127,12 +129,13 @@ const CheckTask = ({
         </div>
         <div className="task-description">
           <p className="task-title">{taskItem.description}</p>
-          <Form.Item name={[taskItem.id, 'comment']}>
+          <Form.Item 
+            name={[taskItem.id, 'comment']}
+            rules={[{required: commentRequired, message: "Your and the author's self-assessment do not match. Leave a comment"}]}>
             <Input.TextArea allowClear />
           </Form.Item>
           <Typography.Text>
-            Self Grade:{' '}
-            {`${selfGradeItem.score} ${selfGradeItem.comment}`}
+            Self Grade: {`${selfGradeItem.score} ${selfGradeItem.comment}`}
           </Typography.Text>
         </div>
         <Form.Item
