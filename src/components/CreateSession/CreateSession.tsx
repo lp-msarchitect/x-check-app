@@ -71,7 +71,7 @@ const CreateSession= ():JSX.Element =>{
     return (
     
         <div>
-            <Button onClick={showModal} type="primary">Add session</Button>
+            <Button onClick={showModal} type="primary" className='create-btn'>Add session</Button>
             <Modal
             title="Create Session"
             visible={visible}
