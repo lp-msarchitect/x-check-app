@@ -9,6 +9,7 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { deleteTask, updateTask } from '../../actions/actions';
 import { useHistory } from 'react-router-dom';
+import { JSON_API_URL } from '../../constants/urls';
 
 interface TaskActionsProps {
   task: Task;
@@ -53,11 +54,12 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
               </Button>
             </>
           )}
-          <Button type='primary'
-                  target='_blank'
-                  href={`http://localhost:3001/tasks/${task.id}`}
-                  size='small'
-                  download
+          <Button
+            type="primary"
+            target="_blank"
+            href={`${JSON_API_URL}/tasks/${task.id}`}
+            size="small"
+            download
           >
             Export As JSON
           </Button>
