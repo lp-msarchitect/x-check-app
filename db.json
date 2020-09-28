@@ -536,7 +536,7 @@
       "author": "cardamo",
       "task": "simple-task-v1",
       "state": "PUBLISHED",
-      "selfGrade": {}
+      "selfGrade": null
     },
     {
       "id": "cnp45LD",

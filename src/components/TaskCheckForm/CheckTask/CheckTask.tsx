@@ -106,6 +106,8 @@ const CheckTask = ({
     setOtherScore(score);
   };
 
+  selfGradeItem = selfGradeItem === null ? {comment: '', score: ''} : null;
+
   return (
     <div className="task-item">
       <h3 className="title">
@@ -132,7 +134,7 @@ const CheckTask = ({
           </Form.Item>
           <Typography.Text>
             Self Grade:{' '}
-            {`${selfGradeItem.score || ''} ${selfGradeItem.comment || ''}`}
+            {`${selfGradeItem.score} ${selfGradeItem.comment}`}
           </Typography.Text>
         </div>
         <Form.Item
