@@ -284,6 +284,29 @@ export const getSignleReview = (reviewId: string) => async (
     });
 };
 
+export const addSingleReview = (review: Review) => async (
+  dispatch: (action: AnyAction) => void
+): Promise<void> => {
+  return dataService
+    .addReview(review)
+    .then((body) => {
+      dispatch({
+        type: ACTIONS.ADD_SINGLE_REVIEW,
+        payload: {
+          res: body,
+        },
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: ACTIONS.ADD_ERROR,
+        error: {
+          message: 'There was an error while loading review.',
+        },
+      });
+    });
+};
+
 export const getDisputes = () => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {

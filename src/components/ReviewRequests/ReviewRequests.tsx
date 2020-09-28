@@ -3,7 +3,7 @@ import Modal from 'antd/lib/modal/Modal';
 import { request } from 'http';
 import React, { useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addReviewRequest } from '../../actions/actions';
+import { addReviewRequest, addSingleReview } from '../../actions/actions';
 import { Auth, ReviewRequest, Task } from '../../models/data-models';
 import {
   AppReduxState,
@@ -60,7 +60,7 @@ const ReviewRequests = (): JSX.Element => {
       state: 'DRAFT',
       selfGrade: null,
     };
-    
+
     dispatch(addReviewRequest(request));
     setCheckedRequest(request);
     setSelectedTask(tasks[values.task]);
@@ -70,15 +70,34 @@ const ReviewRequests = (): JSX.Element => {
   const onSubmitCheck = (values: any): void => {
     setShowCheck(false);
     const request = checkedRequest as ReviewRequest;
-    dispatch(
-      addReviewRequest({
-        ...request,
-        selfGrade: {
-          task: request.task || '',
-          items: values,
-        }
-      })
-    );
+    const isSelfCheck = request.author === auth.githubId;
+    if (isSelfCheck) {
+      dispatch(
+        addReviewRequest({
+          ...request,
+          state: 'PUBLISHED',
+          selfGrade: {
+            task: request.task || '',
+            items: values,
+          },
+        })
+      );
+    } else {
+      dispatch(
+        addSingleReview({
+          id: '',
+          requestId: request.id,
+          author: request.author,
+          reviewer: auth.githubId,
+          state: 'PUBLISHED',
+          task: request.task,
+          grade: {
+            task: request.task || '',
+            items: values,
+          },
+        })
+      );
+    }
   };
 
   const onReviewRequestClick = (record: ReviewRequest) => {

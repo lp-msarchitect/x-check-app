@@ -193,6 +193,10 @@ class DataService {
     return (await this.putResource(`/reviews/${review.id}`, review)) as Review;
   }
 
+  async addReview(review: Review): Promise<Review> {
+    return (await this.setResource(`/reviews`, review)) as Review;
+  }
+
   getAllDisputes(): Promise<Dispute[]> {
     return this.getResource<Dispute[]>('/disputes');
   }

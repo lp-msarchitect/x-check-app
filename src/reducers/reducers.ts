@@ -10,7 +10,7 @@ import {
   ReviewsState,
   TasksState,
   UsersState,
-  SessionsState
+  SessionsState,
 } from '../models/redux-models';
 
 const userAuthReducer = (
@@ -133,6 +133,11 @@ const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
         return addOneReviewToStore(action.payload.res, state);
       }
       return state;
+    case ACTIONS.ADD_SINGLE_REVIEW:
+      if (action.payload) {
+        return addOneReviewToStore(action.payload.res, state);
+      }
+      return state;
     default:
       return state;
   }
@@ -220,16 +225,15 @@ const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
   }
 };
 
-const sessionsReducer = (state = {}, action: AnyAction): any =>{
+const sessionsReducer = (state = {}, action: AnyAction): any => {
   switch (action.type) {
     case ACTIONS.GET_SESSIONS:
       if (action.payload) {
         return keyBy(action.payload.res, 'id') as AnyAction;
       }
       return state;
-    
-      case ACTIONS.CREATE_SESSION:
-      
+
+    case ACTIONS.CREATE_SESSION:
       if (action.payload) {
         return keyBy(
           {
