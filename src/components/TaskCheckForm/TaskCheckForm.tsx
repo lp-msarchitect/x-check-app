@@ -113,7 +113,7 @@ const TaskCheckForm = ({
             <h2 className="title">{singleTask.title}</h2>
             <div className="fast-score-buttons">
               <Button
-                className={`button Clear`}
+                className="button Clear"
                 htmlType="button"
                 type="default"
                 onClick={clearForm}

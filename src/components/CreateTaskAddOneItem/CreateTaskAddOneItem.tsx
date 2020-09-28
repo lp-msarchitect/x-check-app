@@ -42,7 +42,7 @@ const CreateTaskAddOneItem = ({
       category: categoryItem,
       title: titleItem,
       description: descriptionItem,
-      isForMentor: isForMentor
+      isForMentor,
     } as TaskItem;
     const newArray = [...items, item];
     onChangeItems(
@@ -85,7 +85,12 @@ const CreateTaskAddOneItem = ({
         </Select>
       </Form.Item>
       <Form.Item>
-            <Checkbox checked={isForMentor} onChange={(e): void => setIsForMentor(e.target.checked)}>Only For Mentor</Checkbox>
+        <Checkbox
+          checked={isForMentor}
+          onChange={(e): void => setIsForMentor(e.target.checked)}
+        >
+          Only For Mentor
+        </Checkbox>
       </Form.Item>
       <Form.Item label="Score Range">
         <Input

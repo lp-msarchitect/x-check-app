@@ -1,8 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as actions from '../actions/actions';
-import * as ACTIONS from '../constants/actions';
 import { v4 as uuidv4 } from 'uuid';
+import * as actions from './actions';
+import * as ACTIONS from '../constants/actions';
 import data from '../../db.json';
 
 const middlewares = [thunk];
@@ -216,7 +216,7 @@ describe('reviews and disputes test suite', () => {
   const createMockDispute = (reviewId) => {
     return {
       id: uuidv4(),
-      reviewId: reviewId,
+      reviewId,
       state: 'ONGOING',
       items: [
         {
@@ -258,7 +258,7 @@ describe('reviews and disputes test suite', () => {
     };
   };
 
-  it('should create a dispute, change review state and delete the dispute and dispatch actions with results ', async () => {
+  it('should create a dispute, change review state and delete the dispute and dispatch actions with results', async () => {
     const reviewId = 'rev-id-4';
     const review = data.reviews.find((review) => review.id === reviewId);
     const dispute = createMockDispute(reviewId);

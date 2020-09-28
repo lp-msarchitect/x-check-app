@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { AppReduxState } from '../../../models/redux-models';
 import {
   Form,
   Select,
@@ -11,6 +10,7 @@ import {
   Typography,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { AppReduxState } from '../../../models/redux-models';
 import { TaskItem, Auth, TaskScore } from '../../../models/data-models';
 import './CheckTask.scss';
 
@@ -129,9 +129,16 @@ const CheckTask = ({
         </div>
         <div className="task-description">
           <p className="task-title">{taskItem.description}</p>
-          <Form.Item 
+          <Form.Item
             name={[taskItem.id, 'comment']}
-            rules={[{required: commentRequired, message: "Your and the author's self-assessment do not match. Leave a comment"}]}>
+            rules={[
+              {
+                required: commentRequired,
+                message:
+                  "Your and the author's self-assessment do not match. Leave a comment",
+              },
+            ]}
+          >
             <Input.TextArea allowClear />
           </Form.Item>
           <Typography.Text>

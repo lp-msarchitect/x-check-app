@@ -123,9 +123,16 @@ const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {
       return <StateTag state={state} />;
     },
     taskTitle: (task: string, record: ReviewRequest): JSX.Element => {
-      return (<Button type="link" onClick={()=>{
-        onReviewRequestClick(record);
-      }}>{getTaskTitle(task)}</Button>);
+      return (
+        <Button
+          type="link"
+          onClick={() => {
+            onReviewRequestClick(record);
+          }}
+        >
+          {getTaskTitle(task)}
+        </Button>
+      );
     },
     author: (author: string): string => {
       return author;

@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
+import { v4 as uuidv4 } from 'uuid';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
-import { v4 as uuidv4 } from 'uuid';
 import {
   Dispute,
   Review,
@@ -566,7 +566,6 @@ export const createSession = (session: any) => async (
       });
     });
 };
-
 
 export const getSession = () => async (
   dispatch: (action: AnyAction) => void

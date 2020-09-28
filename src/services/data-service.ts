@@ -1,3 +1,4 @@
+import { Session } from 'inspector';
 import {
   User,
   Task,
@@ -9,7 +10,6 @@ import {
 } from '../models/data-models';
 
 import { CLIENT_ID, PROXY_URL } from '../constants/urls';
-import { Session } from 'inspector';
 import * as URLS from '../constants/urls';
 
 class DataService {
@@ -72,7 +72,7 @@ class DataService {
   }
 
   async deleteResource<T>(url: string, id: string): Promise<T> {
-    const res = await fetch(this.baseURL + url + '/' + id, {
+    const res = await fetch(`${this.baseURL + url}/${id}`, {
       method: 'delete',
     });
     const body = await res.json();
@@ -116,6 +116,7 @@ class DataService {
   async addSession(session: Session): Promise<Session> {
     return this.setResource<Session>('/crossCheckSessions', session);
   }
+
   async deleteTask(taskId: string): Promise<Task> {
     return this, this.deleteResource<Task>('/tasks', taskId);
   }

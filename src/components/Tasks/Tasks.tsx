@@ -49,7 +49,7 @@ const Tasks = (): JSX.Element => {
       .then((txt: any) => JSON.parse(txt))
       .then((json: any) => {
         console.log(json);
-        dispatch(createTask(json))
+        dispatch(createTask(json));
       })
       .catch(() => message.error(`${file.name} file parse failed.`));
     return false;
@@ -61,10 +61,7 @@ const Tasks = (): JSX.Element => {
       {(auth.roles.includes('author') ||
         auth.roles.includes('coursemanager')) && (
         <Space align="center" className="create-task-btn">
-          <Button
-            type="primary"
-            onClick={handleAddTask}
-          >
+          <Button type="primary" onClick={handleAddTask}>
             Add Task
           </Button>
           <Upload

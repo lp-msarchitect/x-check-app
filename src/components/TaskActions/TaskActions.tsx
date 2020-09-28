@@ -2,13 +2,13 @@ import React from 'react';
 import { Upload, message, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Auth, Task, TaskState } from '../../models/data-models';
 import './TaskActions.scss';
 import { AppReduxState, TasksState } from '../../models/redux-models';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { deleteTask, updateTask } from '../../actions/actions';
-import { useHistory } from 'react-router-dom';
 
 interface TaskActionsProps {
   task: Task;
@@ -53,11 +53,12 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
               </Button>
             </>
           )}
-          <Button type='primary'
-                  target='_blank'
-                  href={`http://localhost:3001/tasks/${task.id}`}
-                  size='small'
-                  download
+          <Button
+            type="primary"
+            target="_blank"
+            href={`http://localhost:3001/tasks/${task.id}`}
+            size="small"
+            download
           >
             Export As JSON
           </Button>
