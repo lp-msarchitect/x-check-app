@@ -34,7 +34,7 @@
       "id": "simple-task-v1",
       "title": "Simple task v1",
       "author": "cardamo",
-      "state": "DRAFT",
+      "state": "PUBLISHED",
       "categoriesOrder": [
         "Basic Scope",
         "Extra Scope",
@@ -58,12 +58,13 @@
           "description": "Be creative and make up some more awesome things"
         },
         {
-          "id": "fines_p1",
-          "minScore": -10,
-          "maxScore": 0,
+          "minScore": 0,
+          "maxScore": -10,
           "category": "Fines",
-          "title": "App crashes",
-          "description": "App causes BSoD!"
+          "title": "App causes BSoD!",
+          "description": "App causes BSoD!",
+          "isForMentor": true,
+          "id": "5f010cdc-6c32-43a2-8cd6-a4bef80dc6fa"
         }
       ]
     },
@@ -111,43 +112,6 @@
           "description": "App causes BSoD!"
         }
       ]
-    },
-    {
-      "title": "Simple task v1",
-      "author": "cardamo",
-      "state": "DRAFT",
-      "categoriesOrder": [
-        "Basic Scope",
-        "Extra Scope",
-        "Fines"
-      ],
-      "items": [
-        {
-          "id": "basic_p1",
-          "minScore": 0,
-          "maxScore": 20,
-          "category": "Basic Scope",
-          "title": "Basic things",
-          "description": "You need to make things right, not wrong"
-        },
-        {
-          "id": "extra_p1",
-          "minScore": 0,
-          "maxScore": 30,
-          "category": "Extra Scope",
-          "title": "More awesome things",
-          "description": "Be creative and make up some more awesome things"
-        },
-        {
-          "id": "fines_p1",
-          "minScore": -10,
-          "maxScore": 0,
-          "category": "Fines",
-          "title": "App crashes",
-          "description": "App causes BSoD!"
-        }
-      ],
-      "id": "ppusd-v"
     },
     {
       "id": "f2e1a2f7-dc29-4e8f-8252-d73372c609e7",
@@ -587,6 +551,16 @@
           }
         }
       }
+    },
+    {
+      "id": "1gW4mKp",
+      "crossCheckSessionId": null,
+      "author": "lp-msarchitect",
+      "task": "simple-task-v1",
+      "prUrl": "http://test.com",
+      "demoUrl": "http://test.com",
+      "state": "DRAFT",
+      "selfGrade": null
     }
   ],
   "reviews": [

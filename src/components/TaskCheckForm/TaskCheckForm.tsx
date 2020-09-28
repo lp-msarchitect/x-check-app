@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Affix, Button, Form, message } from 'antd';
-import { ReviewRequest, Task } from '../../models/data-models';
+import { ReviewRequest, Task, Auth } from '../../models/data-models';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
+import { useSelector } from 'react-redux';
+import { AppReduxState } from '../../models/redux-models';
 
 const fastScoreButtons = [
   'Not completed',
@@ -35,6 +37,8 @@ const TaskCheckForm = ({
   const [checkedTasks, setCheckedTasks] = useState<boolean[]>(
     new Array(singleTask.items.length).fill(false)
   );
+
+  const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
 
   const success = (): void => {
     message.success('The result submitted');
@@ -71,6 +75,25 @@ const TaskCheckForm = ({
 
   const selfGrade = checkedRequest ? checkedRequest.selfGrade : null;
 
+  const renderChecksTask = singleTask.items.map((elem, id) => {
+    const hide = elem.isForMentor && !auth.roles.includes('mentor');
+    return hide ? null : (
+      <CheckTask
+        taskItem={elem}
+        key={elem.id}
+        taskScores={taskScores}
+        setTaskScores={setTaskScores}
+        setTotalScore={setTotalScore}
+        checkedTaskItems={checkedTaskItems}
+        setCheckedTaskItems={setCheckedTaskItems}
+        checkedTasks={checkedTasks}
+        setCheckedTasks={setCheckedTasks}
+        itemId={id}
+        selfGradeItem={selfGrade ? selfGrade.items[elem.id] : null}
+      />
+    );
+  });
+
   return (
     <div className={open ? 'form-container' : 'form-container disabled'}>
       <Form
@@ -106,23 +129,7 @@ const TaskCheckForm = ({
             </div>
           </div>
         </Affix>
-        {singleTask.items.map((elem, id) => {
-          return (
-            <CheckTask
-              taskItem={elem}
-              key={elem.id}
-              taskScores={taskScores}
-              setTaskScores={setTaskScores}
-              setTotalScore={setTotalScore}
-              checkedTaskItems={checkedTaskItems}
-              setCheckedTaskItems={setCheckedTaskItems}
-              checkedTasks={checkedTasks}
-              setCheckedTasks={setCheckedTasks}
-              itemId={id}
-              selfGradeItem={selfGrade ? selfGrade.items[elem.id] : null}
-            />
-          );
-        })}
+        {renderChecksTask}
         <hr />
         <Button
           type="primary"

@@ -53,8 +53,6 @@ const CheckTask = ({
     'Fully completed',
   ]);
 
-  const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
-
   const checkScore = (value: number): void => {
     const copy = taskScores;
     copy[itemId] = value;
