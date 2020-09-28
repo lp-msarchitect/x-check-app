@@ -104,7 +104,7 @@ const CheckTask = ({
     setOtherScore(score);
   };
 
-  selfGradeItem = selfGradeItem === null ? {comment: '', score: ''} : null;
+  selfGradeItem = selfGradeItem || {comment: '', score: ''};
 
   return (
     <div className="task-item">
