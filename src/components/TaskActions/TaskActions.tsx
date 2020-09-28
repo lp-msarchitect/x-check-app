@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Auth, Task, TaskState } from '../../models/data-models';
 import './TaskActions.scss';
-import { AppReduxState, TasksState } from '../../models/redux-models';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
+import { Auth, Task, TaskState } from '../../models/data-models';
+import { AppReduxState, TasksState } from '../../models/redux-models';
 import { deleteTask, updateTask } from '../../actions/actions';
 import { JSON_API_URL } from '../../constants/urls';
 
@@ -26,7 +26,6 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
 
   const history = useHistory();
   const handleEditTask = () => {
-    console.log(task.id);
     history.push(`/edit-task/${task.id}`);
   };
 

@@ -207,7 +207,7 @@ export const deleteTask = (taskId: string) => async (
       payload: taskId,
     });
   } catch {
-    dispatch({
+    return dispatch({
       type: ACTIONS.ADD_ERROR,
       error: {
         message: 'There was an error while deleting task.',

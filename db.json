@@ -491,6 +491,19 @@
           ]
         }
       ]
+    },
+    {
+      "state": "REQUESTS_GATHERING",
+      "taskId": "simple-task-v2",
+      "startDate": "2020-09-21T18:44:55.952Z",
+      "endDate": "2020-09-16T18:44:57.795Z",
+      "discardMinScore": false,
+      "discardMaxScore": false,
+      "minReiewsAmount": 1,
+      "desiredReviewersAmount": 2,
+      "coefficient": 3,
+      "attendees": [],
+      "id": "HWlnQFs"
     }
   ],
   "reviewRequests": [
@@ -539,10 +552,26 @@
       "crossCheckSessionId": null,
       "author": "lp-msarchitect",
       "task": "simple-task-v2",
-      "prUrl": "http://test.comdvasvadv",
+      "prUrl": "http://test.com",
       "demoUrl": "http://test.com",
-      "state": "DRAFT",
-      "selfGrade": null
+      "state": "PUBLISHED",
+      "selfGrade": {
+        "task": "simple-task-v2",
+        "items": {
+          "basic_p1": {
+            "score": 10
+          },
+          "extra_p1": {
+            "score": 15
+          },
+          "extra_p2": {
+            "score": 25
+          },
+          "fines_p1": {
+            "score": -10
+          }
+        }
+      }
     },
     {
       "id": "1gW4mKp",

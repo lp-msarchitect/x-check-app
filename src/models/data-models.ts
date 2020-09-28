@@ -109,6 +109,11 @@ export interface Review {
 /// Dispute
 export type DisputeState = 'ONGOING' | 'ACCEPTED' | 'REJECTED';
 
+export interface DisputeItem {
+  taskItem: string;
+  comment: string;
+  suggestedScore: number;
+}
 export interface Dispute {
   id: string;
   reviewId: string;
@@ -120,10 +125,4 @@ export interface Dispute {
 interface DisputeComment {
   githubId: string;
   comment: string;
-}
-
-export interface DisputeItem {
-  taskItem: string;
-  comment: string;
-  suggestedScore: number;
 }

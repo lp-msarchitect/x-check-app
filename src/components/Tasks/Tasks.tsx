@@ -48,7 +48,6 @@ const Tasks = (): JSX.Element => {
       .text()
       .then((txt: string) => JSON.parse(txt))
       .then((json: Task) => {
-        console.log(json);
         dispatch(createTask(json));
       })
       .catch(() => message.error(`${file.name} file parse failed.`));

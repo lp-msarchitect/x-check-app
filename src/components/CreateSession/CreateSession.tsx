@@ -12,6 +12,12 @@ const CreateSession = (): JSX.Element => {
 
   const [visible, setVisible] = useState(false);
   const [nameSession, setNameSession] = useState<string>('');
+  const [nameTask, setTaskName] = useState('');
+  const [startSession, setstartSession] = useState('');
+  const [endSession, setEndSession] = useState('');
+  const [coefficient, setCoefficient] = useState(0);
+  const [minReviewsAmount, setMinReviewsAmount] = useState(0);
+  const [desireReviewAmount, setDesireReviewAmount] = useState(0);
 
   const history = useHistory();
   const dispatch: AppDispatch = useDispatch();
@@ -49,13 +55,6 @@ const CreateSession = (): JSX.Element => {
   const handleCancel = () => {
     setVisible(false);
   };
-
-  const [nameTask, setTaskName] = useState('');
-  const [startSession, setstartSession] = useState('');
-  const [endSession, setEndSession] = useState('');
-  const [coefficient, setCoefficient] = useState(0);
-  const [minReviewsAmount, setMinReviewsAmount] = useState(0);
-  const [desireReviewAmount, setDesireReviewAmount] = useState(0);
 
   return (
     <div>

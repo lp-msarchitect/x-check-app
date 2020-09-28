@@ -23,7 +23,7 @@ interface CheckTaskProps {
   setTaskScores: Dispatch<SetStateAction<number[]>>;
   checkedTasks: boolean[];
   setCheckedTasks: Dispatch<SetStateAction<boolean[]>>;
-  selfGradeItem?: { score: number; comment?: string | undefined } | null;
+  selfGradeItem?: { score: number; comment?: string | undefined };
 }
 
 const CheckTask = ({
@@ -103,8 +103,6 @@ const CheckTask = ({
     const score = +value;
     setOtherScore(score);
   };
-
-  selfGradeItem = selfGradeItem || { comment: '', score: '' };
 
   return (
     <div className="task-item">

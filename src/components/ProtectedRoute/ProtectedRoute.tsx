@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { FC } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 

@@ -3,11 +3,11 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { CrossCheckSession, Task } from '../../models/data-models';
 import { Modal, Form, InputNumber, Select, DatePicker, Checkbox } from 'antd';
+import moment from 'moment';
+import { CrossCheckSession, Task } from '../../models/data-models';
 import { createSession } from '../../actions/actions';
 import { TasksState } from '../../models/redux-models';
-import moment from 'moment';
 
 interface EditSessionFormProps {
   tasks: TasksState;
@@ -75,6 +75,7 @@ const EditSessionForm = ({
 
       onCloseOrSubmit();
     } catch (errorInfo) {
+      // eslint-disable-next-line no-console
       console.log('Failed:', errorInfo);
     }
   };

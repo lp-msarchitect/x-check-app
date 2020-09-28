@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Collapse, Pagination, Modal } from 'antd';
+import { Collapse } from 'antd';
 import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -7,6 +7,7 @@ import {
   AppReduxState,
   ReviewsState,
   SessionsState,
+  TasksState,
 } from '../../models/redux-models';
 import { CrossCheckSession } from '../../models/data-models';
 import { getSession } from '../../actions/actions';
@@ -33,7 +34,6 @@ const Sessions = (): JSX.Element => {
   }, [dispatch]);
 
   const [sessionsArr, setSessionsArr] = useState<CrossCheckSession[]>([]);
-  const [reviwers, setReviwers] = useState<string[]>([]);
 
   useEffect(() => {
     setSessionsArr(Object.values(sessions));
@@ -42,7 +42,7 @@ const Sessions = (): JSX.Element => {
   return (
     <div className="sessions">
       <h2>Cross-Check Sessions</h2>
-      <CreateSession tasks={tasks} />
+      <CreateSession />
       <Collapse accordion>
         {sessionsArr.map((session) => {
           if (session.id && tasks && tasks[session.taskId]) {
@@ -60,6 +60,7 @@ const Sessions = (): JSX.Element => {
               </Panel>
             );
           }
+          return null;
         })}
       </Collapse>
     </div>

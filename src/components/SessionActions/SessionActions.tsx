@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import './SessionActions.scss';
+import { AppReduxState, TasksState } from '../../models/redux-models';
+import EditSessionForm from '../EditSessionForm/EditSessionForm';
 import {
   Auth,
   CrossCheckSession,
   CrossCheckSessionState,
 } from '../../models/data-models';
-import './SessionActions.scss';
-import {
-  AppReduxState,
-  SessionsState,
-  TasksState,
-} from '../../models/redux-models';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { useHistory } from 'react-router-dom';
-import EditSessionForm from '../EditSessionForm/EditSessionForm';
 
 interface SessionActionsProps {
   session: CrossCheckSession;
   tasks: TasksState;
 }
 
-type AppDispatch = ThunkDispatch<SessionsState, void, AnyAction>;
+// type AppDispatch = ThunkDispatch<SessionsState, void, AnyAction>;
 
 const SessionActions = ({
   session,
@@ -30,19 +23,22 @@ const SessionActions = ({
 }: SessionActionsProps): JSX.Element => {
   const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
 
-  const dispatch: AppDispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
 
-  const history = useHistory();
+  // const dispatch: AppDispatch = useDispatch();
+
+  // const history = useHistory();
   const handleEditSession = () => {
-    //// TODO: modal here
+    /// / TODO: modal here
     setVisible(true);
   };
 
   const handleUpdateSessionState = (state: CrossCheckSessionState) => {
+    // eslint-disable-next-line no-console
+    console.log(state);
+
     // dispatch(updateSession({ ...session, state }));
   };
-
-  const [visible, setVisible] = useState(false);
 
   return (
     <div className="session-actions">
