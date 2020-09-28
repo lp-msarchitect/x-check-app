@@ -1,10 +1,5 @@
 /// User
-export type UserRole =
-  | 'author'
-  | 'student'
-  | 'supervisor'
-  | 'coursemanager'
-  | 'mentor';
+export type UserRole = 'author' | 'student' | 'supervisor' | 'coursemanager';
 
 export interface User {
   id?: number;

@@ -70,7 +70,7 @@ const TaskCheckForm = ({
   const selfGrade = checkedRequest ? checkedRequest.selfGrade : null;
 
   const renderChecksTask = singleTask.items.map((elem, id) => {
-    const hide = elem.isForMentor && !auth.roles.includes('mentor');
+    const hide = elem.isForMentor && !auth.roles.includes('supervisor');
     return hide ? null : (
       <CheckTask
         taskItem={elem}
