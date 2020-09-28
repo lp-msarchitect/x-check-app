@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Collapse, Button, Pagination, Modal } from 'antd';
+import { Collapse } from 'antd';
 import { AnyAction } from 'redux';
 import {
   AppReduxState,
@@ -14,6 +14,7 @@ import { getSession } from '../../actions/actions';
 import StateTag from '../StateTag/StateTag';
 import CreateSession from '../CreateSession/CreateSession';
 import './Session.scss';
+import SingleSession from '../SingleSession/SingleSession';
 
 const { Panel } = Collapse;
 
@@ -26,7 +27,6 @@ const Sessions = (): JSX.Element => {
 
   const tasks = useSelector<AppReduxState, TasksState>((state) => state.tasks);
 
-  // console.log(sessions);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -34,80 +34,34 @@ const Sessions = (): JSX.Element => {
   }, [dispatch]);
 
   const [sessionsArr, setSessionsArr] = useState<CrossCheckSession[]>([]);
-  const [reviwers, setReviwers] = useState<any[]>([]);
 
   useEffect(() => {
     setSessionsArr(Object.values(sessions));
   }, [sessions]);
 
-  function callback(key: any) {
-    console.log('click');
-  }
-
-  const [visible, setVisible] = useState(false);
-
-  const showModal = (idUser: number, numberSession: number) => {
-    let a = sessionsArr[numberSession];
-    let b = a.attendees;
-    let c = b[idUser];
-    let d = c.reviewerOf;
-    const g = d.join('\n');
-    setReviwers([g]);
-    setVisible(true);
-  };
-
-  const handleOk = () => {
-    setVisible(false);
-    setReviwers([]);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-    setReviwers([]);
-  };
-
-  const panels = sessionsArr.map((session, numberSession) => {
-    // console.log(sessions)
-    // console.log(session)
-    const userAndReviewers = session.attendees;
-    const users = userAndReviewers.map((user, idUser) => {
-      return (
-        <div key={idUser} onClick={() => showModal(idUser, numberSession)}>
-          {user.githubId}
-        </div>
-      );
-    });
-
-    return (
-      <Panel
-        header={session.id}
-        key={session.id}
-        extra={<StateTag state={session.state} />}
-      >
-        <div>Start date:{session.startDate}</div>
-        <div>Deadline:{session.endDate}</div>
-        <div>Coefficient:{session.coefficient}</div>
-        <div>
-          Students:<a>{users}</a>
-        </div>
-        <Modal
-          title="Reviewers"
-          visible={visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          {reviwers}
-        </Modal>
-        <Pagination className="" defaultCurrent={1} total={1} />
-      </Panel>
-    );
-  });
-
   return (
     <div className="sessions">
       <h2>Cross-Check Sessions</h2>
       <CreateSession tasks={tasks} />
-      <Collapse onChange={callback}>{panels}</Collapse>
+      <Collapse accordion>
+        {sessionsArr.map((session) => {
+          if (session.id && tasks && tasks[session.taskId]) {
+            return (
+              <Panel
+                header={tasks[session.taskId].title}
+                key={session.id || session.endDate + session.taskId}
+                extra={<StateTag state={session.state} />}
+              >
+                <SingleSession
+                  session={session}
+                  key={session.id}
+                  tasks={tasks}
+                />
+              </Panel>
+            );
+          }
+        })}
+      </Collapse>
     </div>
   );
 };
