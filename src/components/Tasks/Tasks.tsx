@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Button, Collapse } from 'antd';
-import { CaretRightOutlined } from '@ant-design/icons';
+import { Upload, message, Button, Collapse, Space } from 'antd';
+import { UploadOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import SingleTask from '../SingleTask/SingleTask';
 import { AppReduxState, TasksState } from '../../models/redux-models';
 import { Auth, Task } from '../../models/data-models';
 import './Tasks.scss';
-import { getTasks } from '../../actions/actions';
+import { getTasks, createTask } from '../../actions/actions';
 import StateBadge from '../StateBadge/StateBadge';
 
 type AppDispatch = ThunkDispatch<TasksState, void, AnyAction>;
@@ -43,18 +43,40 @@ const Tasks = (): JSX.Element => {
     history.push('/create-task');
   };
 
+  const beforeUpload = (file: any): boolean => {
+    file
+      .text()
+      .then((txt: any) => JSON.parse(txt))
+      .then((json: any) => {
+        console.log(json);
+        dispatch(createTask(json))
+      })
+      .catch(() => message.error(`${file.name} file parse failed.`));
+    return false;
+  };
+
   return (
     <div className="tasks">
       <h2>Tasks</h2>
       {(auth.roles.includes('author') ||
         auth.roles.includes('coursemanager')) && (
-        <Button
-          type="primary"
-          onClick={handleAddTask}
-          className="create-task-btn"
-        >
-          Add Task
-        </Button>
+        <Space align="center" className="create-task-btn">
+          <Button
+            type="primary"
+            onClick={handleAddTask}
+          >
+            Add Task
+          </Button>
+          <Upload
+            name="task-json"
+            beforeUpload={beforeUpload}
+            showUploadList={false}
+          >
+            <Button type="primary" icon={<UploadOutlined />}>
+              Upload JSON
+            </Button>
+          </Upload>
+        </Space>
       )}
       <Collapse
         accordion

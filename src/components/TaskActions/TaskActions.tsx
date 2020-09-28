@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Upload, message, Button } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { Auth, Task, TaskState } from '../../models/data-models';
 import './TaskActions.scss';
@@ -35,11 +36,6 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
 
   return (
     <div className="task-actions">
-      {auth.roles.includes('student') && (
-        <Button type="primary" size="small">
-          Submit
-        </Button>
-      )}
       {(auth.roles.includes('author') ||
         auth.roles.includes('coursemanager')) && (
         <>
@@ -58,9 +54,10 @@ const TaskActions = ({ task }: TaskActionsProps): JSX.Element => {
             </>
           )}
           <Button type='primary'
-                  target='blanck'
+                  target='_blank'
                   href={`http://localhost:3001/tasks/${task.id}`}
                   size='small'
+                  download
           >
             Export As JSON
           </Button>
