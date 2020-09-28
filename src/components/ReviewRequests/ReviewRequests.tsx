@@ -4,7 +4,13 @@ import { request } from 'http';
 import React, { useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addReviewRequest, addSingleReview } from '../../actions/actions';
-import { Auth, ReviewRequest, Task } from '../../models/data-models';
+import {
+  Auth,
+  ReviewRequest,
+  ReviewRequestState,
+  ReviewState,
+  Task,
+} from '../../models/data-models';
 import {
   AppReduxState,
   ReviewRequestsAppState,
@@ -67,7 +73,7 @@ const ReviewRequests = (): JSX.Element => {
     setShowCheck(true);
   };
 
-  const onSubmitCheck = (values: any): void => {
+  const onSubmitCheck = (values: any, state: string): void => {
     setShowCheck(false);
     const request = checkedRequest as ReviewRequest;
     const isSelfCheck = request.author === auth.githubId;
@@ -75,7 +81,7 @@ const ReviewRequests = (): JSX.Element => {
       dispatch(
         addReviewRequest({
           ...request,
-          state: 'PUBLISHED',
+          state: state as ReviewRequestState,
           selfGrade: {
             task: request.task || '',
             items: values,
@@ -89,7 +95,7 @@ const ReviewRequests = (): JSX.Element => {
           requestId: request.id,
           author: request.author,
           reviewer: auth.githubId,
-          state: 'PUBLISHED',
+          state: state as ReviewState,
           task: request.task,
           grade: {
             task: request.task || '',
@@ -100,7 +106,7 @@ const ReviewRequests = (): JSX.Element => {
     }
   };
 
-  const onReviewRequestClick = (record: ReviewRequest) => {
+  const onReviewRequestClick = (record: ReviewRequest): void => {
     setCheckedRequest(record);
     setSelectedTask(tasks[record.task]);
     setShowCheck(true);

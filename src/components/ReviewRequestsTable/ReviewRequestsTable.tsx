@@ -8,8 +8,6 @@ import { ReviewRequest, ReviewRequestState } from '../../models/data-models';
 
 export interface ReviewRequestsTableProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  //   auth: Auth;
-  //   tasks: TasksState;
   reviewRequests: ReviewRequestsAppState;
   tasks: TasksState;
   onReviewRequestClick: Function;
