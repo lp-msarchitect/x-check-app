@@ -13,6 +13,7 @@ import StateTag from '../StateTag/StateTag';
 import ReviewScoreDetailed from '../ReviewScoreDetailed/ReviewScoreDetailed';
 import DisputeDetails from '../DisputeDetails/DisputeDetails';
 import FeedbackToReviewer from '../FeedbackToReviewer/FeedbackToReviewer';
+import { CloseSquareFilled } from '@ant-design/icons';
 
 const SingleReview = (): JSX.Element => {
   const { reviewId } = useParams<{ reviewId: string }>();
@@ -48,7 +49,12 @@ const SingleReview = (): JSX.Element => {
   };
 
   return (
-    <Descriptions title="Review Info" layout="vertical" bordered>
+    <Descriptions
+      title="Review Info"
+      layout="vertical"
+      bordered
+      extra={<Button onClick={()=> history.push(`/reviews/`)} icon={<CloseSquareFilled className='close-btn'/>} />}
+    >
       {task && (
         <Descriptions.Item label="Task" span={2}>
           {task.title}
