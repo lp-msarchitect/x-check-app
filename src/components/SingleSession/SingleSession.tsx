@@ -10,9 +10,9 @@ interface SingleSessionProps {
 }
 
 const SingleSession = ({ session, tasks }: SingleSessionProps): JSX.Element => {
-  const attendees = session.attendees;
-  const students = attendees.map((user, index) => {
-    return <div key={index}>{user.githubId}</div>;
+  const { attendees } = session;
+  const students = attendees.map((user) => {
+    return <div key={user.githubId}>{user.githubId}</div>;
   });
 
   return (
