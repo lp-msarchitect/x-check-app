@@ -1,116 +1,157 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { CrossCheckSession, Task } from '../../models/data-models';
 import {
-    Task,
-  } from '../../models/data-models';
-import {Modal,Button,Input,Form,InputNumber} from 'antd'
+  Modal,
+  Button,
+  Form,
+  InputNumber,
+  Select,
+  DatePicker,
+  Checkbox,
+} from 'antd';
 import { createSession } from '../../actions/actions';
 
-const CreateSession= ():JSX.Element =>{
-
-    type AppDispatch = ThunkDispatch<Task, void, AnyAction>;
-
-    const [visible, setVisible] = useState(false)
-    const [nameSession,setNameSession] =useState('')
-
-    const history = useHistory();
-     const dispatch: AppDispatch = useDispatch();
-
-
-    const showModal = () => {
-        setVisible(true)
-     };
-
-    const handleOk = () => {
-        const newSession:any ={
-            id:nameSession,
-            state: 'DRAFT',
-            taskId:nameTask,
-            startDate:startSession,
-            endDate:endSession,
-            discardMinScore:false,
-            discardMaxScore:false,
-            minReiewsAmount:minReviewsAmount,
-            desiredReviewersAmount:desireReviewAmount,
-            attendees:[
-                {
-                githubId: "ButterBrot777",
-                reviewerOf: [
-                    'cardamo'
-                ]
-            }
-        ]
-    }
-
-    dispatch(createSession(newSession));
-    history.push('/sessions');
-
-    setVisible(false)
-
-      
-      
-    };   
-
-    const handleCancel = () => {
-        setVisible(false)
-    };
-     
-
-    const [nameTask,setTaskName] =useState('')
-    const [startSession,setstartSession] =useState('')
-    const [endSession, setEndSession] = useState('')
-    const [coefficient,setCoefficient] = useState(0)
-    const [minReviewsAmount,setMinReviewsAmount] = useState(0)
-    const [desireReviewAmount, setDesireReviewAmount] = useState(0)
-    
-
-
-    return (
-    
-        <div>
-            <Button onClick={showModal} type="primary" className='create-btn'>Add session</Button>
-            <Modal
-            title="Create Session"
-            visible={visible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            >
-                <Form.Item  label="Name of session">
-                    <Input value={nameSession} onChange={(e) => setNameSession(e.target.value)} />
-                </Form.Item>
-
-                <Form.Item label="Name of task">
-                    <Input value={nameTask} onChange={(e) => setTaskName(e.target.value)} />
-                </Form.Item>
-
-                <Form.Item label="Start date">
-                    <Input value={startSession} onChange={(e) => setstartSession(e.target.value)} />
-                </Form.Item>
-
-                <Form.Item label="End date ">
-                    <Input value={endSession} onChange={(e) => setEndSession(e.target.value)} />
-                </Form.Item>
-
-                <Form.Item label="Coefficient">
-                    <InputNumber value={coefficient} onChange={(e:any) => setCoefficient(e)} />
-                </Form.Item>
-
-                
-                <Form.Item label="Min reviews amount">
-                    <InputNumber value={minReviewsAmount} onChange={(e:any) => setMinReviewsAmount(e)} />
-                </Form.Item>
-
-                <Form.Item label="Desire reviewers Amount">
-                    <InputNumber value={desireReviewAmount} onChange={(e:any) => setDesireReviewAmount(e)}/>
-                </Form.Item>
-
-          </Modal>
-        </div>
-          
-    )
+interface CreateSessionProps {
+  tasks: Task[];
 }
+
+const CreateSession = ({ tasks }: CreateSessionProps): JSX.Element => {
+  type AppDispatch = ThunkDispatch<Task, void, AnyAction>;
+
+  const [visible, setVisible] = useState(false);
+  const [form] = Form.useForm();
+
+  const history = useHistory();
+  const dispatch: AppDispatch = useDispatch();
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = async () => {
+    try {
+      const values = await form.validateFields([
+        'task',
+        'desiredReviews',
+        'minReviews',
+        'start',
+        'end',
+        'coef',
+      ]);
+      const newSession: CrossCheckSession = {
+        state: values.draft ? 'DRAFT' : 'REQUESTS_GATHERING',
+        taskId: values.taskId,
+        startDate: values.start,
+        endDate: values.end,
+        discardMinScore: false,
+        discardMaxScore: false,
+        minReiewsAmount: values.minReviews,
+        desiredReviewersAmount: values.desiredReviews,
+        coefficient: values.coef !== undefined ? values.coef : 1,
+        attendees: [],
+      };
+
+      dispatch(createSession(newSession));
+      history.push('/sessions');
+
+      setVisible(false);
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+    }
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
+  const tasksList = Object.values(tasks)
+    .map((task: Task) => {
+      return {
+        id: task.id,
+        title: task.title,
+        state: task.state,
+      };
+    })
+    .filter((task) => task.state === 'PUBLISHED');
+
+  const tasksOptions: JSX.Element[] = tasksList.map((taskItem) => {
+    return (
+      <Select.Option value={taskItem.id} key={taskItem.id}>
+        {taskItem.title}
+      </Select.Option>
+    );
+  });
+
+  return (
+    <div>
+      <Button onClick={showModal} type="primary" className="create-btn">
+        Add session
+      </Button>
+      <Modal
+        title="Create Session"
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form form={form} name="dynamic_rule">
+          <Form.Item
+            label="Task:"
+            name="task"
+            rules={[{ required: true, message: 'Please choose task' }]}
+          >
+            <Select>{tasksOptions}</Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Start date"
+            name="start"
+            rules={[{ required: true, message: 'Please input start date.' }]}
+          >
+            <DatePicker />
+          </Form.Item>
+
+          <Form.Item
+            name="end"
+            label="End date "
+            rules={[{ required: true, message: 'Please input start date.' }]}
+          >
+            <DatePicker />
+          </Form.Item>
+
+          <Form.Item label="Coefficient" name="coef">
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            name="minReviews"
+            label="Min reviews amount"
+            rules={[
+              { required: true, message: 'Please input min reviews amount.' },
+            ]}
+          >
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            name="desiredReviews"
+            label="Desired reviewers Amount"
+            rules={[
+              { required: true, message: 'Please input desired reviews.' },
+            ]}
+          >
+            <InputNumber />
+          </Form.Item>
+          <Form.Item name="draft" valuePropName="draft">
+            <Checkbox>Save as draft</Checkbox>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </div>
+  );
+};
 
 export default CreateSession;
