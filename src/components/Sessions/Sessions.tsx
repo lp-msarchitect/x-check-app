@@ -31,14 +31,14 @@ const Sessions = (): JSX.Element => {
   }, [dispatch]);
 
   const [sessionsArr, setSessionsArr] = useState<CrossCheckSession[]>([]);
-  const [reviwers, setReviwers] = useState<any[]>([]);
+  const [reviwers, setReviwers] = useState<string[]>([]);
 
   useEffect(() => {
     setSessionsArr(Object.values(sessions));
   }, [sessions]);
 
-  function callback(key: any) {
-    console.log('click');
+  function callback(key: string | string[]) {
+    console.log('click', key);
   }
 
   const [visible, setVisible] = useState(false);

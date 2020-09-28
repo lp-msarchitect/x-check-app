@@ -85,9 +85,11 @@ const Reviews = (): JSX.Element => {
   };
 
   const rendering = {
+    // eslint-disable-next-line react/display-name
     tag: (state: string): JSX.Element => {
       return <StateTag state={state} />;
     },
+    // eslint-disable-next-line react/display-name
     taskTitle: (taskId: string, review: Review): JSX.Element | null => {
       const currentTask = tasks[taskId];
       if (currentTask) {

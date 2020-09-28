@@ -12,6 +12,7 @@ import {
   UsersState,
   SessionsState,
 } from '../models/redux-models';
+import { Session } from 'inspector';
 
 const userAuthReducer = (
   state = {
@@ -51,7 +52,7 @@ const addOneTaskToStore = (task: Task, state: TasksState): TasksState => {
   return keyBy(
     {
       ...state,
-      [task.id!]: task,
+      [task.id]: task,
     },
     'id'
   ) as TasksState;
@@ -227,7 +228,7 @@ const disputesReducer = (state = {}, action: AnyAction): DisputesState => {
   }
 };
 
-const sessionsReducer = (state = {}, action: AnyAction): any => {
+const sessionsReducer = (state = {}, action: AnyAction): SessionsState => {
   switch (action.type) {
     case ACTIONS.GET_SESSIONS:
       if (action.payload) {
@@ -240,7 +241,7 @@ const sessionsReducer = (state = {}, action: AnyAction): any => {
         return keyBy(
           {
             ...state,
-            [action.payload.res.id]: action.payload.res as any,
+            [action.payload.res.id]: action.payload.res as Session,
           },
           'id'
         ) as SessionsState;

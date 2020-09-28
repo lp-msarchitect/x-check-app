@@ -92,7 +92,7 @@ const reviewsReducer = (state = {}, action: AnyAction): ReviewsState => {
   }
 };
 
-const sessionsReducer = (state = {}, action: AnyAction): any => {
+const sessionsReducer = (state = {}, action: AnyAction): SessionsState => {
   switch (action.type) {
     case ACTIONS.GET_SESSIONS:
       if (action.payload) {

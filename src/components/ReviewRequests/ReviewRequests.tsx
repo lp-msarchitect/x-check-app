@@ -1,6 +1,5 @@
 import { Button } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
-import { request } from 'http';
 import React, { useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addReviewRequest, addSingleReview } from '../../actions/actions';
@@ -10,6 +9,7 @@ import {
   ReviewRequestState,
   ReviewState,
   Task,
+  TaskScore,
 } from '../../models/data-models';
 import {
   AppReduxState,
@@ -55,7 +55,7 @@ const ReviewRequests = (): JSX.Element => {
     setShowCheck(false);
   };
 
-  const onSubmitReviewRequest = (values: Record<string, any>): void => {
+  const onSubmitReviewRequest = (values: Record<string, string>): void => {
     const request: ReviewRequest = {
       id: '',
       crossCheckSessionId: null,
@@ -73,7 +73,7 @@ const ReviewRequests = (): JSX.Element => {
     setShowCheck(true);
   };
 
-  const onSubmitCheck = (values: any, state: string): void => {
+  const onSubmitCheck = (values: TaskScore['items'], state: string): void => {
     setShowCheck(false);
     const request = checkedRequest as ReviewRequest;
     const isSelfCheck = request.author === auth.githubId;

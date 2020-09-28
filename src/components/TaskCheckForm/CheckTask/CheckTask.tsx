@@ -1,5 +1,4 @@
-import React, { ReactElement, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import {
   Form,
   Select,
@@ -10,22 +9,21 @@ import {
   Typography,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { AppReduxState } from '../../../models/redux-models';
-import { TaskItem, Auth, TaskScore } from '../../../models/data-models';
+import { TaskItem } from '../../../models/data-models';
 import './CheckTask.scss';
 
 const { Option } = Select;
 interface CheckTaskProps {
   taskItem: TaskItem;
   checkedTaskItems: number;
-  setCheckedTaskItems: Function;
-  setTotalScore: Function;
+  setCheckedTaskItems: Dispatch<SetStateAction<number>>;
+  setTotalScore: Dispatch<SetStateAction<number>>;
   itemId: number;
   taskScores: number[];
-  setTaskScores: Function;
+  setTaskScores: Dispatch<SetStateAction<number[]>>;
   checkedTasks: boolean[];
-  setCheckedTasks: Function;
-  selfGradeItem?: any;
+  setCheckedTasks: Dispatch<SetStateAction<boolean[]>>;
+  selfGradeItem?: { score: number; comment?: string | undefined } | null;
 }
 
 const CheckTask = ({

@@ -1,4 +1,3 @@
-import { Session } from 'inspector';
 import {
   User,
   Task,
@@ -31,7 +30,7 @@ class DataService {
     return login;
   }
 
-  async setResource<T>(url: string, resource: object): Promise<T> {
+  async setResource<T>(url: string, resource: T): Promise<T> {
     const res = await fetch(this.baseURL + url, {
       method: 'POST',
       headers: {
@@ -46,7 +45,7 @@ class DataService {
     return body;
   }
 
-  async putResource<T>(url: string, resource: object): Promise<T> {
+  async putResource<T>(url: string, resource: T): Promise<T> {
     const res = await fetch(this.baseURL + url, {
       method: 'PUT',
       headers: {
@@ -112,8 +111,8 @@ class DataService {
     return this.setResource<Task>('/tasks', task);
   }
 
-  async addSession(session: Session): Promise<Session> {
-    return this.setResource<Session>('/crossCheckSessions', session);
+  async addSession(session: CrossCheckSession): Promise<CrossCheckSession> {
+    return this.setResource<CrossCheckSession>('/crossCheckSessions', session);
   }
 
   async deleteTask(taskId: string): Promise<Task> {

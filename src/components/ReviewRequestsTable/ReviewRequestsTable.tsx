@@ -19,7 +19,7 @@ export interface ReviewRequestsTableProps
   extends React.HTMLAttributes<HTMLDivElement> {
   reviewRequests: ReviewRequestsAppState;
   tasks: TasksState;
-  onReviewRequestClick: Function;
+  onReviewRequestClick: (record: ReviewRequest) => void;
 }
 
 const ReviewRequestsTable = (props: ReviewRequestsTableProps): JSX.Element => {

@@ -43,11 +43,11 @@ const Tasks = (): JSX.Element => {
     history.push('/create-task');
   };
 
-  const beforeUpload = (file: any): boolean => {
+  const beforeUpload = (file: File): boolean => {
     file
       .text()
-      .then((txt: any) => JSON.parse(txt))
-      .then((json: any) => {
+      .then((txt: string) => JSON.parse(txt))
+      .then((json: Task) => {
         console.log(json);
         dispatch(createTask(json));
       })
@@ -85,7 +85,7 @@ const Tasks = (): JSX.Element => {
           return (
             <Panel
               header={item.title}
-              key={item.id!}
+              key={item.id}
               extra={<StateBadge state={item.state} />}
             >
               <SingleTask singleTask={item} />

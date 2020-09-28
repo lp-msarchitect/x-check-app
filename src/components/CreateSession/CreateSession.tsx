@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Modal, Button, Input, Form, InputNumber } from 'antd';
-import { Task } from '../../models/data-models';
+import { Task, CrossCheckSession } from '../../models/data-models';
 import { createSession } from '../../actions/actions';
 
 const CreateSession = (): JSX.Element => {
   type AppDispatch = ThunkDispatch<Task, void, AnyAction>;
 
   const [visible, setVisible] = useState(false);
-  const [nameSession, setNameSession] = useState('');
+  const [nameSession, setNameSession] = useState<string>('');
 
   const history = useHistory();
   const dispatch: AppDispatch = useDispatch();
@@ -21,7 +21,7 @@ const CreateSession = (): JSX.Element => {
   };
 
   const handleOk = () => {
-    const newSession: any = {
+    const newSession: CrossCheckSession = {
       id: nameSession,
       state: 'DRAFT',
       taskId: nameTask,
@@ -31,6 +31,7 @@ const CreateSession = (): JSX.Element => {
       discardMaxScore: false,
       minReiewsAmount: minReviewsAmount,
       desiredReviewersAmount: desireReviewAmount,
+      coefficient: 1,
       attendees: [
         {
           githubId: 'ButterBrot777',
@@ -98,21 +99,21 @@ const CreateSession = (): JSX.Element => {
         <Form.Item label="Coefficient">
           <InputNumber
             value={coefficient}
-            onChange={(e: any) => setCoefficient(e)}
+            onChange={(value) => setCoefficient((value as number) || 0)}
           />
         </Form.Item>
 
         <Form.Item label="Min reviews amount">
           <InputNumber
             value={minReviewsAmount}
-            onChange={(e: any) => setMinReviewsAmount(e)}
+            onChange={(value) => setMinReviewsAmount((value as number) || 0)}
           />
         </Form.Item>
 
         <Form.Item label="Desire reviewers Amount">
           <InputNumber
             value={desireReviewAmount}
-            onChange={(e: any) => setDesireReviewAmount(e)}
+            onChange={(value) => setDesireReviewAmount((value as number) || 0)}
           />
         </Form.Item>
       </Modal>

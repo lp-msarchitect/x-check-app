@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as ACTIONS from '../constants/actions';
 import DataService from '../services/data-service';
 import {
+  CrossCheckSession,
   Dispute,
   Review,
   ReviewRequest,
@@ -447,7 +448,7 @@ export const deleteDispute = (dispute: Dispute) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
   try {
-    const deleted = await dataService.deleteDispute(dispute.id);
+    await dataService.deleteDispute(dispute.id);
     dispatch({
       type: ACTIONS.DELETE_DISPUTE,
       payload: dispute.reviewId,
@@ -528,7 +529,7 @@ export const deleteReviewRequest = (reviewRequest: ReviewRequest) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
   try {
-    const deleted = await dataService.deleteReviewRequest(reviewRequest.id);
+    await dataService.deleteReviewRequest(reviewRequest.id);
     dispatch({
       type: ACTIONS.DELETE_REVIEW_REQUEST,
       payload: reviewRequest.id,
@@ -544,7 +545,7 @@ export const deleteReviewRequest = (reviewRequest: ReviewRequest) => async (
   }
 };
 
-export const createSession = (session: any) => async (
+export const createSession = (session: CrossCheckSession) => async (
   dispatch: (action: AnyAction) => void
 ): Promise<void> => {
   dataService

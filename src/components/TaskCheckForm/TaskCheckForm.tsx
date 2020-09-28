@@ -3,14 +3,19 @@ import { Affix, Button, Form, message, Space } from 'antd';
 import { useSelector } from 'react-redux';
 import CheckTask from './CheckTask/CheckTask';
 import './TaskCheckForm.scss';
-import { ReviewRequest, Task, Auth, TaskScore } from '../../models/data-models';
+import {
+  ReviewRequest,
+  Task,
+  Auth,
+  ReviewRequestState,
+} from '../../models/data-models';
 import { AppReduxState } from '../../models/redux-models';
 
 interface SingleTaskProps {
   singleTask: Task;
-  onSubmit: Function;
+  onSubmit: (value: string, state: ReviewRequestState) => void;
   open: boolean;
-  onCancel: Function;
+  onCancel: () => void;
   checkedRequest?: ReviewRequest | null;
 }
 
@@ -32,7 +37,7 @@ const TaskCheckForm = ({
   );
 
   const auth = useSelector<AppReduxState, Auth>((state) => state.auth);
-  const [status, setStatus] = useState<string>('DRAFT');
+  const [status, setStatus] = useState<ReviewRequestState>('DRAFT');
 
   const success = (): void => {
     message.success('The result submitted');
