@@ -60,7 +60,7 @@ interface CrossCheckSessionAttendee {
 }
 
 export interface CrossCheckSession {
-  id: string;
+  id?: string;
   state: CrossCheckSessionState;
   taskId: string;
   coefficient: number;

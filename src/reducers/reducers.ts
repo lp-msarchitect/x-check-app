@@ -1,6 +1,12 @@
 import { combineReducers, AnyAction } from 'redux';
 import keyBy from 'lodash.keyby';
-import { Auth, Dispute, Review, Task } from '../models/data-models';
+import {
+  Auth,
+  CrossCheckSession,
+  Dispute,
+  Review,
+  Task,
+} from '../models/data-models';
 import * as ACTIONS from '../constants/actions';
 
 import {
@@ -12,7 +18,6 @@ import {
   UsersState,
   SessionsState,
 } from '../models/redux-models';
-import { Session } from 'inspector';
 
 const userAuthReducer = (
   state = {
@@ -66,17 +71,17 @@ const tasksReducer = (state = {}, action: AnyAction): TasksState => {
       }
       return state;
     case ACTIONS.CREATE_TASK:
-      if (action.payload) {
+      if (action.payload && action.payload.res.id) {
         return addOneTaskToStore(action.payload.res, state);
       }
       return state;
     case ACTIONS.GET_SINGLE_TASK:
-      if (action.payload) {
+      if (action.payload && action.payload.res.id) {
         return addOneTaskToStore(action.payload.res, state);
       }
       return state;
     case ACTIONS.UPDATE_TASK:
-      if (action.payload) {
+      if (action.payload && action.payload.res.id) {
         return addOneTaskToStore(action.payload.res, state);
       }
       return state;
@@ -241,7 +246,7 @@ const sessionsReducer = (state = {}, action: AnyAction): SessionsState => {
         return keyBy(
           {
             ...state,
-            [action.payload.res.id]: action.payload.res as Session,
+            [action.payload.res.id]: action.payload.res as CrossCheckSession,
           },
           'id'
         ) as SessionsState;

@@ -13,6 +13,7 @@ import { getSession } from '../../actions/actions';
 import StateTag from '../StateTag/StateTag';
 import CreateSession from '../CreateSession/CreateSession';
 import './Session.scss';
+import SingleSession from '../SingleSession/SingleSession';
 
 const { Panel } = Collapse;
 
@@ -23,7 +24,8 @@ const Sessions = (): JSX.Element => {
     (state) => state.sessions
   );
 
-  console.log(sessions);
+  const tasks = useSelector<AppReduxState, TasksState>((state) => state.tasks);
+
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -37,74 +39,29 @@ const Sessions = (): JSX.Element => {
     setSessionsArr(Object.values(sessions));
   }, [sessions]);
 
-  function callback(key: string | string[]) {
-    console.log('click', key);
-  }
-
-  const [visible, setVisible] = useState(false);
-
-  const showModal = (idUser: number, numberSession: number) => {
-    const a = sessionsArr[numberSession];
-    const b = a.attendees;
-    const c = b[idUser];
-    const d = c.reviewerOf;
-    const g = d.join('\n');
-    setReviwers([g]);
-    setVisible(true);
-  };
-
-  const handleOk = () => {
-    setVisible(false);
-    setReviwers([]);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-    setReviwers([]);
-  };
-
-  const panels = sessionsArr.map((session, numberSession) => {
-    console.log(sessions);
-    console.log(session);
-    const userAndReviewers = session.attendees;
-    const users = userAndReviewers.map((user, idUser) => {
-      return (
-        <div key={idUser} onClick={() => showModal(idUser, numberSession)}>
-          {user.githubId}
-        </div>
-      );
-    });
-
-    return (
-      <Panel
-        header={session.id}
-        key={session.id}
-        extra={<StateTag state={session.state} />}
-      >
-        <div>Start date:{session.startDate}</div>
-        <div>Deadline:{session.endDate}</div>
-        <div>Coefficient:{session.coefficient}</div>
-        <div>
-          Students:<a>{users}</a>
-        </div>
-        <Modal
-          title="Reviewers"
-          visible={visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          {reviwers}
-        </Modal>
-        <Pagination className="" defaultCurrent={1} total={1} />
-      </Panel>
-    );
-  });
-
   return (
     <div className="sessions">
       <h2>Cross-Check Sessions</h2>
-      <CreateSession />
-      <Collapse onChange={callback}>{panels}</Collapse>
+      <CreateSession tasks={tasks} />
+      <Collapse accordion>
+        {sessionsArr.map((session) => {
+          if (session.id && tasks && tasks[session.taskId]) {
+            return (
+              <Panel
+                header={tasks[session.taskId].title}
+                key={session.id || session.endDate + session.taskId}
+                extra={<StateTag state={session.state} />}
+              >
+                <SingleSession
+                  session={session}
+                  key={session.id}
+                  tasks={tasks}
+                />
+              </Panel>
+            );
+          }
+        })}
+      </Collapse>
     </div>
   );
 };
