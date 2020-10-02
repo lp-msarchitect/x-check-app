@@ -42,7 +42,7 @@ const Sessions = (): JSX.Element => {
   return (
     <div className="sessions">
       <h2>Cross-Check Sessions</h2>
-      <CreateSession />
+      <CreateSession tasks={tasks} />
       <Collapse accordion>
         {sessionsArr.map((session) => {
           if (session.id && tasks && tasks[session.taskId]) {
